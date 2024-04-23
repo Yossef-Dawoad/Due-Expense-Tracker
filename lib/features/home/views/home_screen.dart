@@ -1,5 +1,6 @@
+import 'package:expancetracker/core/common/domain/models/transaction_category.dart';
 import 'package:expancetracker/core/constants/textstyles.dart';
-import 'package:expancetracker/features/home/domain/models/transaction.dart';
+import 'package:expancetracker/features/home/domain/models/money_transaction.dart';
 import 'package:expancetracker/features/home/views/widgets/avater_profile.dart';
 import 'package:expancetracker/features/home/views/widgets/balance_card.dart';
 import 'package:flutter/material.dart';
@@ -61,32 +62,24 @@ class HomeScreen extends StatelessWidget {
 class TransactionHistory extends StatelessWidget {
   TransactionHistory({super.key});
   final transactions = [
-    Transaction(
+    MoneyTransaction(
       id: '0',
-      title: 'Home',
       amount: 45.0,
       datetime: DateTime.now(),
-      status: TransactionStatus.income,
-      icon: Iconsax.home,
-      color: Colors.blue,
+      category: TransactionCategory.home(),
     ),
-    Transaction(
+    MoneyTransaction(
       id: '1',
-      title: 'Health',
       amount: 90.0,
       datetime: DateTime.now(),
-      status: TransactionStatus.expense,
-      icon: Iconsax.health,
-      color: Colors.green,
+      category: TransactionCategory.shopping(),
     ),
-    Transaction(
-        id: '3',
-        title: 'Entertainment',
-        amount: 60.0,
-        datetime: DateTime.now(),
-        status: TransactionStatus.expense,
-        icon: Iconsax.smileys,
-        color: Colors.amber),
+    MoneyTransaction(
+      id: '3',
+      amount: 60.0,
+      datetime: DateTime.now(),
+      category: TransactionCategory.food(),
+    )
   ];
 
   @override

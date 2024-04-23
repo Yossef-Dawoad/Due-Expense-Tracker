@@ -1,11 +1,13 @@
 import 'dart:math';
 
+import 'package:expancetracker/core/routes/routes.dart';
+import 'package:expancetracker/core/utils/extensions/context_ext.dart';
 import 'package:expancetracker/features/add_expense/views/add_expense.dart';
 import 'package:expancetracker/features/status/views/status.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'mainscreen.dart';
+import 'home_screen.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
@@ -61,10 +63,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
         width: 80.0,
         child: FittedBox(
           child: FloatingActionButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddExpenseScreen()),
-            ),
+            onPressed: () => context.pushNamedRoute(Routes.addExpense),
             shape: const CircleBorder(),
             child: Container(
               width: 80,

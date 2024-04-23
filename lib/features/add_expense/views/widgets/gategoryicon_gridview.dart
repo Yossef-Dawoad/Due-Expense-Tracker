@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class CategoryIconGridView extends StatefulWidget {
-  const CategoryIconGridView({super.key});
+  const CategoryIconGridView({super.key, required this.onCategoryIconTap});
+  final ValueChanged<IconData> onCategoryIconTap;
 
   @override
   State<CategoryIconGridView> createState() => _CategoryIconGridViewState();
@@ -43,6 +44,8 @@ class _CategoryIconGridViewState extends State<CategoryIconGridView> {
     Icons.add_to_queue,
   ];
 
+  int? selectedIndex;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,14 +64,23 @@ class _CategoryIconGridViewState extends State<CategoryIconGridView> {
             crossAxisSpacing: 8,
           ),
           itemCount: icons.length,
-          itemBuilder: (context, index) => Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Colors.black54,
-            ),
-            child: Icon(
-              icons[index],
-              color: Colors.white,
+          itemBuilder: (context, index) => InkWell(
+            onTap: () {
+              setState(() {
+                selectedIndex = index;
+              });
+              widget.onCategoryIconTap(icons[index]);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.black54,
+                border: (selectedIndex == index) ? Border.all(width: 4) : null,
+              ),
+              child: Icon(
+                icons[index],
+                color: Colors.white,
+              ),
             ),
           ),
         ),

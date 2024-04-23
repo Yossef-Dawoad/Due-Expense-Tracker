@@ -4,7 +4,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 class DateTextField extends StatefulWidget {
-  const DateTextField({super.key});
+  const DateTextField({super.key, required this.onDateSelected});
+
+  final ValueChanged<DateTime> onDateSelected;
 
   @override
   State<DateTextField> createState() => _DateTextFieldState();
@@ -32,6 +34,7 @@ class _DateTextFieldState extends State<DateTextField> {
         );
         if (selectedDate != null) {
           dateController.text = DateFormat('EEEE').format(selectedDate!);
+          widget.onDateSelected(selectedDate!);
         }
       },
       readOnly: true,

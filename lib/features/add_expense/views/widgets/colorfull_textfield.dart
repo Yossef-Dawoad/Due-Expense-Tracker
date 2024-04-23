@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 
-class ColorfullTextField extends StatelessWidget {
+class ColorfullTextField extends StatefulWidget {
   const ColorfullTextField({
     super.key,
+    required this.controller,
   });
+  final TextEditingController controller;
 
+  @override
+  State<ColorfullTextField> createState() => _ColorfullTextFieldState();
+}
+
+class _ColorfullTextFieldState extends State<ColorfullTextField> {
   @override
   Widget build(BuildContext context) {
     final Shader linearGradientShader = LinearGradient(
@@ -19,6 +26,7 @@ class ColorfullTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
       child: TextFormField(
+        controller: widget.controller,
         textAlign: TextAlign.center,
         showCursor: false,
         style: TextStyle(

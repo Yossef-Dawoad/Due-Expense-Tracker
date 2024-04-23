@@ -2,7 +2,8 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
 class MyFlexColorPicker extends StatefulWidget {
-  const MyFlexColorPicker({super.key});
+  const MyFlexColorPicker({super.key, required this.onColorSelected});
+  final ValueChanged onColorSelected;
 
   @override
   State<MyFlexColorPicker> createState() => _MyFlexColorPickerState();
@@ -38,9 +39,10 @@ class _MyFlexColorPickerState extends State<MyFlexColorPicker> {
           // Use the screenPickerColor as start color.
           color: screenPickerColor,
           // Update the screenPickerColor using the callback.
-          onColorChanged: (Color color) =>
-              setState(() => screenPickerColor = color),
-
+          onColorChanged: (Color color) {
+            setState(() => screenPickerColor = color);
+            widget.onColorSelected(screenPickerColor);
+          },
           width: 44,
           height: 44,
           hasBorder: true,

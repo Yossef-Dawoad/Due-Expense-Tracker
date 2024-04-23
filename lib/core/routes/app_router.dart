@@ -1,8 +1,12 @@
+import 'package:expancetracker/core/bindings/dependancy_injection.dart';
+import 'package:expancetracker/features/add_expense/blocs/categories/categories_bloc.dart';
+import 'package:expancetracker/features/add_expense/blocs/expenses/add_expense_bloc.dart';
 import 'package:expancetracker/features/add_expense/views/add_expense.dart';
 import 'package:expancetracker/features/home/views/navigation_menu.dart';
 import 'package:expancetracker/features/onboarding/views/onboarding_screen.dart';
 import 'package:expancetracker/features/status/views/status.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'routes.dart';
 
@@ -12,8 +16,18 @@ class AppRouter {
       Routes.onBoarding =>
         MaterialPageRoute(builder: (_) => const OnBoardingScreen()),
       Routes.home => MaterialPageRoute(builder: (_) => const NavigationMenu()),
-      Routes.addExpense =>
-        MaterialPageRoute(builder: (_) => const AddExpenseScreen()),
+      Routes.addExpense => MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+                providers: [
+                  BlocProvider<CategoriesBloc>(
+                    create: (context) => sl<CategoriesBloc>(),
+                  ),
+                  BlocProvider<AddExpenseBloc>(
+                    create: (context) => sl<AddExpenseBloc>(),
+                  ),
+                ],
+                child: AddExpenseScreen(),
+              )),
       Routes.status => MaterialPageRoute(builder: (_) => const StatusScreen()),
       _ => _errorRoute(settings.name),
     };
