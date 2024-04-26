@@ -1,7 +1,6 @@
+import 'package:expancetracker/features/add_expense/blocs/categories/categories_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:expancetracker/features/add_expense/blocs/categories/categories_bloc.dart';
 
 class ExsistingCategoryGridView extends StatefulWidget {
   const ExsistingCategoryGridView({

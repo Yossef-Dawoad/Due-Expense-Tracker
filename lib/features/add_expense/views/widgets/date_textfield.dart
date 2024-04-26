@@ -30,7 +30,7 @@ class _DateTextFieldState extends State<DateTextField> {
           context: context,
           initialDate: selectedDate,
           firstDate: DateTime.now(),
-          lastDate: DateTime.now().add(Duration(days: 365)),
+          lastDate: DateTime.now().add(const Duration(days: 365)),
         );
         if (selectedDate != null) {
           dateController.text = DateFormat('EEEE').format(selectedDate!);

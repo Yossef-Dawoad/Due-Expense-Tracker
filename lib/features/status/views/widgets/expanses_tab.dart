@@ -11,9 +11,9 @@ class ExpansesTabScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       slivers: [
-        SliverToBoxAdapter(child: const TransactionHistoryBarChar()),
+        const SliverToBoxAdapter(child: TransactionHistoryBarChar()),
         SliverFillRemaining(
           child: TransactionHistory(),
         ),

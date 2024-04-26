@@ -26,7 +26,7 @@ class AppRouter {
                     create: (context) => sl<ExpensesBloc>(),
                   ),
                 ],
-                child: AddExpenseScreen(),
+                child: const AddExpenseScreen(),
               )),
       Routes.status => MaterialPageRoute(builder: (_) => const StatusScreen()),
       _ => _errorRoute(settings.name),

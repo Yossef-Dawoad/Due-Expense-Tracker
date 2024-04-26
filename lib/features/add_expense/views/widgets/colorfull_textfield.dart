@@ -36,7 +36,7 @@ class _ColorfullTextFieldState extends State<ColorfullTextField> {
         ),
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(20),
+          contentPadding: const EdgeInsets.all(20),
           filled: true,
           fillColor: Colors.white,
           hintText: '0.00',

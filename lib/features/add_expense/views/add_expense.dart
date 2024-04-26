@@ -11,8 +11,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:uuid/uuid.dart';
 
 import 'widgets/category_selector_widget.dart';
-import 'widgets/custom_textfield.dart';
 import 'widgets/colorfull_textfield.dart';
+import 'widgets/custom_textfield.dart';
 import 'widgets/date_textfield.dart';
 
 class AddExpenseScreen extends StatefulWidget {
@@ -139,7 +139,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       context: context,
       builder: (ctx) => BlocProvider.value(
         value: context.read<CategoriesBloc>(),
-        child: CategorySelectorWidget(),
+        child: const CategorySelectorWidget(),
       ),
     );
   }

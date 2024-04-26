@@ -32,7 +32,7 @@ class _MyFlexColorPickerState extends State<MyFlexColorPicker> {
       child: Card.outlined(
         shape: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: Colors.blue),
+          borderSide: const BorderSide(color: Colors.blue),
         ),
         elevation: 0.0,
         child: ColorPicker(
@@ -47,14 +47,14 @@ class _MyFlexColorPickerState extends State<MyFlexColorPicker> {
           height: 44,
           hasBorder: true,
           borderRadius: 22,
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 18.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 18.0),
           heading: Text(
             'Select Category color',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           enableShadesSelection: false,
           elevation: 0.0,
-          pickersEnabled: {
+          pickersEnabled: const {
             ColorPickerType.accent: false,
             ColorPickerType.wheel: true,
           },

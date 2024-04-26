@@ -18,7 +18,7 @@ class OnBoardingPage extends StatelessWidget {
       padding: const EdgeInsets.all(Spaces.medium),
       child: Column(
         children: [
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
           Image(
             image: AssetImage(image),
             width: DeviceUtils.screenWidth(context) * 0.8,

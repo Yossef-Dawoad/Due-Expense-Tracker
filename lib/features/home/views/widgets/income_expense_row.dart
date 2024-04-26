@@ -21,7 +21,7 @@ class IncomeExpenseRow extends StatelessWidget {
           children: [
             IconButton.filled(
               style: IconButton.styleFrom(
-                backgroundColor: Color(0xFFEBEBEB),
+                backgroundColor: const Color(0xFFEBEBEB),
               ),
               icon: const Icon(Iconsax.arrow_up_3, size: 25),
               onPressed: () {},
