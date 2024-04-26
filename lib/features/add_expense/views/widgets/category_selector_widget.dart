@@ -48,8 +48,10 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
                   const SizedBox(height: 20),
                   // Pre-defined Categories
                   ExsistingCategoryGridView(
-                    onCategorySelected: (idx) =>
-                        selectedPredefinedCategoryIdx = idx,
+                    onCategorySelected: (idx) {
+                      selectedPredefinedCategoryIdx = idx;
+                      debugPrint(selectedPredefinedCategoryIdx.toString());
+                    },
                   ),
                   const SizedBox(height: 20),
                   const Divider(),
@@ -127,35 +129,7 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
                         color: Colors.blue,
                       ),
                     )),
-                onPressed: () {
-                  if (selectedCategoryIcon != null &&
-                      selectedColor != null &&
-                      _categoryNameController.text.isNotEmpty) {
-                    // Add new category logic here
-                    final newCategory = TransactionCategory(
-                        id: const Uuid().v4(),
-                        status: TransactionStatus.expense,
-                        title: _categoryNameController.text,
-                        icon: selectedCategoryIcon!,
-                        color: selectedColor!.value);
-                    context
-                        .read<CategoriesBloc>()
-                        .add(CategoryAdded(newCategory));
-                    context.popRoute();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          backgroundColor: Colors.green,
-                          content: Text('New category added')),
-                    );
-                  } else {
-                    context.popRoute();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text('Please fill all the required fields')),
-                    );
-                  }
-                },
+                onPressed: _onUserSelectedCategory,
                 child: Text(
                   'Add Category',
                   style: f18BlackBold.copyWith(
@@ -168,5 +142,39 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
         ),
       ),
     );
+  }
+
+  void _onUserSelectedCategory() {
+    if (selectedPredefinedCategoryIdx != null) {
+      // Select existing category logic
+      // final selectedCategory = categories[selectedPredefinedCategoryIdx!];
+      // context.popRoute(selectedCategory);
+      debugPrint('seleted category: $selectedPredefinedCategoryIdx');
+    }
+    if (selectedCategoryIcon != null &&
+        selectedColor != null &&
+        _categoryNameController.text.isNotEmpty) {
+      // Add new category logic here
+      final newCategory = TransactionCategory(
+        id: const Uuid().v4(),
+        status: TransactionStatus.expense,
+        title: _categoryNameController.text,
+        icon: selectedCategoryIcon!,
+        color: selectedColor!.value,
+      );
+      context.read<CategoriesBloc>().add(CategoryAdded(newCategory));
+      context.popRoute();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            backgroundColor: Colors.green, content: Text('New category added')),
+      );
+    } else {
+      context.popRoute();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            backgroundColor: Colors.red,
+            content: Text('Please fill all the required fields')),
+      );
+    }
   }
 }

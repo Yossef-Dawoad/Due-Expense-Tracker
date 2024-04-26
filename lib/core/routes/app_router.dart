@@ -1,6 +1,6 @@
 import 'package:expancetracker/core/bindings/dependancy_injection.dart';
 import 'package:expancetracker/features/add_expense/blocs/categories/categories_bloc.dart';
-import 'package:expancetracker/features/add_expense/blocs/expenses/add_expense_bloc.dart';
+import 'package:expancetracker/features/add_expense/blocs/expenses/expenses_bloc.dart';
 import 'package:expancetracker/features/add_expense/views/add_expense.dart';
 import 'package:expancetracker/features/home/views/navigation_menu.dart';
 import 'package:expancetracker/features/onboarding/views/onboarding_screen.dart';
@@ -22,8 +22,8 @@ class AppRouter {
                   BlocProvider<CategoriesBloc>(
                     create: (context) => sl<CategoriesBloc>(),
                   ),
-                  BlocProvider<AddExpenseBloc>(
-                    create: (context) => sl<AddExpenseBloc>(),
+                  BlocProvider<ExpensesBloc>(
+                    create: (context) => sl<ExpensesBloc>(),
                   ),
                 ],
                 child: AddExpenseScreen(),

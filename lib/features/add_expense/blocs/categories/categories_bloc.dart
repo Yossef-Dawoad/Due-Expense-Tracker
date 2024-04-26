@@ -9,7 +9,7 @@ part 'categories_bloc.freezed.dart';
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   final BaseFirebaseTransctionDB _firebaseTransctionDB;
-  CategoriesBloc(this._firebaseTransctionDB) : super(_Initial()) {
+  CategoriesBloc(this._firebaseTransctionDB) : super(const _Initial()) {
     on<CategoryAdded>(_onCategoryAdded);
     on<CategoriesFetched>(_onCategoriesFetched);
   }

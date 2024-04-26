@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'add_expense_bloc.dart';
+part of 'expenses_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,23 +15,26 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$AddExpenseEvent {
+mixin _$ExpensesEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(MoneyTransaction transaction) addedNewExpense,
+    required TResult Function() fetchedExpense,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(MoneyTransaction transaction)? addedNewExpense,
+    TResult? Function()? fetchedExpense,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(MoneyTransaction transaction)? addedNewExpense,
+    TResult Function()? fetchedExpense,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,34 +42,37 @@ mixin _$AddExpenseEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(AddedNewExpenseEv value) addedNewExpense,
+    required TResult Function(FetchedExpenseEv value) fetchedExpense,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(AddedNewExpenseEv value)? addedNewExpense,
+    TResult? Function(FetchedExpenseEv value)? fetchedExpense,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(AddedNewExpenseEv value)? addedNewExpense,
+    TResult Function(FetchedExpenseEv value)? fetchedExpense,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AddExpenseEventCopyWith<$Res> {
-  factory $AddExpenseEventCopyWith(
-          AddExpenseEvent value, $Res Function(AddExpenseEvent) then) =
-      _$AddExpenseEventCopyWithImpl<$Res, AddExpenseEvent>;
+abstract class $ExpensesEventCopyWith<$Res> {
+  factory $ExpensesEventCopyWith(
+          ExpensesEvent value, $Res Function(ExpensesEvent) then) =
+      _$ExpensesEventCopyWithImpl<$Res, ExpensesEvent>;
 }
 
 /// @nodoc
-class _$AddExpenseEventCopyWithImpl<$Res, $Val extends AddExpenseEvent>
-    implements $AddExpenseEventCopyWith<$Res> {
-  _$AddExpenseEventCopyWithImpl(this._value, this._then);
+class _$ExpensesEventCopyWithImpl<$Res, $Val extends ExpensesEvent>
+    implements $ExpensesEventCopyWith<$Res> {
+  _$ExpensesEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -83,7 +89,7 @@ abstract class _$$StartedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$StartedImplCopyWithImpl<$Res>
-    extends _$AddExpenseEventCopyWithImpl<$Res, _$StartedImpl>
+    extends _$ExpensesEventCopyWithImpl<$Res, _$StartedImpl>
     implements _$$StartedImplCopyWith<$Res> {
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
@@ -97,7 +103,7 @@ class _$StartedImpl implements _Started {
 
   @override
   String toString() {
-    return 'AddExpenseEvent.started()';
+    return 'ExpensesEvent.started()';
   }
 
   @override
@@ -114,6 +120,7 @@ class _$StartedImpl implements _Started {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(MoneyTransaction transaction) addedNewExpense,
+    required TResult Function() fetchedExpense,
   }) {
     return started();
   }
@@ -123,6 +130,7 @@ class _$StartedImpl implements _Started {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(MoneyTransaction transaction)? addedNewExpense,
+    TResult? Function()? fetchedExpense,
   }) {
     return started?.call();
   }
@@ -132,6 +140,7 @@ class _$StartedImpl implements _Started {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(MoneyTransaction transaction)? addedNewExpense,
+    TResult Function()? fetchedExpense,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -145,6 +154,7 @@ class _$StartedImpl implements _Started {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(AddedNewExpenseEv value) addedNewExpense,
+    required TResult Function(FetchedExpenseEv value) fetchedExpense,
   }) {
     return started(this);
   }
@@ -154,6 +164,7 @@ class _$StartedImpl implements _Started {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(AddedNewExpenseEv value)? addedNewExpense,
+    TResult? Function(FetchedExpenseEv value)? fetchedExpense,
   }) {
     return started?.call(this);
   }
@@ -163,6 +174,7 @@ class _$StartedImpl implements _Started {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(AddedNewExpenseEv value)? addedNewExpense,
+    TResult Function(FetchedExpenseEv value)? fetchedExpense,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -172,7 +184,7 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements AddExpenseEvent {
+abstract class _Started implements ExpensesEvent {
   const factory _Started() = _$StartedImpl;
 }
 
@@ -189,7 +201,7 @@ abstract class _$$AddedNewExpenseEvImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$AddedNewExpenseEvImplCopyWithImpl<$Res>
-    extends _$AddExpenseEventCopyWithImpl<$Res, _$AddedNewExpenseEvImpl>
+    extends _$ExpensesEventCopyWithImpl<$Res, _$AddedNewExpenseEvImpl>
     implements _$$AddedNewExpenseEvImplCopyWith<$Res> {
   __$$AddedNewExpenseEvImplCopyWithImpl(_$AddedNewExpenseEvImpl _value,
       $Res Function(_$AddedNewExpenseEvImpl) _then)
@@ -227,7 +239,7 @@ class _$AddedNewExpenseEvImpl implements AddedNewExpenseEv {
 
   @override
   String toString() {
-    return 'AddExpenseEvent.addedNewExpense(transaction: $transaction)';
+    return 'ExpensesEvent.addedNewExpense(transaction: $transaction)';
   }
 
   @override
@@ -254,6 +266,7 @@ class _$AddedNewExpenseEvImpl implements AddedNewExpenseEv {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(MoneyTransaction transaction) addedNewExpense,
+    required TResult Function() fetchedExpense,
   }) {
     return addedNewExpense(transaction);
   }
@@ -263,6 +276,7 @@ class _$AddedNewExpenseEvImpl implements AddedNewExpenseEv {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(MoneyTransaction transaction)? addedNewExpense,
+    TResult? Function()? fetchedExpense,
   }) {
     return addedNewExpense?.call(transaction);
   }
@@ -272,6 +286,7 @@ class _$AddedNewExpenseEvImpl implements AddedNewExpenseEv {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(MoneyTransaction transaction)? addedNewExpense,
+    TResult Function()? fetchedExpense,
     required TResult orElse(),
   }) {
     if (addedNewExpense != null) {
@@ -285,6 +300,7 @@ class _$AddedNewExpenseEvImpl implements AddedNewExpenseEv {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(AddedNewExpenseEv value) addedNewExpense,
+    required TResult Function(FetchedExpenseEv value) fetchedExpense,
   }) {
     return addedNewExpense(this);
   }
@@ -294,6 +310,7 @@ class _$AddedNewExpenseEvImpl implements AddedNewExpenseEv {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(AddedNewExpenseEv value)? addedNewExpense,
+    TResult? Function(FetchedExpenseEv value)? fetchedExpense,
   }) {
     return addedNewExpense?.call(this);
   }
@@ -303,6 +320,7 @@ class _$AddedNewExpenseEvImpl implements AddedNewExpenseEv {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(AddedNewExpenseEv value)? addedNewExpense,
+    TResult Function(FetchedExpenseEv value)? fetchedExpense,
     required TResult orElse(),
   }) {
     if (addedNewExpense != null) {
@@ -312,7 +330,7 @@ class _$AddedNewExpenseEvImpl implements AddedNewExpenseEv {
   }
 }
 
-abstract class AddedNewExpenseEv implements AddExpenseEvent {
+abstract class AddedNewExpenseEv implements ExpensesEvent {
   const factory AddedNewExpenseEv(final MoneyTransaction transaction) =
       _$AddedNewExpenseEvImpl;
 
@@ -323,12 +341,122 @@ abstract class AddedNewExpenseEv implements AddExpenseEvent {
 }
 
 /// @nodoc
-mixin _$AddExpenseState {
+abstract class _$$FetchedExpenseEvImplCopyWith<$Res> {
+  factory _$$FetchedExpenseEvImplCopyWith(_$FetchedExpenseEvImpl value,
+          $Res Function(_$FetchedExpenseEvImpl) then) =
+      __$$FetchedExpenseEvImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$FetchedExpenseEvImplCopyWithImpl<$Res>
+    extends _$ExpensesEventCopyWithImpl<$Res, _$FetchedExpenseEvImpl>
+    implements _$$FetchedExpenseEvImplCopyWith<$Res> {
+  __$$FetchedExpenseEvImplCopyWithImpl(_$FetchedExpenseEvImpl _value,
+      $Res Function(_$FetchedExpenseEvImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$FetchedExpenseEvImpl implements FetchedExpenseEv {
+  const _$FetchedExpenseEvImpl();
+
+  @override
+  String toString() {
+    return 'ExpensesEvent.fetchedExpense()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$FetchedExpenseEvImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(MoneyTransaction transaction) addedNewExpense,
+    required TResult Function() fetchedExpense,
+  }) {
+    return fetchedExpense();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(MoneyTransaction transaction)? addedNewExpense,
+    TResult? Function()? fetchedExpense,
+  }) {
+    return fetchedExpense?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(MoneyTransaction transaction)? addedNewExpense,
+    TResult Function()? fetchedExpense,
+    required TResult orElse(),
+  }) {
+    if (fetchedExpense != null) {
+      return fetchedExpense();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(AddedNewExpenseEv value) addedNewExpense,
+    required TResult Function(FetchedExpenseEv value) fetchedExpense,
+  }) {
+    return fetchedExpense(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(AddedNewExpenseEv value)? addedNewExpense,
+    TResult? Function(FetchedExpenseEv value)? fetchedExpense,
+  }) {
+    return fetchedExpense?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(AddedNewExpenseEv value)? addedNewExpense,
+    TResult Function(FetchedExpenseEv value)? fetchedExpense,
+    required TResult orElse(),
+  }) {
+    if (fetchedExpense != null) {
+      return fetchedExpense(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class FetchedExpenseEv implements ExpensesEvent {
+  const factory FetchedExpenseEv() = _$FetchedExpenseEvImpl;
+}
+
+/// @nodoc
+mixin _$ExpensesState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function() addedSuccess,
+    required TResult Function(List<MoneyTransaction> transaction)
+        fetshedSuccess,
     required TResult Function(String message) failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -336,7 +464,8 @@ mixin _$AddExpenseState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function()? addedSuccess,
+    TResult? Function(List<MoneyTransaction> transaction)? fetshedSuccess,
     TResult? Function(String message)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -344,7 +473,8 @@ mixin _$AddExpenseState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function()? addedSuccess,
+    TResult Function(List<MoneyTransaction> transaction)? fetshedSuccess,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) =>
@@ -353,7 +483,8 @@ mixin _$AddExpenseState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_AddedSuccess value) addedSuccess,
+    required TResult Function(_FetshedSuccess value) fetshedSuccess,
     required TResult Function(_Failure value) failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -361,7 +492,8 @@ mixin _$AddExpenseState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_AddedSuccess value)? addedSuccess,
+    TResult? Function(_FetshedSuccess value)? fetshedSuccess,
     TResult? Function(_Failure value)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -369,7 +501,8 @@ mixin _$AddExpenseState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_AddedSuccess value)? addedSuccess,
+    TResult Function(_FetshedSuccess value)? fetshedSuccess,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) =>
@@ -377,16 +510,16 @@ mixin _$AddExpenseState {
 }
 
 /// @nodoc
-abstract class $AddExpenseStateCopyWith<$Res> {
-  factory $AddExpenseStateCopyWith(
-          AddExpenseState value, $Res Function(AddExpenseState) then) =
-      _$AddExpenseStateCopyWithImpl<$Res, AddExpenseState>;
+abstract class $ExpensesStateCopyWith<$Res> {
+  factory $ExpensesStateCopyWith(
+          ExpensesState value, $Res Function(ExpensesState) then) =
+      _$ExpensesStateCopyWithImpl<$Res, ExpensesState>;
 }
 
 /// @nodoc
-class _$AddExpenseStateCopyWithImpl<$Res, $Val extends AddExpenseState>
-    implements $AddExpenseStateCopyWith<$Res> {
-  _$AddExpenseStateCopyWithImpl(this._value, this._then);
+class _$ExpensesStateCopyWithImpl<$Res, $Val extends ExpensesState>
+    implements $ExpensesStateCopyWith<$Res> {
+  _$ExpensesStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -403,7 +536,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$AddExpenseStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$ExpensesStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -417,7 +550,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'AddExpenseState.initial()';
+    return 'ExpensesState.initial()';
   }
 
   @override
@@ -434,7 +567,9 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function() addedSuccess,
+    required TResult Function(List<MoneyTransaction> transaction)
+        fetshedSuccess,
     required TResult Function(String message) failure,
   }) {
     return initial();
@@ -445,7 +580,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function()? addedSuccess,
+    TResult? Function(List<MoneyTransaction> transaction)? fetshedSuccess,
     TResult? Function(String message)? failure,
   }) {
     return initial?.call();
@@ -456,7 +592,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function()? addedSuccess,
+    TResult Function(List<MoneyTransaction> transaction)? fetshedSuccess,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -471,7 +608,8 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_AddedSuccess value) addedSuccess,
+    required TResult Function(_FetshedSuccess value) fetshedSuccess,
     required TResult Function(_Failure value) failure,
   }) {
     return initial(this);
@@ -482,7 +620,8 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_AddedSuccess value)? addedSuccess,
+    TResult? Function(_FetshedSuccess value)? fetshedSuccess,
     TResult? Function(_Failure value)? failure,
   }) {
     return initial?.call(this);
@@ -493,7 +632,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_AddedSuccess value)? addedSuccess,
+    TResult Function(_FetshedSuccess value)? fetshedSuccess,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
@@ -504,7 +644,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements AddExpenseState {
+abstract class _Initial implements ExpensesState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -517,7 +657,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$AddExpenseStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$ExpensesStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -531,7 +671,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'AddExpenseState.loading()';
+    return 'ExpensesState.loading()';
   }
 
   @override
@@ -548,7 +688,9 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function() addedSuccess,
+    required TResult Function(List<MoneyTransaction> transaction)
+        fetshedSuccess,
     required TResult Function(String message) failure,
   }) {
     return loading();
@@ -559,7 +701,8 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function()? addedSuccess,
+    TResult? Function(List<MoneyTransaction> transaction)? fetshedSuccess,
     TResult? Function(String message)? failure,
   }) {
     return loading?.call();
@@ -570,7 +713,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function()? addedSuccess,
+    TResult Function(List<MoneyTransaction> transaction)? fetshedSuccess,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -585,7 +729,8 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_AddedSuccess value) addedSuccess,
+    required TResult Function(_FetshedSuccess value) fetshedSuccess,
     required TResult Function(_Failure value) failure,
   }) {
     return loading(this);
@@ -596,7 +741,8 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_AddedSuccess value)? addedSuccess,
+    TResult? Function(_FetshedSuccess value)? fetshedSuccess,
     TResult? Function(_Failure value)? failure,
   }) {
     return loading?.call(this);
@@ -607,7 +753,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_AddedSuccess value)? addedSuccess,
+    TResult Function(_FetshedSuccess value)? fetshedSuccess,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
@@ -618,40 +765,40 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements AddExpenseState {
+abstract class _Loading implements ExpensesState {
   const factory _Loading() = _$LoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(
-          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
-      __$$SuccessImplCopyWithImpl<$Res>;
+abstract class _$$AddedSuccessImplCopyWith<$Res> {
+  factory _$$AddedSuccessImplCopyWith(
+          _$AddedSuccessImpl value, $Res Function(_$AddedSuccessImpl) then) =
+      __$$AddedSuccessImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$AddExpenseStateCopyWithImpl<$Res, _$SuccessImpl>
-    implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(
-      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
+class __$$AddedSuccessImplCopyWithImpl<$Res>
+    extends _$ExpensesStateCopyWithImpl<$Res, _$AddedSuccessImpl>
+    implements _$$AddedSuccessImplCopyWith<$Res> {
+  __$$AddedSuccessImplCopyWithImpl(
+      _$AddedSuccessImpl _value, $Res Function(_$AddedSuccessImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SuccessImpl implements _Success {
-  const _$SuccessImpl();
+class _$AddedSuccessImpl implements _AddedSuccess {
+  const _$AddedSuccessImpl();
 
   @override
   String toString() {
-    return 'AddExpenseState.success()';
+    return 'ExpensesState.addedSuccess()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SuccessImpl);
+        (other.runtimeType == runtimeType && other is _$AddedSuccessImpl);
   }
 
   @override
@@ -662,10 +809,12 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function() addedSuccess,
+    required TResult Function(List<MoneyTransaction> transaction)
+        fetshedSuccess,
     required TResult Function(String message) failure,
   }) {
-    return success();
+    return addedSuccess();
   }
 
   @override
@@ -673,10 +822,11 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function()? addedSuccess,
+    TResult? Function(List<MoneyTransaction> transaction)? fetshedSuccess,
     TResult? Function(String message)? failure,
   }) {
-    return success?.call();
+    return addedSuccess?.call();
   }
 
   @override
@@ -684,12 +834,13 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function()? addedSuccess,
+    TResult Function(List<MoneyTransaction> transaction)? fetshedSuccess,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success();
+    if (addedSuccess != null) {
+      return addedSuccess();
     }
     return orElse();
   }
@@ -699,10 +850,11 @@ class _$SuccessImpl implements _Success {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_AddedSuccess value) addedSuccess,
+    required TResult Function(_FetshedSuccess value) fetshedSuccess,
     required TResult Function(_Failure value) failure,
   }) {
-    return success(this);
+    return addedSuccess(this);
   }
 
   @override
@@ -710,10 +862,11 @@ class _$SuccessImpl implements _Success {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_AddedSuccess value)? addedSuccess,
+    TResult? Function(_FetshedSuccess value)? fetshedSuccess,
     TResult? Function(_Failure value)? failure,
   }) {
-    return success?.call(this);
+    return addedSuccess?.call(this);
   }
 
   @override
@@ -721,19 +874,182 @@ class _$SuccessImpl implements _Success {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_AddedSuccess value)? addedSuccess,
+    TResult Function(_FetshedSuccess value)? fetshedSuccess,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(this);
+    if (addedSuccess != null) {
+      return addedSuccess(this);
     }
     return orElse();
   }
 }
 
-abstract class _Success implements AddExpenseState {
-  const factory _Success() = _$SuccessImpl;
+abstract class _AddedSuccess implements ExpensesState {
+  const factory _AddedSuccess() = _$AddedSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$FetshedSuccessImplCopyWith<$Res> {
+  factory _$$FetshedSuccessImplCopyWith(_$FetshedSuccessImpl value,
+          $Res Function(_$FetshedSuccessImpl) then) =
+      __$$FetshedSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<MoneyTransaction> transaction});
+}
+
+/// @nodoc
+class __$$FetshedSuccessImplCopyWithImpl<$Res>
+    extends _$ExpensesStateCopyWithImpl<$Res, _$FetshedSuccessImpl>
+    implements _$$FetshedSuccessImplCopyWith<$Res> {
+  __$$FetshedSuccessImplCopyWithImpl(
+      _$FetshedSuccessImpl _value, $Res Function(_$FetshedSuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? transaction = null,
+  }) {
+    return _then(_$FetshedSuccessImpl(
+      null == transaction
+          ? _value._transaction
+          : transaction // ignore: cast_nullable_to_non_nullable
+              as List<MoneyTransaction>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FetshedSuccessImpl implements _FetshedSuccess {
+  const _$FetshedSuccessImpl(final List<MoneyTransaction> transaction)
+      : _transaction = transaction;
+
+  final List<MoneyTransaction> _transaction;
+  @override
+  List<MoneyTransaction> get transaction {
+    if (_transaction is EqualUnmodifiableListView) return _transaction;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_transaction);
+  }
+
+  @override
+  String toString() {
+    return 'ExpensesState.fetshedSuccess(transaction: $transaction)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FetshedSuccessImpl &&
+            const DeepCollectionEquality()
+                .equals(other._transaction, _transaction));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_transaction));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FetshedSuccessImplCopyWith<_$FetshedSuccessImpl> get copyWith =>
+      __$$FetshedSuccessImplCopyWithImpl<_$FetshedSuccessImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() addedSuccess,
+    required TResult Function(List<MoneyTransaction> transaction)
+        fetshedSuccess,
+    required TResult Function(String message) failure,
+  }) {
+    return fetshedSuccess(transaction);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? addedSuccess,
+    TResult? Function(List<MoneyTransaction> transaction)? fetshedSuccess,
+    TResult? Function(String message)? failure,
+  }) {
+    return fetshedSuccess?.call(transaction);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? addedSuccess,
+    TResult Function(List<MoneyTransaction> transaction)? fetshedSuccess,
+    TResult Function(String message)? failure,
+    required TResult orElse(),
+  }) {
+    if (fetshedSuccess != null) {
+      return fetshedSuccess(transaction);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_AddedSuccess value) addedSuccess,
+    required TResult Function(_FetshedSuccess value) fetshedSuccess,
+    required TResult Function(_Failure value) failure,
+  }) {
+    return fetshedSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_AddedSuccess value)? addedSuccess,
+    TResult? Function(_FetshedSuccess value)? fetshedSuccess,
+    TResult? Function(_Failure value)? failure,
+  }) {
+    return fetshedSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_AddedSuccess value)? addedSuccess,
+    TResult Function(_FetshedSuccess value)? fetshedSuccess,
+    TResult Function(_Failure value)? failure,
+    required TResult orElse(),
+  }) {
+    if (fetshedSuccess != null) {
+      return fetshedSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FetshedSuccess implements ExpensesState {
+  const factory _FetshedSuccess(final List<MoneyTransaction> transaction) =
+      _$FetshedSuccessImpl;
+
+  List<MoneyTransaction> get transaction;
+  @JsonKey(ignore: true)
+  _$$FetshedSuccessImplCopyWith<_$FetshedSuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -747,7 +1063,7 @@ abstract class _$$FailureImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$FailureImplCopyWithImpl<$Res>
-    extends _$AddExpenseStateCopyWithImpl<$Res, _$FailureImpl>
+    extends _$ExpensesStateCopyWithImpl<$Res, _$FailureImpl>
     implements _$$FailureImplCopyWith<$Res> {
   __$$FailureImplCopyWithImpl(
       _$FailureImpl _value, $Res Function(_$FailureImpl) _then)
@@ -777,7 +1093,7 @@ class _$FailureImpl implements _Failure {
 
   @override
   String toString() {
-    return 'AddExpenseState.failure(message: $message)';
+    return 'ExpensesState.failure(message: $message)';
   }
 
   @override
@@ -802,7 +1118,9 @@ class _$FailureImpl implements _Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function() addedSuccess,
+    required TResult Function(List<MoneyTransaction> transaction)
+        fetshedSuccess,
     required TResult Function(String message) failure,
   }) {
     return failure(message);
@@ -813,7 +1131,8 @@ class _$FailureImpl implements _Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function()? addedSuccess,
+    TResult? Function(List<MoneyTransaction> transaction)? fetshedSuccess,
     TResult? Function(String message)? failure,
   }) {
     return failure?.call(message);
@@ -824,7 +1143,8 @@ class _$FailureImpl implements _Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function()? addedSuccess,
+    TResult Function(List<MoneyTransaction> transaction)? fetshedSuccess,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -839,7 +1159,8 @@ class _$FailureImpl implements _Failure {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_AddedSuccess value) addedSuccess,
+    required TResult Function(_FetshedSuccess value) fetshedSuccess,
     required TResult Function(_Failure value) failure,
   }) {
     return failure(this);
@@ -850,7 +1171,8 @@ class _$FailureImpl implements _Failure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_AddedSuccess value)? addedSuccess,
+    TResult? Function(_FetshedSuccess value)? fetshedSuccess,
     TResult? Function(_Failure value)? failure,
   }) {
     return failure?.call(this);
@@ -861,7 +1183,8 @@ class _$FailureImpl implements _Failure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_AddedSuccess value)? addedSuccess,
+    TResult Function(_FetshedSuccess value)? fetshedSuccess,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
@@ -872,7 +1195,7 @@ class _$FailureImpl implements _Failure {
   }
 }
 
-abstract class _Failure implements AddExpenseState {
+abstract class _Failure implements ExpensesState {
   const factory _Failure(final String message) = _$FailureImpl;
 
   String get message;

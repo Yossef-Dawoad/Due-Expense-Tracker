@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:expancetracker/core/common/domain/models/transaction_category.dart';
 import 'package:expancetracker/core/constants/textstyles.dart';
 import 'package:expancetracker/features/add_expense/blocs/categories/categories_bloc.dart';
-import 'package:expancetracker/features/add_expense/blocs/expenses/add_expense_bloc.dart';
+import 'package:expancetracker/features/add_expense/blocs/expenses/expenses_bloc.dart';
 import 'package:expancetracker/features/home/domain/models/money_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -100,16 +100,17 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     context
-                        .read<AddExpenseBloc>()
-                        .add(AddExpenseEvent.addedNewExpense(MoneyTransaction(
-                          id: const Uuid().v4(),
-                          amount: double.parse(_amountController.text.trim()),
-                          datetime: selectedDate!,
-                          note: _descriptionController.text.trim(),
-                          category: selectedCategory!,
-                        )));
+                        .read<ExpensesBloc>()
+                        .add(ExpensesEvent.addedNewExpense(
+                          MoneyTransaction(
+                            id: const Uuid().v4(),
+                            amount: double.parse(_amountController.text.trim()),
+                            datetime: selectedDate!,
+                            note: _descriptionController.text.trim(),
+                            category: selectedCategory!,
+                          ),
+                        ));
                   },
-                  child: Text('save', style: f18WhiteBold),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(16.0),
                     backgroundColor: Colors.transparent,
@@ -118,6 +119,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
+                  child: Text('save', style: f18WhiteBold),
                 ),
               )
             ],
