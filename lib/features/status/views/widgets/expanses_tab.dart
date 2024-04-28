@@ -1,8 +1,8 @@
+import 'package:expancetracker/features/transactions/views/widgets/transactions_list_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../../home/views/home_screen.dart';
 import 'bar_charts.dart';
 
 class ExpansesTabScreen extends StatelessWidget {
@@ -10,12 +10,12 @@ class ExpansesTabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
+    return const CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: [
-        const SliverToBoxAdapter(child: TransactionHistoryBarChar()),
+        SliverToBoxAdapter(child: TransactionHistoryBarChar()),
         SliverFillRemaining(
-          child: TransactionHistory(),
+          child: TransactionListView(),
         ),
       ],
     );

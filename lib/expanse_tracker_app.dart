@@ -1,7 +1,7 @@
 import 'package:expancetracker/core/routes/app_router.dart';
 import 'package:expancetracker/core/routes/routes.dart';
 import 'package:expancetracker/core/themes/theme.dart';
-import 'package:expancetracker/features/home/views/navigation_menu.dart';
+import 'package:expancetracker/features/screens/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

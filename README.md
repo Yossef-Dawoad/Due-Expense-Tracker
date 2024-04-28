@@ -1,6 +1,6 @@
 # expancetracker
 
-A new Flutter project.
+A Feature Based Flutter Expanses Tracker That all about Minimalism, usfullness, and beauty.
 
 ## Getting Started
 
