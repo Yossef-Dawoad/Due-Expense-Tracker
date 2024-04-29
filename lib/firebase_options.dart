@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
+import 'env/env.dart';
+
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -40,8 +42,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB9PeoihJI-sVzvn3Ju7-GB5VpcACtWeYo',
+  static final FirebaseOptions web = FirebaseOptions(
+    apiKey: Env.webFBAppId,
     appId: '1:766668200983:web:3dba8cfc977fe4d0181052',
     messagingSenderId: '766668200983',
     projectId: 'deu-expanse-tracker',
@@ -50,16 +52,16 @@ class DefaultFirebaseOptions {
     measurementId: 'G-9EL05LRH8G',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCes7RWqQehu0HjLwXO-zNPd0q7f8yLVX8',
+  static final FirebaseOptions android = FirebaseOptions(
+    apiKey: Env.androidFBAppId,
     appId: '1:766668200983:android:8342100a3c99e9c7181052',
     messagingSenderId: '766668200983',
     projectId: 'deu-expanse-tracker',
     storageBucket: 'deu-expanse-tracker.appspot.com',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD1D8Wj2EFB75AIbMfN5ZCNWBBUxJDwDhM',
+  static final FirebaseOptions ios = FirebaseOptions(
+    apiKey: Env.iosFBAppId,
     appId: '1:766668200983:ios:4b34751349b68021181052',
     messagingSenderId: '766668200983',
     projectId: 'deu-expanse-tracker',
@@ -67,8 +69,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.expancetracker',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD1D8Wj2EFB75AIbMfN5ZCNWBBUxJDwDhM',
+  static final FirebaseOptions macos = FirebaseOptions(
+    apiKey: Env.iosFBAppId,
     appId: '1:766668200983:ios:4b34751349b68021181052',
     messagingSenderId: '766668200983',
     projectId: 'deu-expanse-tracker',
@@ -76,8 +78,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.expancetracker',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyB9PeoihJI-sVzvn3Ju7-GB5VpcACtWeYo',
+  static final FirebaseOptions windows = FirebaseOptions(
+    apiKey: Env.webFBAppId,
     appId: '1:766668200983:web:d9993252cf5ad1e0181052',
     messagingSenderId: '766668200983',
     projectId: 'deu-expanse-tracker',
