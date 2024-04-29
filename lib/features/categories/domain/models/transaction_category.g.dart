@@ -9,7 +9,7 @@ part of 'transaction_category.dart';
 _$TransactionCategoryImpl _$$TransactionCategoryImplFromJson(
         Map<String, dynamic> json) =>
     _$TransactionCategoryImpl(
-      id: json['id'] as String,
+      uid: json['uid'] as String,
       title: json['title'] as String,
       totalAmount: (json['totalAmount'] as num?)?.toDouble() ?? 0.0,
       color: (json['color'] as num).toInt(),
@@ -21,7 +21,7 @@ _$TransactionCategoryImpl _$$TransactionCategoryImplFromJson(
 Map<String, dynamic> _$$TransactionCategoryImplToJson(
         _$TransactionCategoryImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'uid': instance.uid,
       'title': instance.title,
       'totalAmount': instance.totalAmount,
       'color': instance.color,

@@ -49,7 +49,7 @@ class AddCategoryButton extends StatelessWidget {
         userData.categoryColor != null &&
         categoryTite.text.isNotEmpty) {
       final newCategory = TransactionCategory(
-        id: const Uuid().v4(),
+        uid: const Uuid().v4(),
         status: TransactionStatus.expense,
         title: categoryTite.text.trim(),
         icon: userData.categoryIcon!,

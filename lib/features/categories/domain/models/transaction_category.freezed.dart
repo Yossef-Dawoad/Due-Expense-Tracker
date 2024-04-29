@@ -20,12 +20,14 @@ TransactionCategory _$TransactionCategoryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TransactionCategory {
-  String get id => throw _privateConstructorUsedError;
+  String get uid => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   double get totalAmount => throw _privateConstructorUsedError;
   int get color => throw _privateConstructorUsedError;
+  @enumerated
   TransactionStatus get status => throw _privateConstructorUsedError;
   @IconDataConverter()
+  @ignore
   IconData get icon => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,12 +43,12 @@ abstract class $TransactionCategoryCopyWith<$Res> {
       _$TransactionCategoryCopyWithImpl<$Res, TransactionCategory>;
   @useResult
   $Res call(
-      {String id,
+      {String uid,
       String title,
       double totalAmount,
       int color,
-      TransactionStatus status,
-      @IconDataConverter() IconData icon});
+      @enumerated TransactionStatus status,
+      @IconDataConverter() @ignore IconData icon});
 }
 
 /// @nodoc
@@ -62,7 +64,7 @@ class _$TransactionCategoryCopyWithImpl<$Res, $Val extends TransactionCategory>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? uid = null,
     Object? title = null,
     Object? totalAmount = null,
     Object? color = null,
@@ -70,9 +72,9 @@ class _$TransactionCategoryCopyWithImpl<$Res, $Val extends TransactionCategory>
     Object? icon = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
           ? _value.title
@@ -107,12 +109,12 @@ abstract class _$$TransactionCategoryImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {String uid,
       String title,
       double totalAmount,
       int color,
-      TransactionStatus status,
-      @IconDataConverter() IconData icon});
+      @enumerated TransactionStatus status,
+      @IconDataConverter() @ignore IconData icon});
 }
 
 /// @nodoc
@@ -126,7 +128,7 @@ class __$$TransactionCategoryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? uid = null,
     Object? title = null,
     Object? totalAmount = null,
     Object? color = null,
@@ -134,9 +136,9 @@ class __$$TransactionCategoryImplCopyWithImpl<$Res>
     Object? icon = null,
   }) {
     return _then(_$TransactionCategoryImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
           ? _value.title
@@ -164,22 +166,22 @@ class __$$TransactionCategoryImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TransactionCategoryImpl
-    with DiagnosticableTreeMixin
-    implements _TransactionCategory {
+class _$TransactionCategoryImpl extends _TransactionCategory
+    with DiagnosticableTreeMixin {
   const _$TransactionCategoryImpl(
-      {required this.id,
+      {required this.uid,
       required this.title,
       this.totalAmount = 0.0,
       required this.color,
-      required this.status,
-      @IconDataConverter() required this.icon});
+      @enumerated required this.status,
+      @IconDataConverter() @ignore required this.icon})
+      : super._();
 
   factory _$TransactionCategoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$TransactionCategoryImplFromJson(json);
 
   @override
-  final String id;
+  final String uid;
   @override
   final String title;
   @override
@@ -188,14 +190,16 @@ class _$TransactionCategoryImpl
   @override
   final int color;
   @override
+  @enumerated
   final TransactionStatus status;
   @override
   @IconDataConverter()
+  @ignore
   final IconData icon;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TransactionCategory(id: $id, title: $title, totalAmount: $totalAmount, color: $color, status: $status, icon: $icon)';
+    return 'TransactionCategory(uid: $uid, title: $title, totalAmount: $totalAmount, color: $color, status: $status, icon: $icon)';
   }
 
   @override
@@ -203,7 +207,7 @@ class _$TransactionCategoryImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'TransactionCategory'))
-      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('uid', uid))
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('totalAmount', totalAmount))
       ..add(DiagnosticsProperty('color', color))
@@ -216,7 +220,7 @@ class _$TransactionCategoryImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransactionCategoryImpl &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.totalAmount, totalAmount) ||
                 other.totalAmount == totalAmount) &&
@@ -228,7 +232,7 @@ class _$TransactionCategoryImpl
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, title, totalAmount, color, status, icon);
+      Object.hash(runtimeType, uid, title, totalAmount, color, status, icon);
 
   @JsonKey(ignore: true)
   @override
@@ -245,21 +249,22 @@ class _$TransactionCategoryImpl
   }
 }
 
-abstract class _TransactionCategory implements TransactionCategory {
+abstract class _TransactionCategory extends TransactionCategory {
   const factory _TransactionCategory(
-          {required final String id,
+          {required final String uid,
           required final String title,
           final double totalAmount,
           required final int color,
-          required final TransactionStatus status,
-          @IconDataConverter() required final IconData icon}) =
+          @enumerated required final TransactionStatus status,
+          @IconDataConverter() @ignore required final IconData icon}) =
       _$TransactionCategoryImpl;
+  const _TransactionCategory._() : super._();
 
   factory _TransactionCategory.fromJson(Map<String, dynamic> json) =
       _$TransactionCategoryImpl.fromJson;
 
   @override
-  String get id;
+  String get uid;
   @override
   String get title;
   @override
@@ -267,9 +272,11 @@ abstract class _TransactionCategory implements TransactionCategory {
   @override
   int get color;
   @override
+  @enumerated
   TransactionStatus get status;
   @override
   @IconDataConverter()
+  @ignore
   IconData get icon;
   @override
   @JsonKey(ignore: true)
