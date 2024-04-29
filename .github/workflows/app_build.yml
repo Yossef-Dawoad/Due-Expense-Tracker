@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  distribution_to_firebase:
+  succesfull_apk_build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -24,8 +24,13 @@ jobs:
         channel: 'stable'
 
     - name: Build Flutter App
+      env: 
+        FIREBASE_API_KEY_ANDROID: ${{ secrets.FIREBASE_API_KEY_ANDROID }}
+        FIREBASE_API_KEY_IOS: ${{ secrets.FIREBASE_API_KEY_IOS }}
+        FIREBASE_APP_ID_WEB: ${{ secrets.FIREBASE_APP_ID_WEB }}
       run: |
         flutter clean
+        flutter pub run build_runner build --delete-conflicting-outputs
         flutter build apk --release  --no-tree-shake-icons 
         
     
