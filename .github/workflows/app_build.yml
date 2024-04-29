@@ -26,7 +26,7 @@ jobs:
     - name: Build Flutter App
       run: |
         flutter clean
-        flutter build apk --release --flavor production -t lib/main_production.dart --no-tree-shake-icons 
+        flutter build apk --release  --no-tree-shake-icons 
         
     
     
