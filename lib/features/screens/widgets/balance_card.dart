@@ -16,7 +16,7 @@ class BalanceCardSkelton extends StatelessWidget {
       height: 230,
       width: MediaQuery.of(context).size.width - 30,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(35),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,

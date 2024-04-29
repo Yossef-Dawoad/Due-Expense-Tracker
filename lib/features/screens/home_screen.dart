@@ -17,6 +17,7 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +37,7 @@ class HomeScreen extends StatelessWidget {
               const BalanceCardSkelton(
                 child: CardContentWidget(),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
