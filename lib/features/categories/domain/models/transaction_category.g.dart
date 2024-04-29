@@ -12,7 +12,7 @@ _$TransactionCategoryImpl _$$TransactionCategoryImplFromJson(
       id: json['id'] as String,
       title: json['title'] as String,
       totalAmount: (json['totalAmount'] as num?)?.toDouble() ?? 0.0,
-      color: json['color'] as int,
+      color: (json['color'] as num).toInt(),
       status: $enumDecode(_$TransactionStatusEnumMap, json['status']),
       icon: const IconDataConverter()
           .fromJson(json['icon'] as Map<String, dynamic>),

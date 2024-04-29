@@ -1,6 +1,9 @@
-import 'package:expancetracker/core/utils/json_converters/icondata_converters.dart';
+// ignore: unused_import
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'package:expancetracker/core/utils/json_converters/icondata_converters.dart';
 
 part 'transaction_category.freezed.dart';
 part 'transaction_category.g.dart';
@@ -16,7 +19,7 @@ class TransactionCategory with _$TransactionCategory {
     @IconDataConverter() required IconData icon,
   }) = _TransactionCategory;
 
-  factory TransactionCategory.fromJson(Map<String, dynamic> json) =>
+  factory TransactionCategory.fromJson(Map<String, Object?> json) =>
       _$TransactionCategoryFromJson(json);
 
   factory TransactionCategory.home() => const TransactionCategory(

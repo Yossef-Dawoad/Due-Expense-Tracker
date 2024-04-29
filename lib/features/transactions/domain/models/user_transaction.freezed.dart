@@ -162,8 +162,11 @@ class __$$UserTransactionImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$UserTransactionImpl implements _UserTransaction {
+
+@JsonSerializable(explicitToJson: true)
+class _$UserTransactionImpl
+    with DiagnosticableTreeMixin
+    implements _UserTransaction {
   const _$UserTransactionImpl(
       {required this.id,
       required this.amount,
@@ -186,8 +189,20 @@ class _$UserTransactionImpl implements _UserTransaction {
   final String? note;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'UserTransaction(id: $id, amount: $amount, datetime: $datetime, category: $category, note: $note)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserTransaction'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('amount', amount))
+      ..add(DiagnosticsProperty('datetime', datetime))
+      ..add(DiagnosticsProperty('category', category))
+      ..add(DiagnosticsProperty('note', note));
   }
 
   @override

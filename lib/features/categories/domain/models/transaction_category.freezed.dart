@@ -164,7 +164,9 @@ class __$$TransactionCategoryImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TransactionCategoryImpl implements _TransactionCategory {
+class _$TransactionCategoryImpl
+    with DiagnosticableTreeMixin
+    implements _TransactionCategory {
   const _$TransactionCategoryImpl(
       {required this.id,
       required this.title,
@@ -192,8 +194,21 @@ class _$TransactionCategoryImpl implements _TransactionCategory {
   final IconData icon;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'TransactionCategory(id: $id, title: $title, totalAmount: $totalAmount, color: $color, status: $status, icon: $icon)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'TransactionCategory'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('totalAmount', totalAmount))
+      ..add(DiagnosticsProperty('color', color))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('icon', icon));
   }
 
   @override

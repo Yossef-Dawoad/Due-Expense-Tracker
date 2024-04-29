@@ -23,6 +23,6 @@ Map<String, dynamic> _$$UserTransactionImplToJson(
       'id': instance.id,
       'amount': instance.amount,
       'datetime': instance.datetime.toIso8601String(),
-      'category': instance.category,
+      'category': instance.category.toJson(),
       'note': instance.note,
     };
