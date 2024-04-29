@@ -123,6 +123,23 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   ),
                   child: Text('save', style: f18WhiteBold),
                 ),
+              ),
+              BlocListener<TransactionsBloc, TransactionState>(
+                listenWhen: (prev, curr) => curr is TransactionAddedSuccess,
+                listener: (context, state) => state.maybeWhen(
+                  addedSuccess: () => {
+                    Navigator.pop(context),
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text('Expense Added Successfully')),
+                    ),
+                    context
+                        .read<TransactionsBloc>()
+                        .add(const FetchedAllTransactions())
+                  },
+                  orElse: () => const CircularProgressIndicator(),
+                ),
+                child: const SizedBox.shrink(),
               )
             ],
           ),
@@ -145,8 +162,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   }
 
   void _submitNewCategory(BuildContext context) {
-    print("+++++++++++++++");
-    print(selectedCategory);
     context.read<TransactionsBloc>().add(
           TransactionEvent.addedNewExpense(
             UserTransaction(

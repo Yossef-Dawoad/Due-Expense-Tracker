@@ -4,9 +4,9 @@ part of 'transactions_bloc.dart';
 class TransactionState with _$TransactionState {
   const factory TransactionState.initial() = _Initial;
   const factory TransactionState.loading() = _Loading;
-  const factory TransactionState.addedSuccess() = _AddedSuccess;
+  const factory TransactionState.addedSuccess() = TransactionAddedSuccess;
   const factory TransactionState.fetshedSuccess(
-      List<UserTransaction> transactions) = _FetshedSuccess;
+      List<UserTransaction> transactions) = TransactionFetshedSuccess;
 
   const factory TransactionState.failure(String message) = _Failure;
 }
