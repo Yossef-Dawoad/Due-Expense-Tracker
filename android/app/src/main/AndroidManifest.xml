@@ -2,7 +2,7 @@
     <application
         android:label="expancetracker"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/due_icon_beta">
         <activity
             android:name=".MainActivity"
             android:exported="true"

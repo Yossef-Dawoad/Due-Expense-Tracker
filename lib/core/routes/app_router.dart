@@ -1,12 +1,13 @@
-import 'package:expancetracker/core/bindings/dependancy_injection.dart';
-import 'package:expancetracker/features/add_expense/blocs/categories/categories_bloc.dart';
-import 'package:expancetracker/features/add_expense/blocs/expenses/expenses_bloc.dart';
-import 'package:expancetracker/features/add_expense/views/add_expense.dart';
-import 'package:expancetracker/features/home/views/navigation_menu.dart';
-import 'package:expancetracker/features/onboarding/views/onboarding_screen.dart';
-import 'package:expancetracker/features/status/views/status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:expancetracker/core/bindings/dependancy_injection.dart';
+import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
+import 'package:expancetracker/features/onboarding/views/onboarding_screen.dart';
+import 'package:expancetracker/features/screens/navigation_menu.dart';
+import 'package:expancetracker/features/status/views/status.dart';
+import 'package:expancetracker/features/transactions/logic/transactions_bloc/transactions_bloc.dart';
+import 'package:expancetracker/features/transactions/views/add_expense.dart';
 
 import 'routes.dart';
 
@@ -18,16 +19,17 @@ class AppRouter {
       Routes.home => MaterialPageRoute(builder: (_) => const NavigationMenu()),
       Routes.addExpense => MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
-                providers: [
-                  BlocProvider<CategoriesBloc>(
-                    create: (context) => sl<CategoriesBloc>(),
-                  ),
-                  BlocProvider<ExpensesBloc>(
-                    create: (context) => sl<ExpensesBloc>(),
-                  ),
-                ],
-                child: const AddExpenseScreen(),
-              )),
+            providers: [
+              BlocProvider<CategoriesBloc>(
+                create: (context) => sl<CategoriesBloc>(),
+              ),
+              BlocProvider<TransactionsBloc>(
+                create: (context) => sl<TransactionsBloc>(),
+              ),
+            ],
+            child: const AddExpenseScreen(),
+          ),
+        ),
       Routes.status => MaterialPageRoute(builder: (_) => const StatusScreen()),
       _ => _errorRoute(settings.name),
     };

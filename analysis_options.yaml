@@ -29,7 +29,6 @@ linter:
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
     - avoid_unused_constructor_parameters
     - await_only_futures
-    - directives_ordering
     - empty_constructor_bodies
     - empty_statements
     - hash_and_equals
