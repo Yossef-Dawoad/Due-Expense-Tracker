@@ -1,10 +1,11 @@
 import 'package:expancetracker/core/constants/textstyles.dart';
+import 'package:expancetracker/features/overview_card/logic/overview_summary_bloc/overview_summary_bloc.dart';
+import 'package:expancetracker/features/overview_card/view/widgets/income_expense_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'income_expense_row.dart';
-
-class BalanceCardSkelton extends StatelessWidget {
-  const BalanceCardSkelton({
+class GradientColorfulContainer extends StatelessWidget {
+  const GradientColorfulContainer({
     super.key,
     required this.child,
   });
@@ -57,14 +58,23 @@ class CardContentWidget extends StatelessWidget {
             fontWeight: FontWeight.normal,
           ),
         ),
-        Text(
-          '\$ 4800.00',
-          style: f38BlackBold.copyWith(color: Colors.white),
+        BlocBuilder<OverviewSummaryBloc, OverviewSummaryState>(
+          buildWhen: (prev, curr) =>
+              curr is TotalTransactionLoading ||
+              curr is TotalTransactionSuccess ||
+              curr is TotalTransactionFailure,
+          builder: (context, state) => state.maybeWhen(
+            totalTransactionLoading: () => const CircularProgressIndicator(),
+            totalTransactionSuccess: (amount) => Text('\$ $amount',
+                style: f38BlackBold.copyWith(color: Colors.white)),
+            orElse: () => Text('\$ ---,--',
+                style: f38BlackBold.copyWith(color: Colors.white)),
+          ),
         ),
         const SizedBox(height: 35),
         const IncomeExpenseRow(
           income: 2500.00,
-          expence: 1200.00,
+          expence: 2500.00,
         )
       ],
     );

@@ -65,14 +65,22 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               const SizedBox(height: 50),
 
               BlocBuilder<CategoriesBloc, CategoriesState>(
+                buildWhen: (prev, curr) =>
+                    curr is TransactionAddLoading ||
+                    curr is TransactionAddSuccess ||
+                    curr is TransactionAddFailure,
                 builder: (context, state) {
                   return state.maybeWhen(
+                    // TODO SHIMMER
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
                     addedsuccess: (category) => MyTextField(
                       hintText: category.title,
                       prefixIcon: Icon(category.icon, size: 28),
                       readOnly: true,
                       onTap: () => categoryModelSheet(context),
                     ),
+
                     orElse: () => MyTextField(
                       hintText: 'Select Category',
                       prefixIcon: const Icon(Iconsax.category, size: 28),
@@ -125,17 +133,22 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 ),
               ),
               BlocListener<TransactionsBloc, TransactionState>(
-                listenWhen: (prev, curr) => curr is TransactionAddedSuccess,
+                listenWhen: (prev, curr) =>
+                    curr is TransactionAddLoading ||
+                    curr is TransactionAddSuccess ||
+                    curr is TransactionAddFailure,
                 listener: (context, state) => state.maybeWhen(
-                  addedSuccess: () => {
-                    Navigator.pop(context),
+                  addSuccess: () {
+                    Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
+                          backgroundColor: Colors.green,
                           content: Text('Expense Added Successfully')),
-                    ),
+                    );
                     context
                         .read<TransactionsBloc>()
-                        .add(const FetchedAllTransactions())
+                        .add(const FetchedAllTransactions());
+                    return;
                   },
                   orElse: () => const CircularProgressIndicator(),
                 ),
