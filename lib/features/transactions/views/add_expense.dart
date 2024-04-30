@@ -66,29 +66,26 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
               BlocBuilder<CategoriesBloc, CategoriesState>(
                 buildWhen: (prev, curr) =>
-                    curr is TransactionAddLoading ||
-                    curr is TransactionAddSuccess ||
-                    curr is TransactionAddFailure,
-                builder: (context, state) {
-                  return state.maybeWhen(
-                    // TODO SHIMMER
-                    loading: () =>
-                        const Center(child: CircularProgressIndicator()),
-                    addedsuccess: (category) => MyTextField(
-                      hintText: category.title,
-                      prefixIcon: Icon(category.icon, size: 28),
-                      readOnly: true,
-                      onTap: () => categoryModelSheet(context),
-                    ),
-
-                    orElse: () => MyTextField(
-                      hintText: 'Select Category',
-                      prefixIcon: const Icon(Iconsax.category, size: 28),
-                      readOnly: true,
-                      onTap: () => categoryModelSheet(context),
-                    ),
-                  );
-                },
+                    curr is CategoryLoading ||
+                    curr is CategoryAddSuccess ||
+                    curr is CategoryFailure,
+                builder: (context, state) => state.maybeWhen(
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  addedsuccess: (category) => MyTextField(
+                    hintText: category.title,
+                    prefixIcon: Icon(category.icon, size: 28),
+                    readOnly: true,
+                    fillColor: Colors.green.shade100,
+                    onTap: () => categoryModelSheet(context),
+                  ),
+                  orElse: () => MyTextField(
+                    hintText: 'Select Category',
+                    prefixIcon: const Icon(Iconsax.category, size: 28),
+                    readOnly: true,
+                    onTap: () => categoryModelSheet(context),
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
               MyTextField(
@@ -145,9 +142,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           backgroundColor: Colors.green,
                           content: Text('Expense Added Successfully')),
                     );
-                    context
-                        .read<TransactionsBloc>()
-                        .add(const FetchedAllTransactions());
                     return;
                   },
                   orElse: () => const CircularProgressIndicator(),
