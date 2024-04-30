@@ -15,6 +15,7 @@
 - [X] A 2 Splash Screens Indroduce the App for the user  
 - [X] An overview Card to Summarize user expenses  
 - [X] List of all user Transaction Cloud Syncrnized   
+- [X] An Intuitive OverView summary Card in the main 
 - [X] A Beautiful Page to Add New Transactions
 - [X] Stylised Model Sheet to adding Customised Transaction Category
 - [X] Statstics Page for Transactions Summary across the week 
