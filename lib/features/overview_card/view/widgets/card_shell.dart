@@ -1,8 +1,9 @@
 import 'package:expancetracker/core/constants/textstyles.dart';
 import 'package:expancetracker/features/overview_card/logic/overview_summary_bloc/overview_summary_bloc.dart';
-import 'package:expancetracker/features/overview_card/view/widgets/income_expense_row.dart';
+import 'package:expancetracker/features/overview_card/view/widgets/single_transaction_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 
 class GradientColorfulContainer extends StatelessWidget {
   const GradientColorfulContainer({
@@ -72,10 +73,53 @@ class CardContentWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 35),
-        const IncomeExpenseRow(
-          income: 2500.00,
-          expence: 2500.00,
-        )
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            BlocBuilder<OverviewSummaryBloc, OverviewSummaryState>(
+              buildWhen: (prev, curr) =>
+                  curr is TotalIncomeLoading ||
+                  curr is TotalIncomeSuccess ||
+                  curr is TotalIncomeFailure,
+              builder: (context, state) => state.maybeWhen(
+                totalIncomeLoading: () => const CircularProgressIndicator(),
+                totalIncomeSuccess: (amount) => TransactionTotalSummary(
+                  title: 'income',
+                  amount: amount,
+                  color: Colors.green,
+                  icon: Iconsax.arrow_up_3,
+                ),
+                orElse: () => const TransactionTotalSummary(
+                  title: 'income',
+                  amount: 0.0,
+                  color: Colors.green,
+                  icon: Iconsax.arrow_up_3,
+                ),
+              ),
+            ),
+            BlocBuilder<OverviewSummaryBloc, OverviewSummaryState>(
+              buildWhen: (prev, curr) =>
+                  curr is TotalExpenseLoading ||
+                  curr is TotalExpenseSuccess ||
+                  curr is TotalExpenseFailure,
+              builder: (context, state) => state.maybeWhen(
+                totalExpenseLoading: () => const CircularProgressIndicator(),
+                totalExpenseSuccess: (amount) => TransactionTotalSummary(
+                  title: 'expense',
+                  amount: amount,
+                  color: Colors.redAccent[700]!,
+                  icon: Iconsax.arrow_down,
+                ),
+                orElse: () => TransactionTotalSummary(
+                  title: 'expense',
+                  amount: 0.0,
+                  color: Colors.redAccent[700]!,
+                  icon: Iconsax.arrow_down,
+                ),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }

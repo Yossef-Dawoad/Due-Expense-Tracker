@@ -10,8 +10,10 @@ class OverViewSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<OverviewSummaryBloc>(
-      create: (context) =>
-          sl<OverviewSummaryBloc>()..add(const OverviewGetTotalTransaciton()),
+      create: (context) => sl<OverviewSummaryBloc>()
+        ..add(const OverviewGetTotalTransaciton())
+        ..add(const OverviewGetTotalIncome())
+        ..add(const OverviewGetTotalExpense()),
       child: const GradientColorfulContainer(child: CardContentWidget()),
     );
   }

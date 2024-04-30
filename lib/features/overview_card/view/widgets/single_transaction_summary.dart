@@ -1,38 +1,5 @@
 import 'package:expancetracker/core/constants/textstyles.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-
-class IncomeExpenseRow extends StatelessWidget {
-  const IncomeExpenseRow({
-    super.key,
-    required this.income,
-    required this.expence,
-  });
-
-  final double income;
-  final double expence;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        TransactionTotalSummary(
-          title: 'income',
-          amount: income,
-          color: Colors.green,
-          icon: Iconsax.arrow_up_3,
-        ),
-        TransactionTotalSummary(
-          title: 'expense',
-          amount: expence,
-          color: Colors.redAccent[700]!,
-          icon: Iconsax.arrow_down,
-        ),
-      ],
-    );
-  }
-}
 
 class TransactionTotalSummary extends StatelessWidget {
   const TransactionTotalSummary({
@@ -53,7 +20,7 @@ class TransactionTotalSummary extends StatelessWidget {
     return Row(
       children: [
         IconButton.filled(
-          style: IconButton.styleFrom(backgroundColor: const Color(0xFFEBEBEB)),
+          style: IconButton.styleFrom(backgroundColor: const Color(0xFFF3F3F3)),
           icon: Icon(icon, size: 25),
           onPressed: () {},
           color: color,
