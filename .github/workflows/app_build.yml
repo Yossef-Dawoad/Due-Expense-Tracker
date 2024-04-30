@@ -27,7 +27,7 @@ jobs:
       env:
         FIREBASE_API_KEY_ANDROID: ${{ secrets.FIREBASE_API_KEY_ANDROID }}
         FIREBASE_API_KEY_IOS: ${{ secrets.FIREBASE_API_KEY_IOS }}
-        FIREBASE_APP_KEY_WEB: ${{ secrets.FIREBASE_API_KEY_WEB }}
+        FIREBASE_API_KEY_WEB: ${{ secrets.FIREBASE_API_KEY_WEB }}
       run: |
         dart run build_runner clean
         dart run build_runner build --delete-conflicting-outputs
