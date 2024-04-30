@@ -26,9 +26,7 @@ mixin _$TransactionCategory {
   int get color => throw _privateConstructorUsedError;
   @enumerated
   TransactionStatus get status => throw _privateConstructorUsedError;
-  @IconDataConverter()
-  @ignore
-  IconData get icon => throw _privateConstructorUsedError;
+  MyIconData get icon => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +46,7 @@ abstract class $TransactionCategoryCopyWith<$Res> {
       double totalAmount,
       int color,
       @enumerated TransactionStatus status,
-      @IconDataConverter() @ignore IconData icon});
+      MyIconData icon});
 }
 
 /// @nodoc
@@ -95,7 +93,7 @@ class _$TransactionCategoryCopyWithImpl<$Res, $Val extends TransactionCategory>
       icon: null == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as IconData,
+              as MyIconData,
     ) as $Val);
   }
 }
@@ -114,7 +112,7 @@ abstract class _$$TransactionCategoryImplCopyWith<$Res>
       double totalAmount,
       int color,
       @enumerated TransactionStatus status,
-      @IconDataConverter() @ignore IconData icon});
+      MyIconData icon});
 }
 
 /// @nodoc
@@ -159,7 +157,7 @@ class __$$TransactionCategoryImplCopyWithImpl<$Res>
       icon: null == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as IconData,
+              as MyIconData,
     ));
   }
 }
@@ -174,7 +172,7 @@ class _$TransactionCategoryImpl extends _TransactionCategory
       this.totalAmount = 0.0,
       required this.color,
       @enumerated required this.status,
-      @IconDataConverter() @ignore required this.icon})
+      required this.icon})
       : super._();
 
   factory _$TransactionCategoryImpl.fromJson(Map<String, dynamic> json) =>
@@ -193,9 +191,7 @@ class _$TransactionCategoryImpl extends _TransactionCategory
   @enumerated
   final TransactionStatus status;
   @override
-  @IconDataConverter()
-  @ignore
-  final IconData icon;
+  final MyIconData icon;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -251,13 +247,12 @@ class _$TransactionCategoryImpl extends _TransactionCategory
 
 abstract class _TransactionCategory extends TransactionCategory {
   const factory _TransactionCategory(
-          {required final String uid,
-          required final String title,
-          final double totalAmount,
-          required final int color,
-          @enumerated required final TransactionStatus status,
-          @IconDataConverter() @ignore required final IconData icon}) =
-      _$TransactionCategoryImpl;
+      {required final String uid,
+      required final String title,
+      final double totalAmount,
+      required final int color,
+      @enumerated required final TransactionStatus status,
+      required final MyIconData icon}) = _$TransactionCategoryImpl;
   const _TransactionCategory._() : super._();
 
   factory _TransactionCategory.fromJson(Map<String, dynamic> json) =
@@ -275,9 +270,7 @@ abstract class _TransactionCategory extends TransactionCategory {
   @enumerated
   TransactionStatus get status;
   @override
-  @IconDataConverter()
-  @ignore
-  IconData get icon;
+  MyIconData get icon;
   @override
   @JsonKey(ignore: true)
   _$$TransactionCategoryImplCopyWith<_$TransactionCategoryImpl> get copyWith =>

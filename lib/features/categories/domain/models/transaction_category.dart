@@ -15,6 +15,7 @@ const isarCollectionOnFreezed = Collection(ignore: {'copyWith'});
 @isarCollectionOnFreezed
 class TransactionCategory with _$TransactionCategory {
   const TransactionCategory._();
+
   const factory TransactionCategory({
     required String uid,
     required String title,
