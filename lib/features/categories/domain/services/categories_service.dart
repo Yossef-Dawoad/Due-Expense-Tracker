@@ -4,8 +4,9 @@ import 'package:expancetracker/core/common/domain/intrefaces/firebase_base.dart'
 
 import '../models/transaction_category.dart';
 
-class FirebaseCategoriesServiceImpl
-    implements BaseFireBaseDB<TransactionCategory> {
+typedef CategoriesServiceType = BaseFireBaseDB<TransactionCategory>;
+
+class FirebaseCategoriesServiceImpl implements CategoriesServiceType {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override

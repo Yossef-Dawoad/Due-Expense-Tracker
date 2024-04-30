@@ -65,22 +65,27 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               const SizedBox(height: 50),
 
               BlocBuilder<CategoriesBloc, CategoriesState>(
-                builder: (context, state) {
-                  return state.maybeWhen(
-                    addedsuccess: (category) => MyTextField(
-                      hintText: category.title,
-                      prefixIcon: Icon(category.icon, size: 28),
-                      readOnly: true,
-                      onTap: () => categoryModelSheet(context),
-                    ),
-                    orElse: () => MyTextField(
-                      hintText: 'Select Category',
-                      prefixIcon: const Icon(Iconsax.category, size: 28),
-                      readOnly: true,
-                      onTap: () => categoryModelSheet(context),
-                    ),
-                  );
-                },
+                buildWhen: (prev, curr) =>
+                    curr is CategoryLoading ||
+                    curr is CategoryAddSuccess ||
+                    curr is CategoryFailure,
+                builder: (context, state) => state.maybeWhen(
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  addedsuccess: (category) => MyTextField(
+                    hintText: category.title,
+                    prefixIcon: Icon(category.icon, size: 28),
+                    readOnly: true,
+                    fillColor: Colors.green.shade100,
+                    onTap: () => categoryModelSheet(context),
+                  ),
+                  orElse: () => MyTextField(
+                    hintText: 'Select Category',
+                    prefixIcon: const Icon(Iconsax.category, size: 28),
+                    readOnly: true,
+                    onTap: () => categoryModelSheet(context),
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
               MyTextField(
@@ -125,17 +130,19 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 ),
               ),
               BlocListener<TransactionsBloc, TransactionState>(
-                listenWhen: (prev, curr) => curr is TransactionAddedSuccess,
+                listenWhen: (prev, curr) =>
+                    curr is TransactionAddLoading ||
+                    curr is TransactionAddSuccess ||
+                    curr is TransactionAddFailure,
                 listener: (context, state) => state.maybeWhen(
-                  addedSuccess: () => {
-                    Navigator.pop(context),
+                  addSuccess: () {
+                    Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
+                          backgroundColor: Colors.green,
                           content: Text('Expense Added Successfully')),
-                    ),
-                    context
-                        .read<TransactionsBloc>()
-                        .add(const FetchedAllTransactions())
+                    );
+                    return;
                   },
                   orElse: () => const CircularProgressIndicator(),
                 ),

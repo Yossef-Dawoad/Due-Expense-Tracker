@@ -1,9 +1,9 @@
+import 'package:expancetracker/features/overview_card/view/overview_card.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:expancetracker/core/constants/textstyles.dart';
 import 'package:expancetracker/features/screens/widgets/avater_profile.dart';
-import 'package:expancetracker/features/screens/widgets/balance_card.dart';
 import 'package:expancetracker/features/transactions/views/widgets/transactions_list_view.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -33,9 +33,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              const BalanceCardSkelton(
-                child: CardContentWidget(),
-              ),
+              const OverViewSummaryCard(),
               const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),

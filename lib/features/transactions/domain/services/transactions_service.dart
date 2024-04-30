@@ -3,7 +3,9 @@ import 'package:expancetracker/core/common/domain/intrefaces/firebase_base.dart'
 
 import '../models/user_transaction.dart';
 
-class FirebaseTransctionServiceImpl implements BaseFireBaseDB<UserTransaction> {
+typedef TransactionServiceType = BaseFireBaseDB<UserTransaction>;
+
+class FirebaseTransctionServiceImpl implements TransactionServiceType {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
