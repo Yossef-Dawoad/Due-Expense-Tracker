@@ -1,3 +1,4 @@
+import 'package:expancetracker/features/transactions/views/all_transactions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +18,8 @@ class AppRouter {
       Routes.onBoarding =>
         MaterialPageRoute(builder: (_) => const OnBoardingScreen()),
       Routes.home => MaterialPageRoute(builder: (_) => const NavigationMenu()),
+      Routes.allTransactions =>
+        MaterialPageRoute(builder: (_) => const AllTransactionsScreen()),
       Routes.addExpense => MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [

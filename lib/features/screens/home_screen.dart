@@ -1,3 +1,5 @@
+import 'package:expancetracker/core/routes/routes.dart';
+import 'package:expancetracker/core/utils/extensions/context_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -43,7 +45,11 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Transactions', style: f18BlackBold),
-                    Text('View All', style: f14greyRegularText),
+                    InkWell(
+                      onTap: () =>
+                          context.pushNamedRoute(Routes.allTransactions),
+                      child: Text('View All', style: f14greyRegularText),
+                    ),
                   ],
                 ),
               ),

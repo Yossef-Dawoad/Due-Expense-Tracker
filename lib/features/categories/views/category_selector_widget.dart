@@ -13,6 +13,7 @@ import 'package:expancetracker/features/categories/logic/category_user_input_pro
 
 import 'widgets/add_category_button.dart';
 import 'widgets/exisitingcategory_gridview.dart';
+import 'widgets/expense_action_choice.dart';
 import 'widgets/gategoryicon_gridview.dart';
 import 'widgets/myflex_colorpicker.dart';
 
@@ -86,8 +87,10 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
                     Text('Category Color', style: f14greyRegularText),
                     const SizedBox(height: 10),
                     const MyFlexColorPicker(),
+                    const SizedBox(height: 30),
                     Text('Expense Type', style: f14greyRegularText),
-                    ExpenseActionChoice()
+                    const SizedBox(height: 10),
+                    const ExpenseActionChoice()
                   ],
                 ),
 
@@ -124,49 +127,6 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class ExpenseActionChoice extends StatefulWidget {
-  const ExpenseActionChoice({super.key});
-
-  @override
-  State<ExpenseActionChoice> createState() => _ExpenseActionChoiceState();
-}
-
-class _ExpenseActionChoiceState extends State<ExpenseActionChoice> {
-  TransactionStatus? _val = TransactionStatus.expense;
-
-  @override
-  Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    final userData = CategoryUserInputProvider.of(context);
-
-    return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text('Choose a type', style: textTheme.labelLarge),
-          const SizedBox(height: 10.0),
-          Wrap(
-            spacing: 5.0,
-            children: TransactionStatus.values
-                .map(
-                  (transactionStat) => ChoiceChip(
-                    label: Text(transactionStat.name),
-                    selected: _val == transactionStat,
-                    onSelected: (bool selected) {
-                      setState(() => _val = selected ? transactionStat : null);
-                      if (_val != null) userData.updateCategoryStatus(_val!);
-                    },
-                  ),
-                )
-                .toList(),
-          ),
-        ],
       ),
     );
   }
