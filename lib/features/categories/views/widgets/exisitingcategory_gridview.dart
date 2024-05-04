@@ -1,5 +1,5 @@
 import 'package:expancetracker/core/bindings/dependancy_injection.dart';
-import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
+import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/categories/logic/category_user_input_provider/category_user_input_provider.dart';
 import 'package:flutter/material.dart';

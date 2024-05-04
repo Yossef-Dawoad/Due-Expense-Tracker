@@ -7,10 +7,10 @@ import 'package:uuid/uuid.dart';
 
 import 'package:expancetracker/core/common/widgets/custom_textfield.dart';
 import 'package:expancetracker/core/constants/textstyles.dart';
-import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
+import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/categories/views/category_selector_widget.dart';
-import '../domain/models/user_transaction.dart';
+import '../data/models/user_transaction.dart';
 import '../logic/transactions_bloc/transactions_bloc.dart';
 
 import 'widgets/colorfull_textfield.dart';

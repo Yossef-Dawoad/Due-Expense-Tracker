@@ -6,7 +6,7 @@ import 'package:expancetracker/core/common/widgets/custom_textfield.dart';
 import 'package:expancetracker/core/common/widgets/header_title.dart';
 import 'package:expancetracker/core/constants/textstyles.dart';
 import 'package:expancetracker/core/utils/extensions/context_ext.dart';
-import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
+import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/categories/logic/category_user_input_provider/category_user_input_handler.dart';
 import 'package:expancetracker/features/categories/logic/category_user_input_provider/category_user_input_provider.dart';

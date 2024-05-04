@@ -1,6 +1,6 @@
 import 'package:expancetracker/core/constants/colors.dart';
 import 'package:expancetracker/core/routes/routes.dart';
-import 'package:expancetracker/features/onboarding/domain/models/page_content.dart';
+import 'package:expancetracker/features/onboarding/data/models/page_content.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/indicator.dart';
