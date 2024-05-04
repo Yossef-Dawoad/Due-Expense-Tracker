@@ -102,7 +102,10 @@ class PredfiendCategoryItem extends StatelessWidget {
             shape: BoxShape.circle,
             border: isSelected ? Border.all(width: 4) : null,
           ),
-          child: Icon(category.icon),
+          child: Icon(
+            category.icon,
+            color: Colors.white,
+          ),
         ),
         Text(
           category.title,

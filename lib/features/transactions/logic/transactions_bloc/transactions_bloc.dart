@@ -17,21 +17,21 @@ class TransactionsBloc extends Bloc<TransactionEvent, TransactionState> {
   }
 
   void _onAddingNewExpense(AddedNewTransaction event, Emitter emit) async {
-    emit(const TransactionState.loading());
+    emit(const TransactionState.addloading());
     try {
       await _transactionService.addNewItem(event.transaction);
-      emit(const TransactionState.addedSuccess());
+      emit(const TransactionState.addSuccess());
     } on Exception catch (e) {
       emit(TransactionState.addedfailure(e.toString()));
     }
   }
 
   void _onTransactionFetched(event, emit) async {
-    emit(const TransactionState.loading());
+    emit(const TransactionState.fetchloading());
     try {
       final cloudTranscations = await _transactionService.getAllItems();
       final userTransactionlist = preDefinedTransactions + cloudTranscations;
-      emit(TransactionState.fetshedSuccess(userTransactionlist));
+      emit(TransactionState.fetchSuccess(userTransactionlist));
     } catch (e) {
       emit(TransactionState.fetchedfailure(e.toString()));
     }

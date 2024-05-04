@@ -16,12 +16,13 @@ class TransactionListView extends StatelessWidget {
           sl<TransactionsBloc>()..add(const FetchedAllTransactions()),
       child: BlocBuilder<TransactionsBloc, TransactionState>(
         buildWhen: (prev, curr) =>
-            curr is TransactionLoading ||
-            curr is TransactionFetshedSuccess ||
-            curr is TransactionAddedFailure,
+            curr is TransactionFetchLoading ||
+            curr is TransactionFetchedSuccess ||
+            curr is TransactionFetchFailure,
         builder: (context, state) {
           //TODO handle error WITH IMAGE and something wrong happen
           //TODO handle loading with shimmers
+
           return state.maybeWhen(
             fetshedSuccess: (transactions) => ListView.separated(
               separatorBuilder: (_, __) => const SizedBox(height: 10),

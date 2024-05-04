@@ -15,6 +15,7 @@ class MyTextField extends StatefulWidget {
     this.hintTextStyle,
     this.showBorder = false,
     this.maxLines = 1,
+    this.fillColor = Colors.white,
   });
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -27,6 +28,7 @@ class MyTextField extends StatefulWidget {
   final TextStyle? hintTextStyle;
   final bool showBorder;
   final int maxLines;
+  final Color fillColor;
 
   @override
   State<MyTextField> createState() => _MyTextFieldState();
@@ -45,7 +47,7 @@ class _MyTextFieldState extends State<MyTextField> {
       minLines: 1,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: widget.fillColor,
         suffixIcon: widget.suffixIcon,
         prefixIcon: widget.prefixIcon,
         contentPadding: EdgeInsets.all(widget.contentPadding),
