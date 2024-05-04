@@ -1,4 +1,3 @@
-import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -7,6 +6,7 @@ import 'package:expancetracker/core/common/widgets/custom_textfield.dart';
 import 'package:expancetracker/core/common/widgets/header_title.dart';
 import 'package:expancetracker/core/constants/textstyles.dart';
 import 'package:expancetracker/core/utils/extensions/context_ext.dart';
+import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/categories/logic/category_user_input_provider/category_user_input_handler.dart';
 import 'package:expancetracker/features/categories/logic/category_user_input_provider/category_user_input_provider.dart';
@@ -86,6 +86,8 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
                     Text('Category Color', style: f14greyRegularText),
                     const SizedBox(height: 10),
                     const MyFlexColorPicker(),
+                    Text('Expense Type', style: f14greyRegularText),
+                    ExpenseActionChoice()
                   ],
                 ),
 
@@ -122,6 +124,49 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ExpenseActionChoice extends StatefulWidget {
+  const ExpenseActionChoice({super.key});
+
+  @override
+  State<ExpenseActionChoice> createState() => _ExpenseActionChoiceState();
+}
+
+class _ExpenseActionChoiceState extends State<ExpenseActionChoice> {
+  TransactionStatus? _val = TransactionStatus.expense;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    final userData = CategoryUserInputProvider.of(context);
+
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text('Choose a type', style: textTheme.labelLarge),
+          const SizedBox(height: 10.0),
+          Wrap(
+            spacing: 5.0,
+            children: TransactionStatus.values
+                .map(
+                  (transactionStat) => ChoiceChip(
+                    label: Text(transactionStat.name),
+                    selected: _val == transactionStat,
+                    onSelected: (bool selected) {
+                      setState(() => _val = selected ? transactionStat : null);
+                      if (_val != null) userData.updateCategoryStatus(_val!);
+                    },
+                  ),
+                )
+                .toList(),
+          ),
+        ],
       ),
     );
   }

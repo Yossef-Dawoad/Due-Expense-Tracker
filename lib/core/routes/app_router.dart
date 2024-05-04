@@ -5,7 +5,7 @@ import 'package:expancetracker/core/bindings/dependancy_injection.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/onboarding/views/onboarding_screen.dart';
 import 'package:expancetracker/features/screens/navigation_menu.dart';
-import 'package:expancetracker/features/status/views/status.dart';
+import 'package:expancetracker/features/stats/views/stats.dart';
 import 'package:expancetracker/features/transactions/logic/transactions_bloc/transactions_bloc.dart';
 import 'package:expancetracker/features/transactions/views/add_expense.dart';
 
@@ -30,7 +30,7 @@ class AppRouter {
             child: const AddExpenseScreen(),
           ),
         ),
-      Routes.status => MaterialPageRoute(builder: (_) => const StatusScreen()),
+      Routes.status => MaterialPageRoute(builder: (_) => const StatsScreen()),
       _ => _errorRoute(settings.name),
     };
   }
