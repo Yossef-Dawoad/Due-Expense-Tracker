@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:expancetracker/core/routes/routes.dart';
 import 'package:expancetracker/core/utils/extensions/context_ext.dart';
-import 'package:expancetracker/features/status/views/status.dart';
+import 'package:expancetracker/features/stats/views/stats.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -19,7 +19,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
   int currentPageIndex = 0;
   final screens = [
     const HomeScreen(),
-    const StatusScreen(),
+    const StatsScreen(),
   ];
   @override
   Widget build(BuildContext context) {

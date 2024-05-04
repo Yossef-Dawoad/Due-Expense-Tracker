@@ -1,4 +1,4 @@
-import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
+import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
 import 'package:flutter/material.dart';
 
 class CategoryUserInputs extends ChangeNotifier {

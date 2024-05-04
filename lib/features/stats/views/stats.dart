@@ -5,8 +5,8 @@ import 'package:iconsax/iconsax.dart';
 import 'widgets/expanses_tab.dart';
 import 'widgets/income_expanse_tab_switcher.dart';
 
-class StatusScreen extends StatelessWidget {
-  const StatusScreen({super.key});
+class StatsScreen extends StatelessWidget {
+  const StatsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

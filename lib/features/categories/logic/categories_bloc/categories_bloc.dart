@@ -1,4 +1,4 @@
-import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
+import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
 import 'package:expancetracker/core/common/domain/intrefaces/firebase_base.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

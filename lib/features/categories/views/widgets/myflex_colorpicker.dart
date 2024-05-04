@@ -37,7 +37,7 @@ class _MyFlexColorPickerState extends State<MyFlexColorPicker> {
       width: double.infinity,
       child: Card.outlined(
         shape: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
           borderSide: const BorderSide(color: Colors.blue),
         ),
         elevation: 0.0,

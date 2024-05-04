@@ -1,5 +1,5 @@
-import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
-import 'package:expancetracker/features/transactions/domain/services/transactions_service.dart';
+import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
+import 'package:expancetracker/features/transactions/data/services/transactions_service.dart';
 
 class OverviewSummaryService {
   final TransactionServiceType _transactionService;

@@ -7,10 +7,10 @@ import 'package:uuid/uuid.dart';
 
 import 'package:expancetracker/core/common/widgets/custom_textfield.dart';
 import 'package:expancetracker/core/constants/textstyles.dart';
-import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
+import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/categories/views/category_selector_widget.dart';
-import '../domain/models/user_transaction.dart';
+import '../data/models/user_transaction.dart';
 import '../logic/transactions_bloc/transactions_bloc.dart';
 
 import 'widgets/colorfull_textfield.dart';
@@ -117,7 +117,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   ),
                 ),
                 child: ElevatedButton(
-                  onPressed: () => _submitNewCategory(context),
+                  onPressed: () => _submitNewExpense(context),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(16.0),
                     backgroundColor: Colors.transparent,
@@ -130,10 +130,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 ),
               ),
               BlocListener<TransactionsBloc, TransactionState>(
-                listenWhen: (prev, curr) =>
-                    curr is TransactionAddLoading ||
-                    curr is TransactionAddSuccess ||
-                    curr is TransactionAddFailure,
+                listenWhen: (prev, curr) => curr is TransactionAddSuccess,
                 listener: (context, state) => state.maybeWhen(
                   addSuccess: () {
                     Navigator.pop(context);
@@ -168,17 +165,19 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     );
   }
 
-  void _submitNewCategory(BuildContext context) {
-    context.read<TransactionsBloc>().add(
-          TransactionEvent.addedNewExpense(
-            UserTransaction(
-              id: const Uuid().v4(),
-              amount: double.parse(_amountController.text.trim()),
-              datetime: _selectedDateNotifier.value,
-              note: _descriptionController.text.trim(),
-              category: selectedCategory!,
-            ),
+  void _submitNewExpense(BuildContext context) {
+    context.read<TransactionsBloc>()
+      ..add(
+        TransactionEvent.addedNewExpense(
+          UserTransaction(
+            id: const Uuid().v4(),
+            amount: double.parse(_amountController.text.trim()),
+            datetime: _selectedDateNotifier.value,
+            note: _descriptionController.text.trim(),
+            category: selectedCategory!,
           ),
-        );
+        ),
+      )
+      ..add(const FetchedAllTransactions());
   }
 }

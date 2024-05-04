@@ -1,4 +1,3 @@
-import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -7,12 +6,14 @@ import 'package:expancetracker/core/common/widgets/custom_textfield.dart';
 import 'package:expancetracker/core/common/widgets/header_title.dart';
 import 'package:expancetracker/core/constants/textstyles.dart';
 import 'package:expancetracker/core/utils/extensions/context_ext.dart';
+import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/categories/logic/category_user_input_provider/category_user_input_handler.dart';
 import 'package:expancetracker/features/categories/logic/category_user_input_provider/category_user_input_provider.dart';
 
 import 'widgets/add_category_button.dart';
 import 'widgets/exisitingcategory_gridview.dart';
+import 'widgets/expense_action_choice.dart';
 import 'widgets/gategoryicon_gridview.dart';
 import 'widgets/myflex_colorpicker.dart';
 
@@ -86,6 +87,10 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
                     Text('Category Color', style: f14greyRegularText),
                     const SizedBox(height: 10),
                     const MyFlexColorPicker(),
+                    const SizedBox(height: 30),
+                    Text('Expense Type', style: f14greyRegularText),
+                    const SizedBox(height: 10),
+                    const ExpenseActionChoice()
                   ],
                 ),
 

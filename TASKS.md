@@ -1,7 +1,7 @@
-- [ ] Add Chips income or expense
-- [ ] add Launcher icon for our App
-- [ ] Add Arrow to Transactions List to Indicate income or expense
-- [ ] in add expense screen selected category should refelcted
+- [X] Add Chips income or expense
+- [X] add Launcher icon for our App
+- [X] Add Arrow to Transactions List to Indicate income or expense
+- [x] in add expense screen selected category should refelcted
 - [ ] Transaction Long Tap to display transction Note and Details (model sheet?)
 - [ ] The Transaction Sheet of Transaction Details should have an **edit** and **delete** options
 - [ ] Shimmer Loading instead of circle progress indicator
