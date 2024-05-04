@@ -130,7 +130,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 ),
               ),
               BlocListener<TransactionsBloc, TransactionState>(
-                listenWhen: (prev, curr) => curr is TransactionAddedSuccess,
+                listenWhen: (prev, curr) => curr is TransactionAddSuccess,
                 listener: (context, state) => state.maybeWhen(
                   addSuccess: () {
                     Navigator.pop(context);
@@ -138,7 +138,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       const SnackBar(
                           backgroundColor: Colors.green,
                           content: Text('Expense Added Successfully')),
-                    ),
+                    );
+                    return;
                   },
                   orElse: () => const CircularProgressIndicator(),
                 ),

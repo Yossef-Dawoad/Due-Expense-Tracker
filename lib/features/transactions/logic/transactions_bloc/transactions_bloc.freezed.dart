@@ -457,31 +457,30 @@ mixin _$TransactionState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() addedSuccess,
-    required TResult Function(List<UserTransaction> transactions)
-        fetshedSuccess,
-    required TResult Function(String message) addedfailure,
-    required TResult Function(String message) fetchedfailure,
+    required TResult Function() addSuccess,
+    required TResult Function(List<UserTransaction> transactions) fetchSuccess,
+    required TResult Function(String message) addfailure,
+    required TResult Function(String message) fetchfailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? addedSuccess,
-    TResult? Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult? Function(String message)? addedfailure,
-    TResult? Function(String message)? fetchedfailure,
+    TResult? Function()? addSuccess,
+    TResult? Function(List<UserTransaction> transactions)? fetchSuccess,
+    TResult? Function(String message)? addfailure,
+    TResult? Function(String message)? fetchfailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? addedSuccess,
-    TResult Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult Function(String message)? addedfailure,
-    TResult Function(String message)? fetchedfailure,
+    TResult Function()? addSuccess,
+    TResult Function(List<UserTransaction> transactions)? fetchSuccess,
+    TResult Function(String message)? addfailure,
+    TResult Function(String message)? fetchfailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -489,30 +488,30 @@ mixin _$TransactionState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(TransactionLoading value) loading,
-    required TResult Function(TransactionAddedSuccess value) addedSuccess,
-    required TResult Function(TransactionFetshedSuccess value) fetshedSuccess,
-    required TResult Function(TransactionAddedFailure value) addedfailure,
-    required TResult Function(TransactionFetchedFailure value) fetchedfailure,
+    required TResult Function(TransactionAddSuccess value) addSuccess,
+    required TResult Function(TransactionFetchSuccess value) fetchSuccess,
+    required TResult Function(TransactionAddFailure value) addfailure,
+    required TResult Function(TransactionFetchFailure value) fetchfailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(TransactionLoading value)? loading,
-    TResult? Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult? Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult? Function(TransactionAddedFailure value)? addedfailure,
-    TResult? Function(TransactionFetchedFailure value)? fetchedfailure,
+    TResult? Function(TransactionAddSuccess value)? addSuccess,
+    TResult? Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult? Function(TransactionAddFailure value)? addfailure,
+    TResult? Function(TransactionFetchFailure value)? fetchfailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(TransactionLoading value)? loading,
-    TResult Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult Function(TransactionAddedFailure value)? addedfailure,
-    TResult Function(TransactionFetchedFailure value)? fetchedfailure,
+    TResult Function(TransactionAddSuccess value)? addSuccess,
+    TResult Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult Function(TransactionAddFailure value)? addfailure,
+    TResult Function(TransactionFetchFailure value)? fetchfailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -576,11 +575,10 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() addedSuccess,
-    required TResult Function(List<UserTransaction> transactions)
-        fetshedSuccess,
-    required TResult Function(String message) addedfailure,
-    required TResult Function(String message) fetchedfailure,
+    required TResult Function() addSuccess,
+    required TResult Function(List<UserTransaction> transactions) fetchSuccess,
+    required TResult Function(String message) addfailure,
+    required TResult Function(String message) fetchfailure,
   }) {
     return initial();
   }
@@ -590,10 +588,10 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? addedSuccess,
-    TResult? Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult? Function(String message)? addedfailure,
-    TResult? Function(String message)? fetchedfailure,
+    TResult? Function()? addSuccess,
+    TResult? Function(List<UserTransaction> transactions)? fetchSuccess,
+    TResult? Function(String message)? addfailure,
+    TResult? Function(String message)? fetchfailure,
   }) {
     return initial?.call();
   }
@@ -603,10 +601,10 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? addedSuccess,
-    TResult Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult Function(String message)? addedfailure,
-    TResult Function(String message)? fetchedfailure,
+    TResult Function()? addSuccess,
+    TResult Function(List<UserTransaction> transactions)? fetchSuccess,
+    TResult Function(String message)? addfailure,
+    TResult Function(String message)? fetchfailure,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -620,10 +618,10 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(TransactionLoading value) loading,
-    required TResult Function(TransactionAddedSuccess value) addedSuccess,
-    required TResult Function(TransactionFetshedSuccess value) fetshedSuccess,
-    required TResult Function(TransactionAddedFailure value) addedfailure,
-    required TResult Function(TransactionFetchedFailure value) fetchedfailure,
+    required TResult Function(TransactionAddSuccess value) addSuccess,
+    required TResult Function(TransactionFetchSuccess value) fetchSuccess,
+    required TResult Function(TransactionAddFailure value) addfailure,
+    required TResult Function(TransactionFetchFailure value) fetchfailure,
   }) {
     return initial(this);
   }
@@ -633,10 +631,10 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(TransactionLoading value)? loading,
-    TResult? Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult? Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult? Function(TransactionAddedFailure value)? addedfailure,
-    TResult? Function(TransactionFetchedFailure value)? fetchedfailure,
+    TResult? Function(TransactionAddSuccess value)? addSuccess,
+    TResult? Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult? Function(TransactionAddFailure value)? addfailure,
+    TResult? Function(TransactionFetchFailure value)? fetchfailure,
   }) {
     return initial?.call(this);
   }
@@ -646,10 +644,10 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(TransactionLoading value)? loading,
-    TResult Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult Function(TransactionAddedFailure value)? addedfailure,
-    TResult Function(TransactionFetchedFailure value)? fetchedfailure,
+    TResult Function(TransactionAddSuccess value)? addSuccess,
+    TResult Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult Function(TransactionAddFailure value)? addfailure,
+    TResult Function(TransactionFetchFailure value)? fetchfailure,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -686,7 +684,7 @@ class _$TransactionLoadingImpl implements TransactionLoading {
 
   @override
   String toString() {
-    return 'TransactionState.addloading()';
+    return 'TransactionState.loading()';
   }
 
   @override
@@ -703,13 +701,12 @@ class _$TransactionLoadingImpl implements TransactionLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() addedSuccess,
-    required TResult Function(List<UserTransaction> transactions)
-        fetshedSuccess,
-    required TResult Function(String message) addedfailure,
-    required TResult Function(String message) fetchedfailure,
+    required TResult Function() addSuccess,
+    required TResult Function(List<UserTransaction> transactions) fetchSuccess,
+    required TResult Function(String message) addfailure,
+    required TResult Function(String message) fetchfailure,
   }) {
-    return addloading();
+    return loading();
   }
 
   @override
@@ -717,12 +714,12 @@ class _$TransactionLoadingImpl implements TransactionLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? addedSuccess,
-    TResult? Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult? Function(String message)? addedfailure,
-    TResult? Function(String message)? fetchedfailure,
+    TResult? Function()? addSuccess,
+    TResult? Function(List<UserTransaction> transactions)? fetchSuccess,
+    TResult? Function(String message)? addfailure,
+    TResult? Function(String message)? fetchfailure,
   }) {
-    return addloading?.call();
+    return loading?.call();
   }
 
   @override
@@ -730,14 +727,14 @@ class _$TransactionLoadingImpl implements TransactionLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? addedSuccess,
-    TResult Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult Function(String message)? addedfailure,
-    TResult Function(String message)? fetchedfailure,
+    TResult Function()? addSuccess,
+    TResult Function(List<UserTransaction> transactions)? fetchSuccess,
+    TResult Function(String message)? addfailure,
+    TResult Function(String message)? fetchfailure,
     required TResult orElse(),
   }) {
-    if (addloading != null) {
-      return addloading();
+    if (loading != null) {
+      return loading();
     }
     return orElse();
   }
@@ -747,12 +744,12 @@ class _$TransactionLoadingImpl implements TransactionLoading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(TransactionLoading value) loading,
-    required TResult Function(TransactionAddedSuccess value) addedSuccess,
-    required TResult Function(TransactionFetshedSuccess value) fetshedSuccess,
-    required TResult Function(TransactionAddedFailure value) addedfailure,
-    required TResult Function(TransactionFetchedFailure value) fetchedfailure,
+    required TResult Function(TransactionAddSuccess value) addSuccess,
+    required TResult Function(TransactionFetchSuccess value) fetchSuccess,
+    required TResult Function(TransactionAddFailure value) addfailure,
+    required TResult Function(TransactionFetchFailure value) fetchfailure,
   }) {
-    return addloading(this);
+    return loading(this);
   }
 
   @override
@@ -760,12 +757,12 @@ class _$TransactionLoadingImpl implements TransactionLoading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(TransactionLoading value)? loading,
-    TResult? Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult? Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult? Function(TransactionAddedFailure value)? addedfailure,
-    TResult? Function(TransactionFetchedFailure value)? fetchedfailure,
+    TResult? Function(TransactionAddSuccess value)? addSuccess,
+    TResult? Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult? Function(TransactionAddFailure value)? addfailure,
+    TResult? Function(TransactionFetchFailure value)? fetchfailure,
   }) {
-    return addloading?.call(this);
+    return loading?.call(this);
   }
 
   @override
@@ -773,14 +770,14 @@ class _$TransactionLoadingImpl implements TransactionLoading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(TransactionLoading value)? loading,
-    TResult Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult Function(TransactionAddedFailure value)? addedfailure,
-    TResult Function(TransactionFetchedFailure value)? fetchedfailure,
+    TResult Function(TransactionAddSuccess value)? addSuccess,
+    TResult Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult Function(TransactionAddFailure value)? addfailure,
+    TResult Function(TransactionFetchFailure value)? fetchfailure,
     required TResult orElse(),
   }) {
-    if (addloading != null) {
-      return addloading(this);
+    if (loading != null) {
+      return loading(this);
     }
     return orElse();
   }
@@ -832,11 +829,10 @@ class _$TransactionAddSuccessImpl implements TransactionAddSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() addedSuccess,
-    required TResult Function(List<UserTransaction> transactions)
-        fetshedSuccess,
-    required TResult Function(String message) addedfailure,
-    required TResult Function(String message) fetchedfailure,
+    required TResult Function() addSuccess,
+    required TResult Function(List<UserTransaction> transactions) fetchSuccess,
+    required TResult Function(String message) addfailure,
+    required TResult Function(String message) fetchfailure,
   }) {
     return addSuccess();
   }
@@ -846,10 +842,10 @@ class _$TransactionAddSuccessImpl implements TransactionAddSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? addedSuccess,
-    TResult? Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult? Function(String message)? addedfailure,
-    TResult? Function(String message)? fetchedfailure,
+    TResult? Function()? addSuccess,
+    TResult? Function(List<UserTransaction> transactions)? fetchSuccess,
+    TResult? Function(String message)? addfailure,
+    TResult? Function(String message)? fetchfailure,
   }) {
     return addSuccess?.call();
   }
@@ -859,10 +855,10 @@ class _$TransactionAddSuccessImpl implements TransactionAddSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? addedSuccess,
-    TResult Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult Function(String message)? addedfailure,
-    TResult Function(String message)? fetchedfailure,
+    TResult Function()? addSuccess,
+    TResult Function(List<UserTransaction> transactions)? fetchSuccess,
+    TResult Function(String message)? addfailure,
+    TResult Function(String message)? fetchfailure,
     required TResult orElse(),
   }) {
     if (addSuccess != null) {
@@ -876,10 +872,10 @@ class _$TransactionAddSuccessImpl implements TransactionAddSuccess {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(TransactionLoading value) loading,
-    required TResult Function(TransactionAddedSuccess value) addedSuccess,
-    required TResult Function(TransactionFetshedSuccess value) fetshedSuccess,
-    required TResult Function(TransactionAddedFailure value) addedfailure,
-    required TResult Function(TransactionFetchedFailure value) fetchedfailure,
+    required TResult Function(TransactionAddSuccess value) addSuccess,
+    required TResult Function(TransactionFetchSuccess value) fetchSuccess,
+    required TResult Function(TransactionAddFailure value) addfailure,
+    required TResult Function(TransactionFetchFailure value) fetchfailure,
   }) {
     return addSuccess(this);
   }
@@ -889,10 +885,10 @@ class _$TransactionAddSuccessImpl implements TransactionAddSuccess {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(TransactionLoading value)? loading,
-    TResult? Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult? Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult? Function(TransactionAddedFailure value)? addedfailure,
-    TResult? Function(TransactionFetchedFailure value)? fetchedfailure,
+    TResult? Function(TransactionAddSuccess value)? addSuccess,
+    TResult? Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult? Function(TransactionAddFailure value)? addfailure,
+    TResult? Function(TransactionFetchFailure value)? fetchfailure,
   }) {
     return addSuccess?.call(this);
   }
@@ -902,10 +898,10 @@ class _$TransactionAddSuccessImpl implements TransactionAddSuccess {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(TransactionLoading value)? loading,
-    TResult Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult Function(TransactionAddedFailure value)? addedfailure,
-    TResult Function(TransactionFetchedFailure value)? fetchedfailure,
+    TResult Function(TransactionAddSuccess value)? addSuccess,
+    TResult Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult Function(TransactionAddFailure value)? addfailure,
+    TResult Function(TransactionFetchFailure value)? fetchfailure,
     required TResult orElse(),
   }) {
     if (addSuccess != null) {
@@ -917,6 +913,175 @@ class _$TransactionAddSuccessImpl implements TransactionAddSuccess {
 
 abstract class TransactionAddSuccess implements TransactionState {
   const factory TransactionAddSuccess() = _$TransactionAddSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$TransactionFetchSuccessImplCopyWith<$Res> {
+  factory _$$TransactionFetchSuccessImplCopyWith(
+          _$TransactionFetchSuccessImpl value,
+          $Res Function(_$TransactionFetchSuccessImpl) then) =
+      __$$TransactionFetchSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<UserTransaction> transactions});
+}
+
+/// @nodoc
+class __$$TransactionFetchSuccessImplCopyWithImpl<$Res>
+    extends _$TransactionStateCopyWithImpl<$Res, _$TransactionFetchSuccessImpl>
+    implements _$$TransactionFetchSuccessImplCopyWith<$Res> {
+  __$$TransactionFetchSuccessImplCopyWithImpl(
+      _$TransactionFetchSuccessImpl _value,
+      $Res Function(_$TransactionFetchSuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? transactions = null,
+  }) {
+    return _then(_$TransactionFetchSuccessImpl(
+      null == transactions
+          ? _value._transactions
+          : transactions // ignore: cast_nullable_to_non_nullable
+              as List<UserTransaction>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TransactionFetchSuccessImpl implements TransactionFetchSuccess {
+  const _$TransactionFetchSuccessImpl(final List<UserTransaction> transactions)
+      : _transactions = transactions;
+
+  final List<UserTransaction> _transactions;
+  @override
+  List<UserTransaction> get transactions {
+    if (_transactions is EqualUnmodifiableListView) return _transactions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_transactions);
+  }
+
+  @override
+  String toString() {
+    return 'TransactionState.fetchSuccess(transactions: $transactions)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TransactionFetchSuccessImpl &&
+            const DeepCollectionEquality()
+                .equals(other._transactions, _transactions));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_transactions));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TransactionFetchSuccessImplCopyWith<_$TransactionFetchSuccessImpl>
+      get copyWith => __$$TransactionFetchSuccessImplCopyWithImpl<
+          _$TransactionFetchSuccessImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() addSuccess,
+    required TResult Function(List<UserTransaction> transactions) fetchSuccess,
+    required TResult Function(String message) addfailure,
+    required TResult Function(String message) fetchfailure,
+  }) {
+    return fetchSuccess(transactions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? addSuccess,
+    TResult? Function(List<UserTransaction> transactions)? fetchSuccess,
+    TResult? Function(String message)? addfailure,
+    TResult? Function(String message)? fetchfailure,
+  }) {
+    return fetchSuccess?.call(transactions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? addSuccess,
+    TResult Function(List<UserTransaction> transactions)? fetchSuccess,
+    TResult Function(String message)? addfailure,
+    TResult Function(String message)? fetchfailure,
+    required TResult orElse(),
+  }) {
+    if (fetchSuccess != null) {
+      return fetchSuccess(transactions);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(TransactionLoading value) loading,
+    required TResult Function(TransactionAddSuccess value) addSuccess,
+    required TResult Function(TransactionFetchSuccess value) fetchSuccess,
+    required TResult Function(TransactionAddFailure value) addfailure,
+    required TResult Function(TransactionFetchFailure value) fetchfailure,
+  }) {
+    return fetchSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(TransactionLoading value)? loading,
+    TResult? Function(TransactionAddSuccess value)? addSuccess,
+    TResult? Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult? Function(TransactionAddFailure value)? addfailure,
+    TResult? Function(TransactionFetchFailure value)? fetchfailure,
+  }) {
+    return fetchSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(TransactionLoading value)? loading,
+    TResult Function(TransactionAddSuccess value)? addSuccess,
+    TResult Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult Function(TransactionAddFailure value)? addfailure,
+    TResult Function(TransactionFetchFailure value)? fetchfailure,
+    required TResult orElse(),
+  }) {
+    if (fetchSuccess != null) {
+      return fetchSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TransactionFetchSuccess implements TransactionState {
+  const factory TransactionFetchSuccess(
+      final List<UserTransaction> transactions) = _$TransactionFetchSuccessImpl;
+
+  List<UserTransaction> get transactions;
+  @JsonKey(ignore: true)
+  _$$TransactionFetchSuccessImplCopyWith<_$TransactionFetchSuccessImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -961,7 +1126,7 @@ class _$TransactionAddFailureImpl implements TransactionAddFailure {
 
   @override
   String toString() {
-    return 'TransactionState.addFailure(message: $message)';
+    return 'TransactionState.addfailure(message: $message)';
   }
 
   @override
@@ -986,44 +1151,41 @@ class _$TransactionAddFailureImpl implements TransactionAddFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() addloading,
+    required TResult Function() loading,
     required TResult Function() addSuccess,
-    required TResult Function(String message) addFailure,
-    required TResult Function() fetchloading,
     required TResult Function(List<UserTransaction> transactions) fetchSuccess,
-    required TResult Function(String message) fetchFailure,
+    required TResult Function(String message) addfailure,
+    required TResult Function(String message) fetchfailure,
   }) {
-    return addFailure(message);
+    return addfailure(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? addloading,
+    TResult? Function()? loading,
     TResult? Function()? addSuccess,
-    TResult? Function(String message)? addFailure,
-    TResult? Function()? fetchloading,
     TResult? Function(List<UserTransaction> transactions)? fetchSuccess,
-    TResult? Function(String message)? fetchFailure,
+    TResult? Function(String message)? addfailure,
+    TResult? Function(String message)? fetchfailure,
   }) {
-    return addFailure?.call(message);
+    return addfailure?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? addloading,
+    TResult Function()? loading,
     TResult Function()? addSuccess,
-    TResult Function(String message)? addFailure,
-    TResult Function()? fetchloading,
     TResult Function(List<UserTransaction> transactions)? fetchSuccess,
-    TResult Function(String message)? fetchFailure,
+    TResult Function(String message)? addfailure,
+    TResult Function(String message)? fetchfailure,
     required TResult orElse(),
   }) {
-    if (addFailure != null) {
-      return addFailure(message);
+    if (addfailure != null) {
+      return addfailure(message);
     }
     return orElse();
   }
@@ -1032,44 +1194,41 @@ class _$TransactionAddFailureImpl implements TransactionAddFailure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(TransactionAddLoading value) addloading,
+    required TResult Function(TransactionLoading value) loading,
     required TResult Function(TransactionAddSuccess value) addSuccess,
-    required TResult Function(TransactionAddFailure value) addFailure,
-    required TResult Function(TransactionFetchLoading value) fetchloading,
-    required TResult Function(TransactionFetchedSuccess value) fetchSuccess,
-    required TResult Function(TransactionFetchFailure value) fetchFailure,
+    required TResult Function(TransactionFetchSuccess value) fetchSuccess,
+    required TResult Function(TransactionAddFailure value) addfailure,
+    required TResult Function(TransactionFetchFailure value) fetchfailure,
   }) {
-    return addFailure(this);
+    return addfailure(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(TransactionAddLoading value)? addloading,
+    TResult? Function(TransactionLoading value)? loading,
     TResult? Function(TransactionAddSuccess value)? addSuccess,
-    TResult? Function(TransactionAddFailure value)? addFailure,
-    TResult? Function(TransactionFetchLoading value)? fetchloading,
-    TResult? Function(TransactionFetchedSuccess value)? fetchSuccess,
-    TResult? Function(TransactionFetchFailure value)? fetchFailure,
+    TResult? Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult? Function(TransactionAddFailure value)? addfailure,
+    TResult? Function(TransactionFetchFailure value)? fetchfailure,
   }) {
-    return addFailure?.call(this);
+    return addfailure?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(TransactionAddLoading value)? addloading,
+    TResult Function(TransactionLoading value)? loading,
     TResult Function(TransactionAddSuccess value)? addSuccess,
-    TResult Function(TransactionAddFailure value)? addFailure,
-    TResult Function(TransactionFetchLoading value)? fetchloading,
-    TResult Function(TransactionFetchedSuccess value)? fetchSuccess,
-    TResult Function(TransactionFetchFailure value)? fetchFailure,
+    TResult Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult Function(TransactionAddFailure value)? addfailure,
+    TResult Function(TransactionFetchFailure value)? fetchfailure,
     required TResult orElse(),
   }) {
-    if (addFailure != null) {
-      return addFailure(this);
+    if (addfailure != null) {
+      return addfailure(this);
     }
     return orElse();
   }
@@ -1086,85 +1245,108 @@ abstract class TransactionAddFailure implements TransactionState {
 }
 
 /// @nodoc
-abstract class _$$TransactionFetchLoadingImplCopyWith<$Res> {
-  factory _$$TransactionFetchLoadingImplCopyWith(
-          _$TransactionFetchLoadingImpl value,
-          $Res Function(_$TransactionFetchLoadingImpl) then) =
-      __$$TransactionFetchLoadingImplCopyWithImpl<$Res>;
+abstract class _$$TransactionFetchFailureImplCopyWith<$Res> {
+  factory _$$TransactionFetchFailureImplCopyWith(
+          _$TransactionFetchFailureImpl value,
+          $Res Function(_$TransactionFetchFailureImpl) then) =
+      __$$TransactionFetchFailureImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
-class __$$TransactionFetchLoadingImplCopyWithImpl<$Res>
-    extends _$TransactionStateCopyWithImpl<$Res, _$TransactionFetchLoadingImpl>
-    implements _$$TransactionFetchLoadingImplCopyWith<$Res> {
-  __$$TransactionFetchLoadingImplCopyWithImpl(
-      _$TransactionFetchLoadingImpl _value,
-      $Res Function(_$TransactionFetchLoadingImpl) _then)
+class __$$TransactionFetchFailureImplCopyWithImpl<$Res>
+    extends _$TransactionStateCopyWithImpl<$Res, _$TransactionFetchFailureImpl>
+    implements _$$TransactionFetchFailureImplCopyWith<$Res> {
+  __$$TransactionFetchFailureImplCopyWithImpl(
+      _$TransactionFetchFailureImpl _value,
+      $Res Function(_$TransactionFetchFailureImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$TransactionFetchFailureImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$TransactionFetchLoadingImpl implements TransactionFetchLoading {
-  const _$TransactionFetchLoadingImpl();
+class _$TransactionFetchFailureImpl implements TransactionFetchFailure {
+  const _$TransactionFetchFailureImpl(this.message);
+
+  @override
+  final String message;
 
   @override
   String toString() {
-    return 'TransactionState.fetchloading()';
+    return 'TransactionState.fetchfailure(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TransactionFetchLoadingImpl);
+            other is _$TransactionFetchFailureImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TransactionFetchFailureImplCopyWith<_$TransactionFetchFailureImpl>
+      get copyWith => __$$TransactionFetchFailureImplCopyWithImpl<
+          _$TransactionFetchFailureImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() addloading,
+    required TResult Function() loading,
     required TResult Function() addSuccess,
-    required TResult Function(String message) addFailure,
-    required TResult Function() fetchloading,
     required TResult Function(List<UserTransaction> transactions) fetchSuccess,
-    required TResult Function(String message) fetchFailure,
+    required TResult Function(String message) addfailure,
+    required TResult Function(String message) fetchfailure,
   }) {
-    return fetchloading();
+    return fetchfailure(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? addloading,
+    TResult? Function()? loading,
     TResult? Function()? addSuccess,
-    TResult? Function(String message)? addFailure,
-    TResult? Function()? fetchloading,
     TResult? Function(List<UserTransaction> transactions)? fetchSuccess,
-    TResult? Function(String message)? fetchFailure,
+    TResult? Function(String message)? addfailure,
+    TResult? Function(String message)? fetchfailure,
   }) {
-    return fetchloading?.call();
+    return fetchfailure?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? addloading,
+    TResult Function()? loading,
     TResult Function()? addSuccess,
-    TResult Function(String message)? addFailure,
-    TResult Function()? fetchloading,
     TResult Function(List<UserTransaction> transactions)? fetchSuccess,
-    TResult Function(String message)? fetchFailure,
+    TResult Function(String message)? addfailure,
+    TResult Function(String message)? fetchfailure,
     required TResult orElse(),
   }) {
-    if (fetchloading != null) {
-      return fetchloading();
+    if (fetchfailure != null) {
+      return fetchfailure(message);
     }
     return orElse();
   }
@@ -1173,547 +1355,52 @@ class _$TransactionFetchLoadingImpl implements TransactionFetchLoading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(TransactionAddLoading value) addloading,
+    required TResult Function(TransactionLoading value) loading,
     required TResult Function(TransactionAddSuccess value) addSuccess,
-    required TResult Function(TransactionAddFailure value) addFailure,
-    required TResult Function(TransactionFetchLoading value) fetchloading,
-    required TResult Function(TransactionFetchedSuccess value) fetchSuccess,
-    required TResult Function(TransactionFetchFailure value) fetchFailure,
+    required TResult Function(TransactionFetchSuccess value) fetchSuccess,
+    required TResult Function(TransactionAddFailure value) addfailure,
+    required TResult Function(TransactionFetchFailure value) fetchfailure,
   }) {
-    return fetchloading(this);
+    return fetchfailure(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(TransactionAddLoading value)? addloading,
+    TResult? Function(TransactionLoading value)? loading,
     TResult? Function(TransactionAddSuccess value)? addSuccess,
-    TResult? Function(TransactionAddFailure value)? addFailure,
-    TResult? Function(TransactionFetchLoading value)? fetchloading,
-    TResult? Function(TransactionFetchedSuccess value)? fetchSuccess,
-    TResult? Function(TransactionFetchFailure value)? fetchFailure,
+    TResult? Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult? Function(TransactionAddFailure value)? addfailure,
+    TResult? Function(TransactionFetchFailure value)? fetchfailure,
   }) {
-    return fetchloading?.call(this);
+    return fetchfailure?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(TransactionAddLoading value)? addloading,
+    TResult Function(TransactionLoading value)? loading,
     TResult Function(TransactionAddSuccess value)? addSuccess,
-    TResult Function(TransactionAddFailure value)? addFailure,
-    TResult Function(TransactionFetchLoading value)? fetchloading,
-    TResult Function(TransactionFetchedSuccess value)? fetchSuccess,
-    TResult Function(TransactionFetchFailure value)? fetchFailure,
+    TResult Function(TransactionFetchSuccess value)? fetchSuccess,
+    TResult Function(TransactionAddFailure value)? addfailure,
+    TResult Function(TransactionFetchFailure value)? fetchfailure,
     required TResult orElse(),
   }) {
-    if (fetchloading != null) {
-      return fetchloading(this);
+    if (fetchfailure != null) {
+      return fetchfailure(this);
     }
     return orElse();
   }
 }
 
-abstract class TransactionFetchLoading implements TransactionState {
-  const factory TransactionFetchLoading() = _$TransactionFetchLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$TransactionFetchedSuccessImplCopyWith<$Res> {
-  factory _$$TransactionFetchedSuccessImplCopyWith(
-          _$TransactionFetchedSuccessImpl value,
-          $Res Function(_$TransactionFetchedSuccessImpl) then) =
-      __$$TransactionFetchedSuccessImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<UserTransaction> transactions});
-}
-
-/// @nodoc
-class __$$TransactionFetchedSuccessImplCopyWithImpl<$Res>
-    extends _$TransactionStateCopyWithImpl<$Res,
-        _$TransactionFetchedSuccessImpl>
-    implements _$$TransactionFetchedSuccessImplCopyWith<$Res> {
-  __$$TransactionFetchedSuccessImplCopyWithImpl(
-      _$TransactionFetchedSuccessImpl _value,
-      $Res Function(_$TransactionFetchedSuccessImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? transactions = null,
-  }) {
-    return _then(_$TransactionFetchedSuccessImpl(
-      null == transactions
-          ? _value._transactions
-          : transactions // ignore: cast_nullable_to_non_nullable
-              as List<UserTransaction>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$TransactionFetchedSuccessImpl implements TransactionFetchedSuccess {
-  const _$TransactionFetchedSuccessImpl(
-      final List<UserTransaction> transactions)
-      : _transactions = transactions;
-
-  final List<UserTransaction> _transactions;
-  @override
-  List<UserTransaction> get transactions {
-    if (_transactions is EqualUnmodifiableListView) return _transactions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_transactions);
-  }
-
-  @override
-  String toString() {
-    return 'TransactionState.fetchSuccess(transactions: $transactions)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TransactionFetchedSuccessImpl &&
-            const DeepCollectionEquality()
-                .equals(other._transactions, _transactions));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_transactions));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$TransactionFetchedSuccessImplCopyWith<_$TransactionFetchedSuccessImpl>
-      get copyWith => __$$TransactionFetchedSuccessImplCopyWithImpl<
-          _$TransactionFetchedSuccessImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() addedSuccess,
-    required TResult Function(List<UserTransaction> transactions)
-        fetshedSuccess,
-    required TResult Function(String message) addedfailure,
-    required TResult Function(String message) fetchedfailure,
-  }) {
-    return fetchSuccess(transactions);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? addedSuccess,
-    TResult? Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult? Function(String message)? addedfailure,
-    TResult? Function(String message)? fetchedfailure,
-  }) {
-    return fetchSuccess?.call(transactions);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? addedSuccess,
-    TResult Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult Function(String message)? addedfailure,
-    TResult Function(String message)? fetchedfailure,
-    required TResult orElse(),
-  }) {
-    if (fetchSuccess != null) {
-      return fetchSuccess(transactions);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(TransactionLoading value) loading,
-    required TResult Function(TransactionAddedSuccess value) addedSuccess,
-    required TResult Function(TransactionFetshedSuccess value) fetshedSuccess,
-    required TResult Function(TransactionAddedFailure value) addedfailure,
-    required TResult Function(TransactionFetchedFailure value) fetchedfailure,
-  }) {
-    return fetchSuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(TransactionLoading value)? loading,
-    TResult? Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult? Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult? Function(TransactionAddedFailure value)? addedfailure,
-    TResult? Function(TransactionFetchedFailure value)? fetchedfailure,
-  }) {
-    return fetchSuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(TransactionLoading value)? loading,
-    TResult Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult Function(TransactionAddedFailure value)? addedfailure,
-    TResult Function(TransactionFetchedFailure value)? fetchedfailure,
-    required TResult orElse(),
-  }) {
-    if (fetchSuccess != null) {
-      return fetchSuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class TransactionFetchedSuccess implements TransactionState {
-  const factory TransactionFetchedSuccess(
-          final List<UserTransaction> transactions) =
-      _$TransactionFetchedSuccessImpl;
-
-  List<UserTransaction> get transactions;
-  @JsonKey(ignore: true)
-  _$$TransactionFetchedSuccessImplCopyWith<_$TransactionFetchedSuccessImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$TransactionAddedFailureImplCopyWith<$Res> {
-  factory _$$TransactionAddedFailureImplCopyWith(
-          _$TransactionAddedFailureImpl value,
-          $Res Function(_$TransactionAddedFailureImpl) then) =
-      __$$TransactionAddedFailureImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String message});
-}
-
-/// @nodoc
-class __$$TransactionAddedFailureImplCopyWithImpl<$Res>
-    extends _$TransactionStateCopyWithImpl<$Res, _$TransactionAddedFailureImpl>
-    implements _$$TransactionAddedFailureImplCopyWith<$Res> {
-  __$$TransactionAddedFailureImplCopyWithImpl(
-      _$TransactionAddedFailureImpl _value,
-      $Res Function(_$TransactionAddedFailureImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_$TransactionAddedFailureImpl(
-      null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$TransactionAddedFailureImpl implements TransactionAddedFailure {
-  const _$TransactionAddedFailureImpl(this.message);
-
-  @override
-  final String message;
-
-  @override
-  String toString() {
-    return 'TransactionState.addedfailure(message: $message)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TransactionAddedFailureImpl &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$TransactionAddedFailureImplCopyWith<_$TransactionAddedFailureImpl>
-      get copyWith => __$$TransactionAddedFailureImplCopyWithImpl<
-          _$TransactionAddedFailureImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() addedSuccess,
-    required TResult Function(List<UserTransaction> transactions)
-        fetshedSuccess,
-    required TResult Function(String message) addedfailure,
-    required TResult Function(String message) fetchedfailure,
-  }) {
-    return addedfailure(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? addedSuccess,
-    TResult? Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult? Function(String message)? addedfailure,
-    TResult? Function(String message)? fetchedfailure,
-  }) {
-    return addedfailure?.call(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? addedSuccess,
-    TResult Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult Function(String message)? addedfailure,
-    TResult Function(String message)? fetchedfailure,
-    required TResult orElse(),
-  }) {
-    if (addedfailure != null) {
-      return addedfailure(message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(TransactionLoading value) loading,
-    required TResult Function(TransactionAddedSuccess value) addedSuccess,
-    required TResult Function(TransactionFetshedSuccess value) fetshedSuccess,
-    required TResult Function(TransactionAddedFailure value) addedfailure,
-    required TResult Function(TransactionFetchedFailure value) fetchedfailure,
-  }) {
-    return addedfailure(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(TransactionLoading value)? loading,
-    TResult? Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult? Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult? Function(TransactionAddedFailure value)? addedfailure,
-    TResult? Function(TransactionFetchedFailure value)? fetchedfailure,
-  }) {
-    return addedfailure?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(TransactionLoading value)? loading,
-    TResult Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult Function(TransactionAddedFailure value)? addedfailure,
-    TResult Function(TransactionFetchedFailure value)? fetchedfailure,
-    required TResult orElse(),
-  }) {
-    if (addedfailure != null) {
-      return addedfailure(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class TransactionAddedFailure implements TransactionState {
-  const factory TransactionAddedFailure(final String message) =
-      _$TransactionAddedFailureImpl;
+abstract class TransactionFetchFailure implements TransactionState {
+  const factory TransactionFetchFailure(final String message) =
+      _$TransactionFetchFailureImpl;
 
   String get message;
   @JsonKey(ignore: true)
-  _$$TransactionAddedFailureImplCopyWith<_$TransactionAddedFailureImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$TransactionFetchedFailureImplCopyWith<$Res> {
-  factory _$$TransactionFetchedFailureImplCopyWith(
-          _$TransactionFetchedFailureImpl value,
-          $Res Function(_$TransactionFetchedFailureImpl) then) =
-      __$$TransactionFetchedFailureImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String message});
-}
-
-/// @nodoc
-class __$$TransactionFetchedFailureImplCopyWithImpl<$Res>
-    extends _$TransactionStateCopyWithImpl<$Res,
-        _$TransactionFetchedFailureImpl>
-    implements _$$TransactionFetchedFailureImplCopyWith<$Res> {
-  __$$TransactionFetchedFailureImplCopyWithImpl(
-      _$TransactionFetchedFailureImpl _value,
-      $Res Function(_$TransactionFetchedFailureImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_$TransactionFetchedFailureImpl(
-      null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$TransactionFetchedFailureImpl implements TransactionFetchedFailure {
-  const _$TransactionFetchedFailureImpl(this.message);
-
-  @override
-  final String message;
-
-  @override
-  String toString() {
-    return 'TransactionState.fetchedfailure(message: $message)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TransactionFetchedFailureImpl &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$TransactionFetchedFailureImplCopyWith<_$TransactionFetchedFailureImpl>
-      get copyWith => __$$TransactionFetchedFailureImplCopyWithImpl<
-          _$TransactionFetchedFailureImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() addedSuccess,
-    required TResult Function(List<UserTransaction> transactions)
-        fetshedSuccess,
-    required TResult Function(String message) addedfailure,
-    required TResult Function(String message) fetchedfailure,
-  }) {
-    return fetchedfailure(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? addedSuccess,
-    TResult? Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult? Function(String message)? addedfailure,
-    TResult? Function(String message)? fetchedfailure,
-  }) {
-    return fetchedfailure?.call(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? addedSuccess,
-    TResult Function(List<UserTransaction> transactions)? fetshedSuccess,
-    TResult Function(String message)? addedfailure,
-    TResult Function(String message)? fetchedfailure,
-    required TResult orElse(),
-  }) {
-    if (fetchedfailure != null) {
-      return fetchedfailure(message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(TransactionLoading value) loading,
-    required TResult Function(TransactionAddedSuccess value) addedSuccess,
-    required TResult Function(TransactionFetshedSuccess value) fetshedSuccess,
-    required TResult Function(TransactionAddedFailure value) addedfailure,
-    required TResult Function(TransactionFetchedFailure value) fetchedfailure,
-  }) {
-    return fetchedfailure(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(TransactionLoading value)? loading,
-    TResult? Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult? Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult? Function(TransactionAddedFailure value)? addedfailure,
-    TResult? Function(TransactionFetchedFailure value)? fetchedfailure,
-  }) {
-    return fetchedfailure?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(TransactionLoading value)? loading,
-    TResult Function(TransactionAddedSuccess value)? addedSuccess,
-    TResult Function(TransactionFetshedSuccess value)? fetshedSuccess,
-    TResult Function(TransactionAddedFailure value)? addedfailure,
-    TResult Function(TransactionFetchedFailure value)? fetchedfailure,
-    required TResult orElse(),
-  }) {
-    if (fetchedfailure != null) {
-      return fetchedfailure(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class TransactionFetchedFailure implements TransactionState {
-  const factory TransactionFetchedFailure(final String message) =
-      _$TransactionFetchedFailureImpl;
-
-  String get message;
-  @JsonKey(ignore: true)
-  _$$TransactionFetchedFailureImplCopyWith<_$TransactionFetchedFailureImpl>
+  _$$TransactionFetchFailureImplCopyWith<_$TransactionFetchFailureImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
