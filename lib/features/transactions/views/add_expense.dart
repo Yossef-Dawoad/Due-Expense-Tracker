@@ -112,7 +112,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   ),
                 ),
                 child: ElevatedButton(
-                  onPressed: () => _submitNewCategory(context),
+                  onPressed: () => _submitNewExpense(context),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(16.0),
                     backgroundColor: Colors.transparent,
@@ -133,9 +133,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       const SnackBar(
                           content: Text('Expense Added Successfully')),
                     ),
-                    context
-                        .read<TransactionsBloc>()
-                        .add(const FetchedAllTransactions())
                   },
                   orElse: () => const CircularProgressIndicator(),
                 ),
@@ -161,17 +158,19 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     );
   }
 
-  void _submitNewCategory(BuildContext context) {
-    context.read<TransactionsBloc>().add(
-          TransactionEvent.addedNewExpense(
-            UserTransaction(
-              id: const Uuid().v4(),
-              amount: double.parse(_amountController.text.trim()),
-              datetime: _selectedDateNotifier.value,
-              note: _descriptionController.text.trim(),
-              category: selectedCategory!,
-            ),
+  void _submitNewExpense(BuildContext context) {
+    context.read<TransactionsBloc>()
+      ..add(
+        TransactionEvent.addedNewExpense(
+          UserTransaction(
+            id: const Uuid().v4(),
+            amount: double.parse(_amountController.text.trim()),
+            datetime: _selectedDateNotifier.value,
+            note: _descriptionController.text.trim(),
+            category: selectedCategory!,
           ),
-        );
+        ),
+      )
+      ..add(const FetchedAllTransactions());
   }
 }
