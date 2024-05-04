@@ -22,7 +22,7 @@ class TransactionsBloc extends Bloc<TransactionEvent, TransactionState> {
       await _transactionService.addNewItem(event.transaction);
       emit(const TransactionState.addedSuccess());
     } on Exception catch (e) {
-      emit(TransactionState.failure(e.toString()));
+      emit(TransactionState.addedfailure(e.toString()));
     }
   }
 
@@ -33,7 +33,7 @@ class TransactionsBloc extends Bloc<TransactionEvent, TransactionState> {
       final userTransactionlist = preDefinedTransactions + cloudTranscations;
       emit(TransactionState.fetshedSuccess(userTransactionlist));
     } catch (e) {
-      emit(TransactionState.failure(e.toString()));
+      emit(TransactionState.fetchedfailure(e.toString()));
     }
   }
 }

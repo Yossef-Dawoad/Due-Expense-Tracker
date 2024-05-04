@@ -1,6 +1,6 @@
 - [X] Add Chips income or expense
 - [X] add Launcher icon for our App
-- [ ] Add Arrow to Transactions List to Indicate income or expense
+- [X] Add Arrow to Transactions List to Indicate income or expense
 - [x] in add expense screen selected category should refelcted
 - [ ] Transaction Long Tap to display transction Note and Details (model sheet?)
 - [ ] The Transaction Sheet of Transaction Details should have an **edit** and **delete** options

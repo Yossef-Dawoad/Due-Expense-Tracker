@@ -1,4 +1,5 @@
 import 'package:expancetracker/core/constants/textstyles.dart';
+import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
 import 'package:expancetracker/features/transactions/data/models/user_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,11 +26,18 @@ class TransactionTileWidget extends StatelessWidget {
             child: Icon(transaction.category.icon),
           ),
           title: Text(transaction.category.title, style: f18BlackBold),
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          trailing: Row(
             children: [
-              Text('\$${transaction.amount}', style: f18BlackBold),
-              Text(dateFormat, style: f14greyRegularText)
+              transaction.category.status == TransactionStatus.expense
+                  ? const Icon(Icons.arrow_downward, color: Colors.red)
+                  : const Icon(Icons.arrow_upward, color: Colors.green),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('\$${transaction.amount}', style: f18BlackBold),
+                  Text(dateFormat, style: f14greyRegularText)
+                ],
+              ),
             ],
           ),
         ),
