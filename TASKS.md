@@ -4,7 +4,7 @@
 - [x] in add expense screen selected category should refelcted
 - [ ] Transaction Long Tap to display transction Note and Details (model sheet?)
 - [ ] The Transaction Sheet of Transaction Details should have an **edit** and **delete** options
-- [ ] Shimmer Loading instead of circle progress indicator
+- [x] Shimmer Loading instead of circle progress indicator
 - [ ] Setup tests
 - [X] add github actions
 - [ ] add fastlane and ci/cd pipeline

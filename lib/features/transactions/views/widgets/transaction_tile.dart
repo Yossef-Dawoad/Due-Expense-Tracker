@@ -1,9 +1,7 @@
 import 'package:expancetracker/core/constants/textstyles.dart';
 import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
 import 'package:expancetracker/features/transactions/data/models/user_transaction.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class TransactionTileWidget extends StatelessWidget {
@@ -19,12 +17,13 @@ class TransactionTileWidget extends StatelessWidget {
     final dateFormat = DateFormat('d, MMM').format(transaction.datetime);
     return Card(
       elevation: 0.0,
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 25.0),
         child: Row(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -38,8 +37,7 @@ class TransactionTileWidget extends StatelessWidget {
                   Flexible(
                     child: Text(
                       transaction.category.title,
-                      style:
-                          f18BlackBold.copyWith(fontWeight: FontWeight.normal),
+                      style: f18BlackBold.copyWith(fontWeight: FontWeight.normal),
                     ),
                   ),
                 ],

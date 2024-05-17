@@ -6,7 +6,7 @@ extension ContextThemingExtension on BuildContext {
   Color get primaryColor => theme.primaryColor;
   Color get primaryColorDark => theme.primaryColorDark;
   Color get primaryColorLight => theme.primaryColorLight;
-  Color get backgroundColor => theme.colorScheme.background;
+  Color get backgroundColor => theme.colorScheme.surface;
   Color get scaffoldBackgroundColor => theme.scaffoldBackgroundColor;
   Color get cardColor => theme.cardColor;
   Color get dividerColor => theme.dividerColor;
@@ -20,8 +20,7 @@ extension ContextThemingExtension on BuildContext {
 
 extension NavigatingExtensions on BuildContext {
   Future<T?> pushRoute<T>(Widget page) {
-    return Navigator.of(this)
-        .push(MaterialPageRoute(builder: (context) => page));
+    return Navigator.of(this).push(MaterialPageRoute(builder: (context) => page));
   }
 
   Future<T?> pushNamedRoute<T>(String routeName, {Object? arguments}) {
@@ -41,14 +40,11 @@ extension NavigatingExtensions on BuildContext {
   }
 
   void pushReplacementRoute(Widget page) {
-    Navigator.of(this)
-        .pushReplacement(MaterialPageRoute(builder: (context) => page));
+    Navigator.of(this).pushReplacement(MaterialPageRoute(builder: (context) => page));
   }
 
-  Future<T?> pushReplacementNamedRoute<T>(String routeName,
-      {Object? arguments}) {
-    return Navigator.of(this)
-        .pushReplacementNamed(routeName, arguments: arguments);
+  Future<T?> pushReplacementNamedRoute<T>(String routeName, {Object? arguments}) {
+    return Navigator.of(this).pushReplacementNamed(routeName, arguments: arguments);
   }
 
   void popRoute<T>([T? result]) {

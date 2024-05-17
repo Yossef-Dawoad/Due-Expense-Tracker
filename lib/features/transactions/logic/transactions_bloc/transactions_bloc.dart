@@ -28,6 +28,8 @@ class TransactionsBloc extends Bloc<TransactionEvent, TransactionState> {
 
   void _onTransactionFetched(event, emit) async {
     emit(const TransactionState.loading());
+    // await Future.delayed(const Duration(minutes: 15), () {});
+
     try {
       final cloudTranscations = await _transactionService.getAllItems();
       final userTransactionlist = preDefinedTransactions + cloudTranscations;

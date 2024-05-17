@@ -1,4 +1,5 @@
 import 'package:expancetracker/core/bindings/dependancy_injection.dart';
+import 'package:expancetracker/core/common/widgets/skelton/skeleton_transaction_shimmer.dart';
 import 'package:expancetracker/features/transactions/logic/transactions_bloc/transactions_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +13,7 @@ class TransactionListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          sl<TransactionsBloc>()..add(const FetchedAllTransactions()),
+      create: (context) => sl<TransactionsBloc>()..add(const FetchedAllTransactions()),
       child: BlocBuilder<TransactionsBloc, TransactionState>(
         buildWhen: (prev, curr) =>
             curr is TransactionLoading ||
@@ -21,16 +21,19 @@ class TransactionListView extends StatelessWidget {
             curr is TransactionFetchFailure,
         builder: (context, state) {
           //TODO handle error WITH IMAGE and something wrong happen
-          //TODO handle loading with shimmers
 
           return state.maybeWhen(
             fetchSuccess: (transactions) => ListView.separated(
               separatorBuilder: (_, __) => const SizedBox(height: 10),
               itemCount: transactions.length,
-              itemBuilder: (_, idx) =>
-                  TransactionTileWidget(transaction: transactions[idx]),
+              itemBuilder: (_, idx) => TransactionTileWidget(transaction: transactions[idx]),
             ),
-            orElse: () => const Center(child: CircularProgressIndicator()),
+            orElse: () => ListView.separated(
+              separatorBuilder: (_, __) => const SizedBox(height: 10),
+              itemCount: 6,
+              itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
+            ),
+            // SkeletonTransactionTiles
           );
         },
       ),
