@@ -15,7 +15,9 @@ class ExpansesTabScreen extends StatelessWidget {
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: [
+        // Transactions Charts
         const SliverToBoxAdapter(child: TransactionHistoryBarChar()),
+        // Transaction Sliver
         BlocProvider(
           create: (context) => sl<TransactionsBloc>()..add(const FetchedAllTransactions()),
           child: BlocBuilder<TransactionsBloc, TransactionState>(
@@ -25,7 +27,6 @@ class ExpansesTabScreen extends StatelessWidget {
                 curr is TransactionFetchFailure,
             builder: (context, state) {
               //TODO handle error WITH IMAGE and something wrong happen
-
               return state.maybeWhen(
                 fetchSuccess: (transactions) => SliverList.separated(
                   separatorBuilder: (_, __) => const SizedBox(height: 10),

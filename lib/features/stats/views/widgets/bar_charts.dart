@@ -1,9 +1,24 @@
 import 'package:expancetracker/core/constants/textstyles.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class TransactionHistoryBarChar extends StatelessWidget {
+class TransactionHistoryBarChar extends StatefulWidget {
   const TransactionHistoryBarChar({super.key});
+
+  @override
+  State<TransactionHistoryBarChar> createState() => _TransactionHistoryBarCharState();
+}
+
+class _TransactionHistoryBarCharState extends State<TransactionHistoryBarChar> {
+  // date formmtter
+  late DateFormat formatter;
+
+  @override
+  void initState() {
+    super.initState();
+    formatter = DateFormat('EEE, MMM dd');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +33,8 @@ class TransactionHistoryBarChar extends StatelessWidget {
         height: 350,
         child: Column(
           children: [
-            Text(DateTime.now().toString(), style: f14greyRegularText),
-            Text('\$35000.0', style: f24BlackBold),
+            Text(formatter.format(DateTime.now()), style: f14greyRegularText),
+            Text('\$3500.0', style: f24BlackBold),
             const SizedBox(height: 20),
             Expanded(
               child: BarChart(
@@ -28,10 +43,8 @@ class TransactionHistoryBarChar extends StatelessWidget {
                   borderData: FlBorderData(show: false),
                   titlesData: const FlTitlesData(
                     show: true,
-                    rightTitles:
-                        AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                    topTitles:
-                        AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                   ),
                   barGroups: [
                     makeGroupDataLine(1, 10),
@@ -67,8 +80,8 @@ class TransactionHistoryBarChar extends StatelessWidget {
           color: color,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            toY: 0,
-            color: Colors.grey.withOpacity(0.2),
+            // toY: 0,
+            color: Colors.grey.withOpacity(0.5),
           ),
         ),
       ],

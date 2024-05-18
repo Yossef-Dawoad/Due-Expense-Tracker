@@ -22,7 +22,7 @@ class SkeltonContainer extends StatefulWidget {
 
 class _SkeltonContainerState extends State<SkeltonContainer> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<Alignment> _topAlignmentAnimation, _bottomAlignmentAnimation;
+  late Animation<double> _animation;
 
   @override
   void dispose() {
@@ -37,55 +37,17 @@ class _SkeltonContainerState extends State<SkeltonContainer> with SingleTickerPr
       vsync: this,
       duration: Duration(milliseconds: widget.animationDuration),
     );
-    _topAlignmentAnimation = TweenSequence<Alignment>(
-      [
-        TweenSequenceItem<Alignment>(
-          tween: Tween(begin: Alignment.topLeft, end: Alignment.topRight),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween(begin: Alignment.topRight, end: Alignment.bottomRight),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween(begin: Alignment.bottomRight, end: Alignment.bottomLeft),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween(begin: Alignment.bottomLeft, end: Alignment.topLeft),
-          weight: 1,
-        ),
-      ],
-    ).animate(_controller);
-
-    _bottomAlignmentAnimation = TweenSequence<Alignment>(
-      [
-        TweenSequenceItem<Alignment>(
-          tween: Tween(begin: Alignment.bottomRight, end: Alignment.bottomLeft),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween(begin: Alignment.bottomLeft, end: Alignment.topLeft),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween(begin: Alignment.topLeft, end: Alignment.topRight),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween(begin: Alignment.topRight, end: Alignment.bottomRight),
-          weight: 1,
-        ),
-      ],
-    ).animate(_controller);
-
-    _controller.repeat();
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOutCubic, // This is where you set your curve
+    );
+    _controller.repeat(reverse: true);
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _controller,
+      animation: _animation,
       builder: (context, _) => Container(
         height: widget.height,
         width: widget.width,
@@ -94,8 +56,7 @@ class _SkeltonContainerState extends State<SkeltonContainer> with SingleTickerPr
           borderRadius: BorderRadius.circular(widget.radius),
           gradient: LinearGradient(
             colors: const [Color.fromARGB(3, 214, 214, 214), Colors.white],
-            begin: _topAlignmentAnimation.value,
-            end: _bottomAlignmentAnimation.value,
+            stops: [0, _controller.value],
           ),
         ),
       ),
