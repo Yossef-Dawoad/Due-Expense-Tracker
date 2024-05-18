@@ -14,7 +14,7 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-  final PageController _pageController = PageController();
+  final _pageController = PageController();
   int _currentPageIndex = 0;
 
   @override
@@ -35,14 +35,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             controller: _pageController,
             onPageChanged: _updatePageIndicator,
             itemCount: onBoardingPages.length,
-            itemBuilder: (context, index) {
-              final page = onBoardingPages[index];
-              return OnBoardingPage(
-                image: page.image,
-                title: page.title,
-                subTitle: page.subTitle,
-              );
-            },
+            itemBuilder: (context, index) => OnBoardingPage(pageContent: onBoardingPages[index]),
           ),
 
           /// skip Button
@@ -51,7 +44,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             right: 24,
             child: TextButton(
               onPressed: () => _skiptoLastPage(exitRouteName: Routes.home),
-              child: const Text('skip'),
+              child: const Text('Skip'),
             ),
           ),
 
@@ -72,8 +65,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             bottom: kBottomNavigationBarHeight,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
                 shape: const StadiumBorder(),
                 backgroundColor: Palette.primary,
               ),
@@ -82,7 +74,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
               child: (_currentPageIndex == onBoardingPages.length - 1)
                   ? const Text(
-                      "continue",
+                      "Continue",
                       style: TextStyle(color: Palette.white),
                     )
                   : const Icon(
@@ -100,6 +92,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     setState(() => _currentPageIndex = index);
   }
 
+  /// Skips to the last page of the onboarding flow and navigates to the specified exit route.
+  ///
+  /// If the current page index is not the last page index, this method jumps to the last page.
+  /// Otherwise, it navigates to the specified exit route, removing all previous routes from the navigation stack.
+  ///
+  /// Parameters:
+  /// - [exitRouteName]: The name of the route to navigate to when the last page is reached. Defaults to '/' (the root route).
   void _skiptoLastPage({String exitRouteName = '/'}) async {
     final lastPageIndex = onBoardingPages.length - 1;
 
@@ -114,13 +113,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
+  /// Navigates to the next page in the onboarding sequence.
+  ///
+  /// If the current page is the last page in the sequence, it skips to the last page
+  /// and exits the onboarding flow using the provided [exitsRouteName].
+  ///
+  /// Otherwise, it moves to the next page in the sequence using the [_pageController].s
   void _navigateToNextPage({String exitsRouteName = '/'}) {
     if (_currentPageIndex == onBoardingPages.length - 1) {
       _skiptoLastPage(exitRouteName: exitsRouteName);
       return;
     }
     _pageController.nextPage(
-      duration: const Duration(microseconds: 300),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeIn,
     );
   }

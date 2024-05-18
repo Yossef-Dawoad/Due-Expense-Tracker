@@ -1,19 +1,19 @@
 import 'package:expancetracker/core/constants/spaces.dart';
 import 'package:expancetracker/core/utils/device_utils/device_utilty.dart';
 import 'package:expancetracker/core/utils/extensions/context_ext.dart';
+import 'package:expancetracker/features/onboarding/data/models/page_content.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({
     super.key,
-    required this.image,
-    required this.title,
-    required this.subTitle,
+    required this.pageContent,
   });
-  final String image, title, subTitle;
+  final OnBoardingPageContent pageContent;
 
   @override
   Widget build(BuildContext context) {
+    final (title, subTitle, image) = pageContent.entriesRecord();
     return Padding(
       padding: const EdgeInsets.all(Spaces.medium),
       child: Column(
