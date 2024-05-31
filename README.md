@@ -6,7 +6,7 @@
 ## ScreenShots
 
 
-![h](https://github.com/Yossef-Dawoad/Due-Expense-Tracker/app_screens/image1.png)  |  ![b](https://github.com/Yossef-Dawoad/Due-Expense-Tracker/app_screens/image2.png) |  ![b](https://github.com/Yossef-Dawoad/Due-Expense-Tracker/app_screens/image3.png)
+![h](https://github.com/Yossef-Dawoad/Due-Expense-Tracker/blob/dev/app_screens/image1.png)  |  ![b](https://github.com/Yossef-Dawoad/Due-Expense-Tracker/blob/dev/app_screens/image2.png) |  ![b](https://github.com/Yossef-Dawoad/Due-Expense-Tracker/blob/dev/app_screens/image3.png)
 :-------------------------:|:-------------------------:|:-------------------------:
 
 
