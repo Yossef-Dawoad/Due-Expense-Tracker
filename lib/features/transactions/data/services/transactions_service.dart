@@ -3,9 +3,9 @@ import 'package:expancetracker/core/common/domain/intrefaces/firebase_base.dart'
 
 import '../models/user_transaction.dart';
 
-typedef TransactionServiceType = BaseFireBaseDB<UserTransaction>;
+typedef UserTransactionServiceType = BaseFireBaseDB<UserTransaction>;
 
-class FirebaseTransctionServiceImpl implements TransactionServiceType {
+class FirebaseTransctionServiceImpl implements UserTransactionServiceType {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
@@ -22,16 +22,13 @@ class FirebaseTransctionServiceImpl implements TransactionServiceType {
   @override
   Future<List<UserTransaction>> getAllItems() async {
     final dataSnapShot = await _firestore.collection(collectionName).get();
-    final result = dataSnapShot.docs
-        .map((doc) => UserTransaction.fromJson(doc.data()))
-        .toList();
+    final result = dataSnapShot.docs.map((doc) => UserTransaction.fromJson(doc.data())).toList();
     return result;
   }
 
   @override
   Future<UserTransaction> getItemById(String id) async {
-    final dataSnapShot =
-        await _firestore.collection(collectionName).doc(id).get();
+    final dataSnapShot = await _firestore.collection(collectionName).doc(id).get();
     return UserTransaction.fromJson(dataSnapShot.data()!);
   }
 

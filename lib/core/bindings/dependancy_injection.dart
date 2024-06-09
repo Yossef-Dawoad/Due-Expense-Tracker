@@ -13,7 +13,7 @@ void initializeDependencies() {
   sl.registerLazySingleton<CategoriesServiceType>(
     () => FirebaseCategoriesServiceImpl(),
   );
-  sl.registerLazySingleton<TransactionServiceType>(
+  sl.registerLazySingleton<UserTransactionServiceType>(
     () => FirebaseTransctionServiceImpl(),
   );
   sl.registerLazySingleton<OverviewSummaryService>(

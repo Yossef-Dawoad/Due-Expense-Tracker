@@ -2,7 +2,7 @@ import 'package:expancetracker/features/categories/data/models/transaction_categ
 import 'package:expancetracker/features/transactions/data/services/transactions_service.dart';
 
 class OverviewSummaryService {
-  final TransactionServiceType _transactionService;
+  final UserTransactionServiceType _transactionService;
   OverviewSummaryService(this._transactionService);
 
   Future<double> getTotalTransactionsAmount() async {
