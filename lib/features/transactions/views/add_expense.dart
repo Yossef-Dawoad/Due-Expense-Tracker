@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 
 import 'package:expancetracker/core/common/widgets/custom_textfield.dart';
 import 'package:expancetracker/core/constants/textstyles.dart';
-import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
+import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/categories/views/category_selector_widget.dart';
 import '../data/models/user_transaction.dart';
@@ -46,8 +46,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Iconsax.close_circle))
+              onPressed: () => Navigator.pop(context), icon: const Icon(Iconsax.close_circle))
         ],
       ),
       body: SingleChildScrollView(
@@ -70,8 +69,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     curr is CategoryAddSuccess ||
                     curr is CategoryFailure,
                 builder: (context, state) => state.maybeWhen(
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
+                  loading: () => const Center(child: CircularProgressIndicator()),
                   addedsuccess: (category) => MyTextField(
                     hintText: category.title,
                     prefixIcon: Icon(category.icon, size: 28),
@@ -159,8 +157,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       context: context,
       builder: (ctx) => BlocProvider.value(
         value: context.read<CategoriesBloc>(),
-        child: CategorySelectorWidget(
-            onChanged: (value) => selectedCategory = value),
+        child: CategorySelectorWidget(onChanged: (value) => selectedCategory = value),
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:expancetracker/features/categories/data/services/categories_service.dart';
+import 'package:expancetracker/features/categories/domain/datasources/categories_remote_datasource.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/overview_card/data/services/summary_service.dart';
 import 'package:expancetracker/features/overview_card/logic/overview_summary_bloc/overview_summary_bloc.dart';

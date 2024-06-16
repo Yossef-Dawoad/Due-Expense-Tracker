@@ -23,16 +23,14 @@ class FirebaseCategoriesServiceImpl implements CategoriesServiceType {
   @override
   Future<List<TransactionCategory>> getAllItems() async {
     final dataSnapShot = await _firestore.collection(collectionName).get();
-    final result = dataSnapShot.docs
-        .map((doc) => TransactionCategory.fromJson(doc.data()))
-        .toList();
+    final result =
+        dataSnapShot.docs.map((doc) => TransactionCategory.fromJson(doc.data())).toList();
     return result;
   }
 
   @override
   Future<TransactionCategory> getItemById(String id) async {
-    final dataSnapShot =
-        await _firestore.collection(collectionName).doc(id).get();
+    final dataSnapShot = await _firestore.collection(collectionName).doc(id).get();
     return TransactionCategory.fromJson(dataSnapShot.data()!);
   }
 

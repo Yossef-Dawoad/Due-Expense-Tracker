@@ -6,7 +6,7 @@ import 'package:expancetracker/core/common/widgets/custom_textfield.dart';
 import 'package:expancetracker/core/common/widgets/header_title.dart';
 import 'package:expancetracker/core/constants/textstyles.dart';
 import 'package:expancetracker/core/utils/extensions/context_ext.dart';
-import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
+import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/categories/logic/category_user_input_provider/category_user_input_handler.dart';
 import 'package:expancetracker/features/categories/logic/category_user_input_provider/category_user_input_provider.dart';
@@ -43,8 +43,7 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
               if (!addNewCategory)
                 Column(
                   children: [
-                    Text('Select Category',
-                        style: f18BlackBold.copyWith(color: Colors.black54)),
+                    Text('Select Category', style: f18BlackBold.copyWith(color: Colors.black54)),
                     const SizedBox(height: 20),
                     // Pre-defined Categories
                     const ExsistingCategoryGridViewContainer(),
@@ -58,13 +57,11 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
                   ? HeaderTitle(
                       title: 'Want to Select Existing One?',
                       actionIcon: Iconsax.arrow_square_up,
-                      onActionTap: () =>
-                          setState(() => addNewCategory = !addNewCategory))
+                      onActionTap: () => setState(() => addNewCategory = !addNewCategory))
                   : HeaderTitle(
                       title: 'Or You Add New Category',
                       actionIcon: Iconsax.arrow_square_down,
-                      onActionTap: () =>
-                          setState(() => addNewCategory = !addNewCategory),
+                      onActionTap: () => setState(() => addNewCategory = !addNewCategory),
                     ),
               const SizedBox(height: 20),
               // show the category form if user want to enter new category
@@ -107,8 +104,7 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
                     context.popRoute();
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          backgroundColor: Colors.green,
-                          content: Text('New category added')),
+                          backgroundColor: Colors.green, content: Text('New category added')),
                     );
                     return null;
                   },

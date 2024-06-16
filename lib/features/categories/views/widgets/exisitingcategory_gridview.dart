@@ -1,5 +1,5 @@
 import 'package:expancetracker/core/bindings/dependancy_injection.dart';
-import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
+import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/categories/logic/category_user_input_provider/category_user_input_provider.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +13,7 @@ class ExsistingCategoryGridViewContainer extends StatefulWidget {
       _ExsistingCategoryGridViewContainerState();
 }
 
-class _ExsistingCategoryGridViewContainerState
-    extends State<ExsistingCategoryGridViewContainer> {
+class _ExsistingCategoryGridViewContainerState extends State<ExsistingCategoryGridViewContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,8 +30,7 @@ class _ExsistingCategoryGridViewContainerState
           builder: (context, state) {
             return state.maybeWhen(
               orElse: () => const Center(child: CircularProgressIndicator()),
-              fetshedsuccess: (categories) =>
-                  ExsistingCategoryGridView(categories),
+              fetshedsuccess: (categories) => ExsistingCategoryGridView(categories),
             );
           },
         ),
@@ -46,8 +44,7 @@ class ExsistingCategoryGridView extends StatefulWidget {
   final List<TransactionCategory> categories;
 
   @override
-  State<ExsistingCategoryGridView> createState() =>
-      _ExsistingCategoryGridViewState();
+  State<ExsistingCategoryGridView> createState() => _ExsistingCategoryGridViewState();
 }
 
 class _ExsistingCategoryGridViewState extends State<ExsistingCategoryGridView> {

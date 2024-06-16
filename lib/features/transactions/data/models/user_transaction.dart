@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
+import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 
 part 'user_transaction.freezed.dart';
 part 'user_transaction.g.dart';
@@ -20,6 +20,5 @@ class UserTransaction with _$UserTransaction {
     String? note,
   }) = _UserTransaction;
 
-  factory UserTransaction.fromJson(Map<String, Object?> json) =>
-      _$UserTransactionFromJson(json);
+  factory UserTransaction.fromJson(Map<String, Object?> json) => _$UserTransactionFromJson(json);
 }

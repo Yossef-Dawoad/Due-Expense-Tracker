@@ -4,7 +4,7 @@ import 'package:uuid/uuid.dart';
 
 import 'package:expancetracker/core/constants/textstyles.dart';
 import 'package:expancetracker/core/utils/extensions/context_ext.dart';
-import 'package:expancetracker/features/categories/data/models/transaction_category.dart';
+import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
 import 'package:expancetracker/features/categories/logic/category_user_input_provider/category_user_input_provider.dart';
 
@@ -29,8 +29,7 @@ class AddCategoryButton extends StatelessWidget {
         onPressed: () => _onUserSelectedCategory(context),
         child: Text(
           'Add Category',
-          style: f18BlackBold.copyWith(
-              color: Theme.of(context).colorScheme.primary),
+          style: f18BlackBold.copyWith(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -60,15 +59,13 @@ class AddCategoryButton extends StatelessWidget {
       // pop-up the current route and display sanckbar
       context.popRoute();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            backgroundColor: Colors.green, content: Text('New category added')),
+        const SnackBar(backgroundColor: Colors.green, content: Text('New category added')),
       );
     } else {
       context.popRoute();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            backgroundColor: Colors.red,
-            content: Text('Please fill all the required fields')),
+            backgroundColor: Colors.red, content: Text('Please fill all the required fields')),
       );
     }
   }
