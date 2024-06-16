@@ -1,7 +1,7 @@
 import 'package:expancetracker/core/constants/spaces.dart';
 import 'package:expancetracker/core/utils/device_utils/device_utilty.dart';
 import 'package:expancetracker/core/utils/extensions/context_ext.dart';
-import 'package:expancetracker/features/onboarding/data/models/page_content.dart';
+import 'package:expancetracker/features/onboarding/domain/models/page_content.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardingPage extends StatelessWidget {

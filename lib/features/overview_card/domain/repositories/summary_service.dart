@@ -1,9 +1,9 @@
 import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
-import 'package:expancetracker/features/transactions/data/services/transactions_service.dart';
+import 'package:expancetracker/features/transactions/domain/datasources/transactions_remote_datasource.dart';
 
-class OverviewSummaryService {
+class OverviewSummaryRepository {
   final UserTransactionServiceType _transactionService;
-  OverviewSummaryService(this._transactionService);
+  OverviewSummaryRepository(this._transactionService);
 
   Future<double> getTotalTransactionsAmount() async {
     final transactions = await _transactionService.getAllItems();

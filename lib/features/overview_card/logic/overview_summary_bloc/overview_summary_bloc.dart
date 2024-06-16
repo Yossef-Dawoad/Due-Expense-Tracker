@@ -1,4 +1,4 @@
-import 'package:expancetracker/features/overview_card/data/services/summary_service.dart';
+import 'package:expancetracker/features/overview_card/domain/repositories/summary_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -6,9 +6,8 @@ part 'overview_summary_event.dart';
 part 'overview_summary_state.dart';
 part 'overview_summary_bloc.freezed.dart';
 
-class OverviewSummaryBloc
-    extends Bloc<OverviewSummaryEvent, OverviewSummaryState> {
-  final OverviewSummaryService _service;
+class OverviewSummaryBloc extends Bloc<OverviewSummaryEvent, OverviewSummaryState> {
+  final OverviewSummaryRepository _service;
   OverviewSummaryBloc(this._service) : super(const _Initial()) {
     on<OverviewGetTotalTransaciton>(_totalTransaction);
     on<OverviewGetTotalIncome>(_totalIncome);

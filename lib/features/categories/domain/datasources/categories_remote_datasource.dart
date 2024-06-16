@@ -6,7 +6,7 @@ import '../models/transaction_category.dart';
 
 typedef CategoriesServiceType = BaseFireBaseDB<TransactionCategory>;
 
-class FirebaseCategoriesServiceImpl implements CategoriesServiceType {
+class CategoriesRemoteDataSource implements CategoriesServiceType {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override

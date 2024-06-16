@@ -5,7 +5,7 @@ import '../models/user_transaction.dart';
 
 typedef UserTransactionServiceType = BaseFireBaseDB<UserTransaction>;
 
-class FirebaseTransctionServiceImpl implements UserTransactionServiceType {
+class TransctionRemoteDataSource implements UserTransactionServiceType {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override

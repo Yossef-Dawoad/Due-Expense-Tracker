@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:expancetracker/core/common/domain/data/pre_defiend_transactions.dart';
 import 'package:expancetracker/core/common/domain/intrefaces/firebase_base.dart';
-import 'package:expancetracker/features/transactions/data/models/user_transaction.dart';
+import 'package:expancetracker/features/transactions/domain/models/user_transaction.dart';
 
 part 'transactions_bloc.freezed.dart';
 part 'transactions_event.dart';

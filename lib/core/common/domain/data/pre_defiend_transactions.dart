@@ -1,5 +1,5 @@
 import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
-import 'package:expancetracker/features/transactions/data/models/user_transaction.dart';
+import 'package:expancetracker/features/transactions/domain/models/user_transaction.dart';
 
 final preDefinedTransactions = [
   UserTransaction(

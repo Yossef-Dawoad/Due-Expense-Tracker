@@ -1,9 +1,9 @@
 import 'package:expancetracker/features/categories/domain/datasources/categories_remote_datasource.dart';
 import 'package:expancetracker/features/categories/logic/categories_bloc/categories_bloc.dart';
-import 'package:expancetracker/features/overview_card/data/services/summary_service.dart';
+import 'package:expancetracker/features/overview_card/domain/repositories/summary_service.dart';
 import 'package:expancetracker/features/overview_card/logic/overview_summary_bloc/overview_summary_bloc.dart';
 import 'package:expancetracker/features/transactions/logic/transactions_bloc/transactions_bloc.dart';
-import 'package:expancetracker/features/transactions/data/services/transactions_service.dart';
+import 'package:expancetracker/features/transactions/domain/datasources/transactions_remote_datasource.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -11,13 +11,13 @@ final sl = GetIt.instance;
 void initializeDependencies() {
   /// Register Services
   sl.registerLazySingleton<CategoriesServiceType>(
-    () => FirebaseCategoriesServiceImpl(),
+    () => CategoriesRemoteDataSource(),
   );
   sl.registerLazySingleton<UserTransactionServiceType>(
-    () => FirebaseTransctionServiceImpl(),
+    () => TransctionRemoteDataSource(),
   );
-  sl.registerLazySingleton<OverviewSummaryService>(
-    () => OverviewSummaryService(sl()),
+  sl.registerLazySingleton<OverviewSummaryRepository>(
+    () => OverviewSummaryRepository(sl()),
   );
 
   // Regsiter Blocs
