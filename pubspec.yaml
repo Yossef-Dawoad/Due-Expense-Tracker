@@ -40,18 +40,23 @@ dependencies:
   intl: ^0.19.0
   iconsax: ^0.0.8
   fl_chart: ^0.68.0
-  flutter_screenutil: ^5.9.1
+  flutter_screenutil: ^5.9.3
   flex_color_picker: ^3.5.0
   
-  firebase_core: ^2.31.0
-  cloud_firestore: ^4.17.3
+  firebase_core: ^3.1.0
+  cloud_firestore: ^5.0.1
 
   json_annotation: ^4.9.0
   freezed_annotation: ^2.4.1
 
   get_it: ^7.7.0
-  flutter_bloc: ^8.1.5
+  flutter_bloc: ^8.1.6
   envied: ^0.5.4+1
+
+  drift: ^2.18.0
+  sqlite3_flutter_libs: ^0.5.24
+  path_provider: ^2.1.3
+  path: ^1.9.0
   
 
 dev_dependencies:
@@ -61,10 +66,11 @@ dev_dependencies:
   
   flutter_lints: ^4.0.0
 
-  build_runner: ^2.4.10
+  build_runner: ^2.4.11
   freezed: ^2.5.2
   json_serializable: ^6.8.0
   envied_generator: ^0.5.4+1
+  drift_dev: ^2.18.0
 
 
 flutter:
