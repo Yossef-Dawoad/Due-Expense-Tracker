@@ -1,5 +1,5 @@
 import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
-import 'package:expancetracker/features/transactions/domain/datasources/transactions_remote_datasource.dart';
+import 'package:expancetracker/features/transactions/domain/datasources/transactions_remote_source.dart';
 
 class OverviewSummaryRepository {
   final UserTransactionServiceType _transactionService;
