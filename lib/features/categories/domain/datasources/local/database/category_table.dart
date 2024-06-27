@@ -60,29 +60,29 @@ LazyDatabase _openConnection() {
 // that should use this dao.
 @DriftAccessor(
   tables: [Categories],
-  queries: {'getRowsCount': 'SELECT COUNT(id) from transactions;'},
+  queries: {'getRowsCount': 'SELECT COUNT(id) from categories;'},
 )
 class CategoriesDao extends DatabaseAccessor<AppDatabase> with _$CategoriesDaoMixin {
   // this constructor is required so that the main database can create an instance
   // of this object.
   CategoriesDao(super.db);
 
-  // Future<List<Transaction>> getAllTransactions() => select(transactions).get();
-  // Stream<List<Transaction>> watchAllTransactions() => select(transactions).watch();
+  Future<List<Category>> getAllCategorys() => select(categories).get();
+  Stream<List<Category>> watchAllCategorys() => select(categories).watch();
 
-  // Future<int> insertTransaction(Insertable<Transaction> transaction) =>
-  //     into(transactions).insert(transaction);
-  // Future<void> insertBulkTransaction(Iterable<Insertable<Transaction>> items) async =>
-  //     await batch((btch) => btch.insertAll(transactions, items));
-  // Future<bool> updateTransaction(Insertable<Transaction> transaction) =>
-  //     update(transactions).replace(transaction);
-  // Future<int> deleteTransaction(Insertable<Transaction> transaction) =>
-  //     delete(transactions).delete(transaction);
+  Future<int> insertCategory(Insertable<Category> transaction) =>
+      into(categories).insert(transaction);
+  Future<void> insertBulkCategory(Iterable<Insertable<Category>> items) async =>
+      await batch((btch) => btch.insertAll(categories, items));
+  Future<bool> updateCategory(Insertable<Category> transaction) =>
+      update(categories).replace(transaction);
+  Future<int> deleteCategory(Insertable<Category> transaction) =>
+      delete(categories).delete(transaction);
 
-  // Future<bool> isDataBaseEmpty() async {
-  //   final rowsCount = transactions.id.count();
-  //   final stmt = select(transactions).addColumns([rowsCount]);
-  //   final count = await stmt.map((r) => r.read(rowsCount)!).getSingle();
-  //   return count > 0;
-  // }
+  Future<bool> isDataBaseEmpty() async {
+    final rowsCount = categories.id.count();
+    final stmt = select(categories).addColumns([rowsCount]);
+    final count = await stmt.map((r) => r.read(rowsCount)!).getSingle();
+    return count > 0;
+  }
 }
