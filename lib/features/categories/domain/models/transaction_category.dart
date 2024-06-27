@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:expancetracker/core/utils/json_converters/icondata_converters.dart';
+import 'package:expancetracker/core/utils/converters/icondata_converters.dart';
 
 part 'transaction_category.freezed.dart';
 part 'transaction_category.g.dart';
@@ -16,7 +16,7 @@ class TransactionCategory with _$TransactionCategory {
     @Default(0.0) double totalAmount,
     required int color,
     required TransactionStatus status,
-    @IconDataConverter() required IconData icon,
+    @IconDataJsonConverter() required IconData icon,
   }) = _TransactionCategory;
 
   factory TransactionCategory.fromJson(Map<String, Object?> json) =>

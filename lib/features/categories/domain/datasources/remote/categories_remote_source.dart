@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:expancetracker/core/common/domain/intrefaces/firebase_base.dart';
 
-import '../models/transaction_category.dart';
+import '../../models/transaction_category.dart';
 
 typedef CategoriesRemoteService = BaseFireBaseDB<TransactionCategory>;
 

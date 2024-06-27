@@ -1,6 +1,6 @@
 import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 
-import '../datasources/categories_remote_datasource.dart';
+import '../datasources/remote/categories_remote_source.dart';
 
 class CategoriesRepository {
   final CategoriesRemoteService _categoriesRemoteSource;

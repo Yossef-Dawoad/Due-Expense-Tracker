@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expancetracker/core/common/domain/intrefaces/firebase_base.dart';
 
-import '../models/user_transaction.dart';
+import '../../models/user_transaction.dart';
 
 typedef UserTransactionServiceType = BaseFireBaseDB<UserTransaction>;
 

@@ -12,9 +12,9 @@ abstract interface class LocalSourceInterface<Item> {
   /// insertItem(ItemCompanion(name:Value(...)))
   /// ```
   ///
-  Future<int?> insertItem(Insertable<Item> device);
+  Future<int?> insertItem(Insertable<Item> item);
   Future<void> insertBulkItems(Iterable<Insertable<Item>> items);
-  Future<bool?> updateItem(Insertable<Item> device);
-  Future<int?> deleteItem(Insertable<Item> device);
+  Future<bool?> updateItem(Insertable<Item> item);
+  Future<int?> deleteItem(Insertable<Item> item);
   Future<bool> isDataBaseEmpty();
 }
