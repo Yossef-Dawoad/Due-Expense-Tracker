@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:expancetracker/core/common/domain/types/result.dart';
 import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/domain/repositories/categories_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,23 +16,21 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     on<CategoryAdded>(_onCategoryAdded);
     on<CategoriesFetched>(_onCategoriesFetched);
   }
-  void _onCategoryAdded(event, emit) async {
+  FutureOr<void> _onCategoryAdded(event, emit) async {
     emit(const CategoriesState.loading());
-    try {
-      final category = await _categoriesRepo.addNewCategory(event.category);
-      emit(CategoriesState.addedsuccess(category));
-    } catch (e) {
-      emit(CategoriesState.failure(e.toString()));
-    }
+    final categoryResult = await _categoriesRepo.addNewCategory(event.category);
+    return switch (categoryResult) {
+      Success(data: TransactionCategory category) => emit(CategoriesState.addedsuccess(category)),
+      Failure(err: String message) => emit(CategoriesState.failure(message)),
+    };
   }
 
-  void _onCategoriesFetched(event, emit) async {
+  FutureOr<void> _onCategoriesFetched(event, emit) async {
     emit(const CategoriesState.loading());
-    try {
-      final categories = await _categoriesRepo.getAllCategories();
-      emit(CategoriesState.fetshedsuccess(categories));
-    } catch (e) {
-      emit(CategoriesState.failure(e.toString()));
-    }
+    final categoriesResult = await _categoriesRepo.fetchAllCategories();
+    return switch (categoriesResult) {
+      Success(data: final categories) => emit(CategoriesState.fetchedsuccess(categories!)),
+      Failure(err: String message) => emit(CategoriesState.failure(message)),
+    };
   }
 }

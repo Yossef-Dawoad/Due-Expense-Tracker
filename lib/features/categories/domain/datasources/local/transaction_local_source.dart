@@ -1,23 +1,24 @@
 import 'package:drift/drift.dart';
 import 'package:expancetracker/core/common/databases/local_source_interface.dart';
 import 'package:expancetracker/core/utils/logger/logger.dart';
-import 'package:expancetracker/features/transactions/domain/datasources/local/database/transaction_table.dart';
 
-typedef TransactionLocalSourceInterface = LocalSourceInterface<Transaction>;
+import 'database/category_table.dart';
 
-class TransactionLocalSource implements TransactionLocalSourceInterface {
-  final TransactionsDao _source;
-  TransactionLocalSource(this._source);
+typedef CategoryLocalInterface = LocalSourceInterface<Category>;
+
+class CategoryLocalSource implements CategoryLocalInterface {
+  final CategoriesDao _source;
+  CategoryLocalSource(this._source);
 
   @override
-  Future<int> deleteItem(Insertable<Transaction> transaction) async {
-    return await _source.deleteTransaction(transaction);
+  Future<int> deleteItem(Insertable<Category> transaction) async {
+    return await _source.deleteCategory(transaction);
   }
 
   @override
-  Future<List<Transaction>?> getAllItems() async {
+  Future<List<Category>?> getAllItems() async {
     try {
-      return await _source.getAllTransactions();
+      return await _source.getAllCategorys();
     } catch (err) {
       logger.e('Error reading from db', error: err);
     }
@@ -25,9 +26,9 @@ class TransactionLocalSource implements TransactionLocalSourceInterface {
   }
 
   @override
-  Future<int?> insertItem(Insertable<Transaction> transaction) async {
+  Future<int?> insertItem(Insertable<Category> transaction) async {
     try {
-      return await _source.insertTransaction(transaction);
+      return await _source.insertCategory(transaction);
     } catch (err) {
       logger.e('Error reading from db', error: err);
     }
@@ -35,18 +36,18 @@ class TransactionLocalSource implements TransactionLocalSourceInterface {
   }
 
   @override
-  Future<bool> updateItem(Insertable<Transaction> transaction) async {
-    return await _source.updateTransaction(transaction);
+  Future<bool> updateItem(Insertable<Category> transaction) async {
+    return await _source.updateCategory(transaction);
   }
 
   @override
-  Stream<List<Transaction>> watchAllItems() async* {
-    yield* _source.watchAllTransactions();
+  Stream<List<Category>> watchAllItems() async* {
+    yield* _source.watchAllCategorys();
   }
 
   @override
-  Future<void> insertBulkItems(Iterable<Insertable<Transaction>> transactions) async {
-    await _source.insertBulkTransaction(transactions);
+  Future<void> insertBulkItems(Iterable<Insertable<Category>> transactions) async {
+    await _source.insertBulkCategory(transactions);
   }
 
   @override

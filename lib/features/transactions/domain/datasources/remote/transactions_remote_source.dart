@@ -3,9 +3,9 @@ import 'package:expancetracker/core/common/domain/intrefaces/firebase_base.dart'
 
 import '../../models/user_transaction.dart';
 
-typedef UserTransactionServiceType = BaseFireBaseDB<UserTransaction>;
+typedef UserTransactionRemoteInterface = BaseFireBaseDB<UserTransaction>;
 
-class TransctionRemoteDataSource implements UserTransactionServiceType {
+class TransctionRemoteSource implements UserTransactionRemoteInterface {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override

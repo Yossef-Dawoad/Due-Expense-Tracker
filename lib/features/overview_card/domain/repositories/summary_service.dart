@@ -2,7 +2,7 @@ import 'package:expancetracker/features/categories/domain/models/transaction_cat
 import 'package:expancetracker/features/transactions/domain/datasources/remote/transactions_remote_source.dart';
 
 class OverviewSummaryRepository {
-  final UserTransactionServiceType _transactionService;
+  final UserTransactionRemoteInterface _transactionService;
   OverviewSummaryRepository(this._transactionService);
 
   Future<double> getTotalTransactionsAmount() async {
