@@ -20,8 +20,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     emit(const CategoriesState.loading());
     final categoryResult = await _categoriesRepo.addNewCategory(event.category);
     return switch (categoryResult) {
-      Success(data: TransactionCategory category) => emit(CategoriesState.addedsuccess(category)),
-      Failure(err: String message) => emit(CategoriesState.failure(message)),
+      Success(data: final category) => emit(CategoriesState.addedsuccess(category!)),
+      Failure(err: final message) => emit(CategoriesState.failure(message ?? '')),
     };
   }
 
@@ -30,7 +30,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     final categoriesResult = await _categoriesRepo.fetchAllCategories();
     return switch (categoriesResult) {
       Success(data: final categories) => emit(CategoriesState.fetchedsuccess(categories!)),
-      Failure(err: String message) => emit(CategoriesState.failure(message)),
+      Failure(err: final message) => emit(CategoriesState.failure(message!)),
     };
   }
 }

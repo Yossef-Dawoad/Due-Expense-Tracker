@@ -10,7 +10,7 @@ final class Success<T> extends Result<T> {
 }
 
 final class Failure<T> extends Result<T> {
-  const Failure(String err) : super(null, err);
+  const Failure(String? err) : super(null, err);
 }
 
 typedef FutureResult<T> = Future<Result<T>>;
