@@ -48,7 +48,4 @@ class TransactionCategory with _$TransactionCategory {
       );
 }
 
-enum TransactionStatus {
-  income,
-  expense,
-}
+enum TransactionStatus { income, expense }

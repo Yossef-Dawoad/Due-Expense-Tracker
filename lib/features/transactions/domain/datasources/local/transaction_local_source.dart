@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:expancetracker/core/common/databases/app_database.dart';
 import 'package:expancetracker/core/common/databases/local_source_interface.dart';
 import 'package:expancetracker/core/utils/logger/logger.dart';
 import 'package:expancetracker/features/transactions/domain/datasources/local/database/transaction_table.dart';

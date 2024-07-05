@@ -455,7 +455,7 @@ mixin _$CategoriesState {
     required TResult Function() loading,
     required TResult Function(TransactionCategory category) addedsuccess,
     required TResult Function(List<TransactionCategory> categories)
-        fetshedsuccess,
+        fetchedsuccess,
     required TResult Function(String error) failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -464,7 +464,7 @@ mixin _$CategoriesState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(TransactionCategory category)? addedsuccess,
-    TResult? Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult? Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult? Function(String error)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -473,7 +473,7 @@ mixin _$CategoriesState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(TransactionCategory category)? addedsuccess,
-    TResult Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) =>
@@ -483,7 +483,7 @@ mixin _$CategoriesState {
     required TResult Function(_Initial value) initial,
     required TResult Function(CategoryLoading value) loading,
     required TResult Function(CategoryAddSuccess value) addedsuccess,
-    required TResult Function(CategoryFetchSuccess value) fetshedsuccess,
+    required TResult Function(CategoryFetchSuccess value) fetchedsuccess,
     required TResult Function(CategoryFailure value) failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -492,7 +492,7 @@ mixin _$CategoriesState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CategoryLoading value)? loading,
     TResult? Function(CategoryAddSuccess value)? addedsuccess,
-    TResult? Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult? Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult? Function(CategoryFailure value)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -501,7 +501,7 @@ mixin _$CategoriesState {
     TResult Function(_Initial value)? initial,
     TResult Function(CategoryLoading value)? loading,
     TResult Function(CategoryAddSuccess value)? addedsuccess,
-    TResult Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult Function(CategoryFailure value)? failure,
     required TResult orElse(),
   }) =>
@@ -568,7 +568,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() loading,
     required TResult Function(TransactionCategory category) addedsuccess,
     required TResult Function(List<TransactionCategory> categories)
-        fetshedsuccess,
+        fetchedsuccess,
     required TResult Function(String error) failure,
   }) {
     return initial();
@@ -580,7 +580,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(TransactionCategory category)? addedsuccess,
-    TResult? Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult? Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult? Function(String error)? failure,
   }) {
     return initial?.call();
@@ -592,7 +592,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(TransactionCategory category)? addedsuccess,
-    TResult Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
@@ -608,7 +608,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(CategoryLoading value) loading,
     required TResult Function(CategoryAddSuccess value) addedsuccess,
-    required TResult Function(CategoryFetchSuccess value) fetshedsuccess,
+    required TResult Function(CategoryFetchSuccess value) fetchedsuccess,
     required TResult Function(CategoryFailure value) failure,
   }) {
     return initial(this);
@@ -620,7 +620,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CategoryLoading value)? loading,
     TResult? Function(CategoryAddSuccess value)? addedsuccess,
-    TResult? Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult? Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult? Function(CategoryFailure value)? failure,
   }) {
     return initial?.call(this);
@@ -632,7 +632,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(CategoryLoading value)? loading,
     TResult Function(CategoryAddSuccess value)? addedsuccess,
-    TResult Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult Function(CategoryFailure value)? failure,
     required TResult orElse(),
   }) {
@@ -689,7 +689,7 @@ class _$CategoryLoadingImpl implements CategoryLoading {
     required TResult Function() loading,
     required TResult Function(TransactionCategory category) addedsuccess,
     required TResult Function(List<TransactionCategory> categories)
-        fetshedsuccess,
+        fetchedsuccess,
     required TResult Function(String error) failure,
   }) {
     return loading();
@@ -701,7 +701,7 @@ class _$CategoryLoadingImpl implements CategoryLoading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(TransactionCategory category)? addedsuccess,
-    TResult? Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult? Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult? Function(String error)? failure,
   }) {
     return loading?.call();
@@ -713,7 +713,7 @@ class _$CategoryLoadingImpl implements CategoryLoading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(TransactionCategory category)? addedsuccess,
-    TResult Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
@@ -729,7 +729,7 @@ class _$CategoryLoadingImpl implements CategoryLoading {
     required TResult Function(_Initial value) initial,
     required TResult Function(CategoryLoading value) loading,
     required TResult Function(CategoryAddSuccess value) addedsuccess,
-    required TResult Function(CategoryFetchSuccess value) fetshedsuccess,
+    required TResult Function(CategoryFetchSuccess value) fetchedsuccess,
     required TResult Function(CategoryFailure value) failure,
   }) {
     return loading(this);
@@ -741,7 +741,7 @@ class _$CategoryLoadingImpl implements CategoryLoading {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CategoryLoading value)? loading,
     TResult? Function(CategoryAddSuccess value)? addedsuccess,
-    TResult? Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult? Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult? Function(CategoryFailure value)? failure,
   }) {
     return loading?.call(this);
@@ -753,7 +753,7 @@ class _$CategoryLoadingImpl implements CategoryLoading {
     TResult Function(_Initial value)? initial,
     TResult Function(CategoryLoading value)? loading,
     TResult Function(CategoryAddSuccess value)? addedsuccess,
-    TResult Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult Function(CategoryFailure value)? failure,
     required TResult orElse(),
   }) {
@@ -848,7 +848,7 @@ class _$CategoryAddSuccessImpl implements CategoryAddSuccess {
     required TResult Function() loading,
     required TResult Function(TransactionCategory category) addedsuccess,
     required TResult Function(List<TransactionCategory> categories)
-        fetshedsuccess,
+        fetchedsuccess,
     required TResult Function(String error) failure,
   }) {
     return addedsuccess(category);
@@ -860,7 +860,7 @@ class _$CategoryAddSuccessImpl implements CategoryAddSuccess {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(TransactionCategory category)? addedsuccess,
-    TResult? Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult? Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult? Function(String error)? failure,
   }) {
     return addedsuccess?.call(category);
@@ -872,7 +872,7 @@ class _$CategoryAddSuccessImpl implements CategoryAddSuccess {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(TransactionCategory category)? addedsuccess,
-    TResult Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
@@ -888,7 +888,7 @@ class _$CategoryAddSuccessImpl implements CategoryAddSuccess {
     required TResult Function(_Initial value) initial,
     required TResult Function(CategoryLoading value) loading,
     required TResult Function(CategoryAddSuccess value) addedsuccess,
-    required TResult Function(CategoryFetchSuccess value) fetshedsuccess,
+    required TResult Function(CategoryFetchSuccess value) fetchedsuccess,
     required TResult Function(CategoryFailure value) failure,
   }) {
     return addedsuccess(this);
@@ -900,7 +900,7 @@ class _$CategoryAddSuccessImpl implements CategoryAddSuccess {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CategoryLoading value)? loading,
     TResult? Function(CategoryAddSuccess value)? addedsuccess,
-    TResult? Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult? Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult? Function(CategoryFailure value)? failure,
   }) {
     return addedsuccess?.call(this);
@@ -912,7 +912,7 @@ class _$CategoryAddSuccessImpl implements CategoryAddSuccess {
     TResult Function(_Initial value)? initial,
     TResult Function(CategoryLoading value)? loading,
     TResult Function(CategoryAddSuccess value)? addedsuccess,
-    TResult Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult Function(CategoryFailure value)? failure,
     required TResult orElse(),
   }) {
@@ -980,7 +980,7 @@ class _$CategoryFetchSuccessImpl implements CategoryFetchSuccess {
 
   @override
   String toString() {
-    return 'CategoriesState.fetshedsuccess(categories: $categories)';
+    return 'CategoriesState.fetchedsuccess(categories: $categories)';
   }
 
   @override
@@ -1011,10 +1011,10 @@ class _$CategoryFetchSuccessImpl implements CategoryFetchSuccess {
     required TResult Function() loading,
     required TResult Function(TransactionCategory category) addedsuccess,
     required TResult Function(List<TransactionCategory> categories)
-        fetshedsuccess,
+        fetchedsuccess,
     required TResult Function(String error) failure,
   }) {
-    return fetshedsuccess(categories);
+    return fetchedsuccess(categories);
   }
 
   @override
@@ -1023,10 +1023,10 @@ class _$CategoryFetchSuccessImpl implements CategoryFetchSuccess {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(TransactionCategory category)? addedsuccess,
-    TResult? Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult? Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult? Function(String error)? failure,
   }) {
-    return fetshedsuccess?.call(categories);
+    return fetchedsuccess?.call(categories);
   }
 
   @override
@@ -1035,12 +1035,12 @@ class _$CategoryFetchSuccessImpl implements CategoryFetchSuccess {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(TransactionCategory category)? addedsuccess,
-    TResult Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
-    if (fetshedsuccess != null) {
-      return fetshedsuccess(categories);
+    if (fetchedsuccess != null) {
+      return fetchedsuccess(categories);
     }
     return orElse();
   }
@@ -1051,10 +1051,10 @@ class _$CategoryFetchSuccessImpl implements CategoryFetchSuccess {
     required TResult Function(_Initial value) initial,
     required TResult Function(CategoryLoading value) loading,
     required TResult Function(CategoryAddSuccess value) addedsuccess,
-    required TResult Function(CategoryFetchSuccess value) fetshedsuccess,
+    required TResult Function(CategoryFetchSuccess value) fetchedsuccess,
     required TResult Function(CategoryFailure value) failure,
   }) {
-    return fetshedsuccess(this);
+    return fetchedsuccess(this);
   }
 
   @override
@@ -1063,10 +1063,10 @@ class _$CategoryFetchSuccessImpl implements CategoryFetchSuccess {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CategoryLoading value)? loading,
     TResult? Function(CategoryAddSuccess value)? addedsuccess,
-    TResult? Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult? Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult? Function(CategoryFailure value)? failure,
   }) {
-    return fetshedsuccess?.call(this);
+    return fetchedsuccess?.call(this);
   }
 
   @override
@@ -1075,12 +1075,12 @@ class _$CategoryFetchSuccessImpl implements CategoryFetchSuccess {
     TResult Function(_Initial value)? initial,
     TResult Function(CategoryLoading value)? loading,
     TResult Function(CategoryAddSuccess value)? addedsuccess,
-    TResult Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult Function(CategoryFailure value)? failure,
     required TResult orElse(),
   }) {
-    if (fetshedsuccess != null) {
-      return fetshedsuccess(this);
+    if (fetchedsuccess != null) {
+      return fetchedsuccess(this);
     }
     return orElse();
   }
@@ -1165,7 +1165,7 @@ class _$CategoryFailureImpl implements CategoryFailure {
     required TResult Function() loading,
     required TResult Function(TransactionCategory category) addedsuccess,
     required TResult Function(List<TransactionCategory> categories)
-        fetshedsuccess,
+        fetchedsuccess,
     required TResult Function(String error) failure,
   }) {
     return failure(error);
@@ -1177,7 +1177,7 @@ class _$CategoryFailureImpl implements CategoryFailure {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(TransactionCategory category)? addedsuccess,
-    TResult? Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult? Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult? Function(String error)? failure,
   }) {
     return failure?.call(error);
@@ -1189,7 +1189,7 @@ class _$CategoryFailureImpl implements CategoryFailure {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(TransactionCategory category)? addedsuccess,
-    TResult Function(List<TransactionCategory> categories)? fetshedsuccess,
+    TResult Function(List<TransactionCategory> categories)? fetchedsuccess,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
@@ -1205,7 +1205,7 @@ class _$CategoryFailureImpl implements CategoryFailure {
     required TResult Function(_Initial value) initial,
     required TResult Function(CategoryLoading value) loading,
     required TResult Function(CategoryAddSuccess value) addedsuccess,
-    required TResult Function(CategoryFetchSuccess value) fetshedsuccess,
+    required TResult Function(CategoryFetchSuccess value) fetchedsuccess,
     required TResult Function(CategoryFailure value) failure,
   }) {
     return failure(this);
@@ -1217,7 +1217,7 @@ class _$CategoryFailureImpl implements CategoryFailure {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CategoryLoading value)? loading,
     TResult? Function(CategoryAddSuccess value)? addedsuccess,
-    TResult? Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult? Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult? Function(CategoryFailure value)? failure,
   }) {
     return failure?.call(this);
@@ -1229,7 +1229,7 @@ class _$CategoryFailureImpl implements CategoryFailure {
     TResult Function(_Initial value)? initial,
     TResult Function(CategoryLoading value)? loading,
     TResult Function(CategoryAddSuccess value)? addedsuccess,
-    TResult Function(CategoryFetchSuccess value)? fetshedsuccess,
+    TResult Function(CategoryFetchSuccess value)? fetchedsuccess,
     TResult Function(CategoryFailure value)? failure,
     required TResult orElse(),
   }) {

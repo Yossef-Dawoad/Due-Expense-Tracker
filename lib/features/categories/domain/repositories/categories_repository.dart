@@ -1,9 +1,9 @@
 import 'package:drift/drift.dart';
 import 'package:expancetracker/core/bindings/dependancy_injection.dart';
+import 'package:expancetracker/core/common/databases/app_database.dart';
 import 'package:expancetracker/core/common/domain/types/result.dart';
 import 'package:expancetracker/core/utils/logger/logger.dart';
 import 'package:expancetracker/core/utils/network/network_manager.dart';
-import 'package:expancetracker/features/categories/domain/datasources/local/database/category_table.dart';
 import 'package:expancetracker/features/categories/domain/datasources/local/transaction_local_source.dart';
 import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 

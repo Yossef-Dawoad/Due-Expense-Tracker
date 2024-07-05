@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 class IconDataJsonConverter implements JsonConverter<IconData, Map<String, dynamic>> {

@@ -101,8 +101,8 @@ class _$TransactionCategoryCopyWithImpl<$Res, $Val extends TransactionCategory>
 /// @nodoc
 abstract class _$$TransactionCategoryImplCopyWith<$Res>
     implements $TransactionCategoryCopyWith<$Res> {
-  factory _$$TransactionCategoryImplCopyWith(
-          _$TransactionCategoryImpl value, $Res Function(_$TransactionCategoryImpl) then) =
+  factory _$$TransactionCategoryImplCopyWith(_$TransactionCategoryImpl value,
+          $Res Function(_$TransactionCategoryImpl) then) =
       __$$TransactionCategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -119,8 +119,8 @@ abstract class _$$TransactionCategoryImplCopyWith<$Res>
 class __$$TransactionCategoryImplCopyWithImpl<$Res>
     extends _$TransactionCategoryCopyWithImpl<$Res, _$TransactionCategoryImpl>
     implements _$$TransactionCategoryImplCopyWith<$Res> {
-  __$$TransactionCategoryImplCopyWithImpl(
-      _$TransactionCategoryImpl _value, $Res Function(_$TransactionCategoryImpl) _then)
+  __$$TransactionCategoryImplCopyWithImpl(_$TransactionCategoryImpl _value,
+      $Res Function(_$TransactionCategoryImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -164,7 +164,9 @@ class __$$TransactionCategoryImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TransactionCategoryImpl with DiagnosticableTreeMixin implements _TransactionCategory {
+class _$TransactionCategoryImpl
+    with DiagnosticableTreeMixin
+    implements _TransactionCategory {
   const _$TransactionCategoryImpl(
       {required this.id,
       required this.title,
@@ -216,7 +218,8 @@ class _$TransactionCategoryImpl with DiagnosticableTreeMixin implements _Transac
             other is _$TransactionCategoryImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount) &&
+            (identical(other.totalAmount, totalAmount) ||
+                other.totalAmount == totalAmount) &&
             (identical(other.color, color) || other.color == color) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.icon, icon) || other.icon == icon));
@@ -224,13 +227,15 @@ class _$TransactionCategoryImpl with DiagnosticableTreeMixin implements _Transac
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, totalAmount, color, status, icon);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, totalAmount, color, status, icon);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$TransactionCategoryImplCopyWith<_$TransactionCategoryImpl> get copyWith =>
-      __$$TransactionCategoryImplCopyWithImpl<_$TransactionCategoryImpl>(this, _$identity);
+      __$$TransactionCategoryImplCopyWithImpl<_$TransactionCategoryImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -242,12 +247,13 @@ class _$TransactionCategoryImpl with DiagnosticableTreeMixin implements _Transac
 
 abstract class _TransactionCategory implements TransactionCategory {
   const factory _TransactionCategory(
-      {required final String id,
-      required final String title,
-      final double totalAmount,
-      required final int color,
-      required final TransactionStatus status,
-      @IconDataJsonConverter() required final IconData icon}) = _$TransactionCategoryImpl;
+          {required final String id,
+          required final String title,
+          final double totalAmount,
+          required final int color,
+          required final TransactionStatus status,
+          @IconDataJsonConverter() required final IconData icon}) =
+      _$TransactionCategoryImpl;
 
   factory _TransactionCategory.fromJson(Map<String, dynamic> json) =
       _$TransactionCategoryImpl.fromJson;

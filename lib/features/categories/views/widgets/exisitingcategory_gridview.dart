@@ -30,7 +30,7 @@ class _ExsistingCategoryGridViewContainerState extends State<ExsistingCategoryGr
           builder: (context, state) {
             return state.maybeWhen(
               orElse: () => const Center(child: CircularProgressIndicator()),
-              fetshedsuccess: (categories) => ExsistingCategoryGridView(categories),
+              fetchedsuccess: (categories) => ExsistingCategoryGridView(categories),
             );
           },
         ),
