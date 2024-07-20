@@ -2,6 +2,8 @@
 
  A minimalist and useful Flutter-based expense tracker featuring cloud-synced transactions,  
  custom categories, and weekly statistics. Currently developing new features and automated tests.
+> [!IMPORTANT]  
+> Local Support is on the `feat/localcache` branch it's half-backed and still messing some touchs but feel free to check it out.
 
 ## ScreenShots
 
