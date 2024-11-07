@@ -13,6 +13,7 @@ abstract interface class LocalSourceInterface<Item> {
   /// ```
   ///
   Future<int?> insertItem(Insertable<Item> item);
+  Future<int?> insertSubItem<SubItem>(Insertable<SubItem> item);
   Future<void> insertBulkItems(Iterable<Insertable<Item>> items);
   Future<bool?> updateItem(Insertable<Item> item);
   Future<int?> deleteItem(Insertable<Item> item);

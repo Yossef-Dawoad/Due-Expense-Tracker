@@ -36,9 +36,25 @@ class TransactionRepository implements TransactionRepositoryInterface {
   }
 
   @override
-  FutureResult<UserTransaction> addNewTransaction(UserTransaction item) {
-    // TODO: implement addNewTransaction
-    throw UnimplementedError();
+  FutureResult<UserTransaction> addNewTransaction(UserTransaction item) async {
+    // TODO: implement Error handling
+    final category = CategoriesCompanion(
+      title: Value(item.category.title),
+      color: Value(item.category.color),
+      icon: Value(item.category.icon),
+      status: Value(item.category.status),
+      totalAmount: Value(item.category.totalAmount),
+    );
+    final categoryId = await _transactionLocalSource.insertSubItem(category);
+    final transaction = TransactionsCompanion(
+      amount: Value(item.amount),
+      note: Value(item.note),
+      category: Value(categoryId!),
+    );
+    await _transactionLocalSource.insertItem(transaction);
+    return Success(item);
+
+
   }
 
   @override
@@ -77,10 +93,23 @@ class TransactionRepository implements TransactionRepositoryInterface {
       logger.i('Remote source is not empty - Inserting into local database', error: transactions);
       await _transactionLocalSource.insertBulkItems(
         transactions.map(
-          (ele) => TransactionsCompanion(
-            amount: Value(ele.amount),
-            note: Value(ele.note),
-          ),
+          (ele) {
+            final category = CategoriesCompanion(
+              title: Value(ele.category.title),
+              color: Value(ele.category.color),
+              icon: Value(ele.category.icon),
+              status: Value(ele.category.status),
+              totalAmount: Value(ele.category.totalAmount),
+            );
+            // TODO: Handle category insert error
+            final categoryId = await _transactionLocalSource.insertCategory(category);
+
+            return TransactionsCompanion(
+              amount: Value(ele.amount),
+              note: Value(ele.note),
+              category: category.id,
+            );
+          },
         ),
       );
       return Success(transactions);

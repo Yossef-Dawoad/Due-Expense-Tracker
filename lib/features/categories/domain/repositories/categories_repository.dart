@@ -102,6 +102,7 @@ class CategoriesRepository implements CategoryRepositoryInterface {
             color: Value(ele.color),
             status: Value(ele.status),
             totalAmount: Value(ele.totalAmount),
+            icon: Value(ele.icon),
           ),
         ),
       );

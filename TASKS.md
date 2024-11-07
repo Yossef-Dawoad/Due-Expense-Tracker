@@ -8,3 +8,4 @@
 - [ ] Setup tests
 - [X] add github actions
 - [ ] add fastlane and ci/cd pipeline
+- [ ] server failed timeout display Somthing Went Wrong

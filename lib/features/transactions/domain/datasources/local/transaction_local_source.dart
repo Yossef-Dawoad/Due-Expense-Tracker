@@ -36,6 +36,16 @@ class TransactionLocalSource implements TransactionLocalSourceInterface {
   }
 
   @override
+  Future<int?> insertSubItem<Category>(Insertable<Category> category) async {
+    try {
+      return await _source.insertCategory(category as CategoriesCompanion);
+    } catch (err) {
+      logger.e('Error reading from db', error: err);
+    }
+    return null;
+  }
+
+  @override
   Future<bool> updateItem(Insertable<Transaction> transaction) async {
     return await _source.updateTransaction(transaction);
   }

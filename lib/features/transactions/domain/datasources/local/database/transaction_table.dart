@@ -17,7 +17,7 @@ class Transactions extends Table with AutoIncrementingPK {
 // fields for the tables. The <MyDatabase> type annotation is the database class
 // that should use this dao.
 @DriftAccessor(
-  tables: [Transactions],
+  tables: [Transactions, Categories],
   queries: {'getRowsCount': 'SELECT COUNT(id) from transactions;'},
 )
 class TransactionsDao extends DatabaseAccessor<AppDatabase> with _$TransactionsDaoMixin {
@@ -27,6 +27,10 @@ class TransactionsDao extends DatabaseAccessor<AppDatabase> with _$TransactionsD
 
   Future<List<Transaction>> getAllTransactions() => select(transactions).get();
   Stream<List<Transaction>> watchAllTransactions() => select(transactions).watch();
+
+  Future<int> insertCategory(Insertable<Category> category) {
+    return into(categories).insert(category);
+  }
 
   Future<int> insertTransaction(Insertable<Transaction> transaction) =>
       into(transactions).insert(transaction);

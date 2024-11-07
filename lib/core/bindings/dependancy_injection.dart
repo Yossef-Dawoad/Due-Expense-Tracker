@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:expancetracker/core/common/databases/app_database.dart';
 import 'package:expancetracker/core/utils/network/network_manager.dart';
 import 'package:expancetracker/features/categories/domain/datasources/local/database/category_table.dart';
 import 'package:expancetracker/features/categories/domain/datasources/local/transaction_local_source.dart';
@@ -20,6 +21,7 @@ void initializeDependencies() {
   /////////////----------- APP Services---------///////////////
   sl.registerLazySingleton(() => Connectivity());
   sl.registerLazySingleton<NetworkManagerInterface>(() => NetworkManager(sl()));
+  sl.registerLazySingleton(() => AppDatabase());
 
   /// Register DataSources
 

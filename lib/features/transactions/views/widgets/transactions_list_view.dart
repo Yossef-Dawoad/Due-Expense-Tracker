@@ -22,18 +22,31 @@ class TransactionListView extends StatelessWidget {
         builder: (context, state) {
           //TODO handle error WITH IMAGE and something wrong happen
 
-          return state.maybeWhen(
-            fetchSuccess: (transactions) => ListView.separated(
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
-              itemCount: transactions.length,
-              itemBuilder: (_, idx) => TransactionTileWidget(transaction: transactions[idx]),
-            ),
-            orElse: () => ListView.separated(
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
-              itemCount: 6,
-              itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
-            ),
-            // SkeletonTransactionTiles
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<TransactionsBloc>().add(const FetchedAllTransactions());
+            },
+            child: state.maybeWhen(
+                fetchSuccess: (transactions) => ListView.separated(
+                      separatorBuilder: (_, __) => const SizedBox(height: 10),
+                      itemCount: transactions.length,
+                      itemBuilder: (_, idx) =>
+                          TransactionTileWidget(transaction: transactions[idx]),
+                    ),
+                loading: () => ListView.separated(
+                      separatorBuilder: (_, __) => const SizedBox(height: 10),
+                      itemCount: 6,
+                      itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
+                    ),
+                orElse: () => const Center(
+                      child: Text(
+                        'Failed To Get Your Transaction. \nPlease Try Again Later',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
+                      ),
+                    )
+                // SkeletonTransactionTiles
+                ),
           );
         },
       ),
