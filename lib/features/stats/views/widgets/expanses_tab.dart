@@ -19,7 +19,8 @@ class ExpansesTabScreen extends StatelessWidget {
         const SliverToBoxAdapter(child: TransactionHistoryBarChar()),
         // Transaction Sliver
         BlocProvider(
-          create: (context) => sl<TransactionsBloc>()..add(const FetchedAllTransactions()),
+          create: (context) =>
+              sl<TransactionsBloc>()..add(const FetchedAllTransactions()),
           child: BlocBuilder<TransactionsBloc, TransactionState>(
             buildWhen: (prev, curr) =>
                 curr is TransactionLoading ||
@@ -27,18 +28,30 @@ class ExpansesTabScreen extends StatelessWidget {
                 curr is TransactionFetchFailure,
             builder: (context, state) {
               //TODO handle error WITH IMAGE and something wrong happen
-              return state.maybeWhen(
-                fetchSuccess: (transactions) => SliverList.separated(
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
-                  itemCount: transactions.length,
-                  itemBuilder: (_, idx) => TransactionTileWidget(transaction: transactions[idx]),
-                ),
-                orElse: () => SliverList.separated(
+              return switch (state) {
+                TransactionLoading() => SliverList.separated(
                   separatorBuilder: (_, __) => const SizedBox(height: 10),
                   itemCount: 6,
                   itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
                 ),
-              );
+                TransactionFetchSuccess(:final transactions) =>
+                  SliverList.separated(
+                    separatorBuilder: (_, __) => const SizedBox(height: 10),
+                    itemCount: transactions.length,
+                    itemBuilder: (_, idx) =>
+                        TransactionTileWidget(transaction: transactions[idx]),
+                  ),
+                TransactionFetchFailure(:final error) => SliverList.separated(
+                  separatorBuilder: (_, __) => const SizedBox(height: 10),
+                  itemCount: 6,
+                  itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
+                ),
+                _ => SliverList.separated(
+                  separatorBuilder: (_, __) => const SizedBox(height: 10),
+                  itemCount: 6,
+                  itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
+                ),
+              };
             },
           ),
         ),

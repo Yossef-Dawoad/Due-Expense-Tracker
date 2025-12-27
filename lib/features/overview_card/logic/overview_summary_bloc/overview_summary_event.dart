@@ -1,11 +1,21 @@
 part of 'overview_summary_bloc.dart';
 
-@freezed
-class OverviewSummaryEvent with _$OverviewSummaryEvent {
-  const factory OverviewSummaryEvent.started() = _Started;
-  const factory OverviewSummaryEvent.getTotalTransaction() =
-      OverviewGetTotalTransaciton;
-  const factory OverviewSummaryEvent.getTotalIncome() = OverviewGetTotalIncome;
-  const factory OverviewSummaryEvent.getTotalExpense() =
-      OverviewGetTotalExpense;
+sealed class OverviewSummaryEvent {
+  const OverviewSummaryEvent();
+}
+
+final class FetchedAllTransactionsSummary extends OverviewSummaryEvent {
+  const FetchedAllTransactionsSummary();
+}
+
+final class TotalIncomeRequested extends OverviewSummaryEvent {
+  const TotalIncomeRequested();
+}
+
+final class TotalExpenseRequested extends OverviewSummaryEvent {
+  const TotalExpenseRequested();
+}
+
+final class ClearedOverviewSummary extends OverviewSummaryEvent {
+  const ClearedOverviewSummary();
 }

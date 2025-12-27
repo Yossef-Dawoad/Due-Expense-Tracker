@@ -46,7 +46,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-              onPressed: () => Navigator.pop(context), icon: const Icon(Iconsax.close_circle))
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Iconsax.close_circle),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -65,25 +67,27 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
               BlocBuilder<CategoriesBloc, CategoriesState>(
                 buildWhen: (prev, curr) =>
-                    curr is CategoryLoading ||
+                    curr is CategoriesLoading ||
                     curr is CategoryAddSuccess ||
                     curr is CategoryFailure,
-                builder: (context, state) => state.maybeWhen(
-                  loading: () => const Center(child: CircularProgressIndicator()),
-                  addedsuccess: (category) => MyTextField(
+                builder: (context, state) => switch (state) {
+                  CategoriesLoading() => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  CategoryAddSuccess(:final category) => MyTextField(
                     hintText: category.title,
                     prefixIcon: Icon(category.icon, size: 28),
                     readOnly: true,
                     fillColor: Colors.green.shade100,
                     onTap: () => categoryModelSheet(context),
                   ),
-                  orElse: () => MyTextField(
+                  _ => MyTextField(
                     hintText: 'Select Category',
                     prefixIcon: const Icon(Iconsax.category, size: 28),
                     readOnly: true,
                     onTap: () => categoryModelSheet(context),
                   ),
-                ),
+                },
               ),
               const SizedBox(height: 20),
               MyTextField(
@@ -129,20 +133,19 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               ),
               BlocListener<TransactionsBloc, TransactionState>(
                 listenWhen: (prev, curr) => curr is TransactionAddSuccess,
-                listener: (context, state) => state.maybeWhen(
-                  addSuccess: () {
-                    Navigator.pop(context);
+                listener: (context, state) => switch (state) {
+                  TransactionAddSuccess() => {
+                    Navigator.pop(context),
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          backgroundColor: Colors.green,
-                          content: Text('Expense Added Successfully')),
-                    );
-                    return;
+                        backgroundColor: Colors.green,
+                        content: Text('Expense Added Successfully'),
+                      ),
+                    ),
                   },
-                  orElse: () => const CircularProgressIndicator(),
-                ),
-                child: const SizedBox.shrink(),
-              )
+                  _ => const CircularProgressIndicator(),
+                },
+              ),
             ],
           ),
         ),
@@ -157,7 +160,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       context: context,
       builder: (ctx) => BlocProvider.value(
         value: context.read<CategoriesBloc>(),
-        child: CategorySelectorWidget(onChanged: (value) => selectedCategory = value),
+        child: CategorySelectorWidget(
+          onChanged: (value) => selectedCategory = value,
+        ),
       ),
     );
   }
@@ -165,7 +170,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   void _submitNewExpense(BuildContext context) {
     context.read<TransactionsBloc>()
       ..add(
-        TransactionEvent.addedNewExpense(
+        AddedNewTransaction(
           UserTransaction(
             id: const Uuid().v4(),
             amount: double.parse(_amountController.text.trim()),

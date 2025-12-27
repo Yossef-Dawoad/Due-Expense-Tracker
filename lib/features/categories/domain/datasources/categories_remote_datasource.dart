@@ -11,7 +11,7 @@ class CategoriesRemoteDataSource implements CategoriesRemoteService {
 
   @override
   Future<TransactionCategory> addNewItem(TransactionCategory item) async {
-    await _firestore.collection(collectionName).doc(item.id).set(item.toJson());
+    await _firestore.collection(collectionName).doc(item.id).set(item.toMap());
     return item;
   }
 
@@ -23,15 +23,19 @@ class CategoriesRemoteDataSource implements CategoriesRemoteService {
   @override
   Future<List<TransactionCategory>> getAllItems() async {
     final dataSnapShot = await _firestore.collection(collectionName).get();
-    final result =
-        dataSnapShot.docs.map((doc) => TransactionCategory.fromJson(doc.data())).toList();
+    final result = dataSnapShot.docs
+        .map((doc) => TransactionCategory.fromMap(doc.data()))
+        .toList();
     return result;
   }
 
   @override
   Future<TransactionCategory> getItemById(String id) async {
-    final dataSnapShot = await _firestore.collection(collectionName).doc(id).get();
-    return TransactionCategory.fromJson(dataSnapShot.data()!);
+    final dataSnapShot = await _firestore
+        .collection(collectionName)
+        .doc(id)
+        .get();
+    return TransactionCategory.fromMap(dataSnapShot.data()!);
   }
 
   @override

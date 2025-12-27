@@ -1,26 +1,23 @@
 part of 'overview_summary_bloc.dart';
 
-@freezed
-class OverviewSummaryState with _$OverviewSummaryState {
-  const factory OverviewSummaryState.initial() = _Initial;
+sealed class OverviewSummaryState {
+  const OverviewSummaryState();
+}
 
-  const factory OverviewSummaryState.totalTransactionLoading() =
-      TotalTransactionLoading;
-  const factory OverviewSummaryState.totalTransactionSuccess(double amount) =
-      TotalTransactionSuccess;
-  const factory OverviewSummaryState.totalTransactionFailure(String message) =
-      TotalTransactionFailure;
+class OverviewSummaryInitial extends OverviewSummaryState {
+  const OverviewSummaryInitial();
+}
 
-  const factory OverviewSummaryState.totalIncomeLoading() = TotalIncomeLoading;
-  const factory OverviewSummaryState.totalIncomeSuccess(double amount) =
-      TotalIncomeSuccess;
-  const factory OverviewSummaryState.totalIncomeFailure(String message) =
-      TotalIncomeFailure;
+class OverviewSummaryLoading extends OverviewSummaryState {
+  const OverviewSummaryLoading();
+}
 
-  const factory OverviewSummaryState.totalExpenseLoading() =
-      TotalExpenseLoading;
-  const factory OverviewSummaryState.totalExpenseSuccess(double amount) =
-      TotalExpenseSuccess;
-  const factory OverviewSummaryState.totalExpenseFailure(String message) =
-      TotalExpenseFailure;
+class TotalTransactionSuccess extends OverviewSummaryState {
+  const TotalTransactionSuccess(this.totalAmount);
+  final double totalAmount;
+}
+
+class OverviewSummaryFailure extends OverviewSummaryState {
+  const OverviewSummaryFailure(this.error);
+  final String error;
 }

@@ -18,18 +18,19 @@ class AddCategoryButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            elevation: 0.0,
-            padding: const EdgeInsets.all(16.0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
-              side: const BorderSide(
-                color: Colors.blue,
-              ),
-            )),
+          elevation: 0.0,
+          padding: const EdgeInsets.all(16.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+            side: const BorderSide(color: Colors.blue),
+          ),
+        ),
         onPressed: () => _onUserSelectedCategory(context),
         child: Text(
           'Add Category',
-          style: f18BlackBold.copyWith(color: Theme.of(context).colorScheme.primary),
+          style: f18BlackBold.copyWith(
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
       ),
     );
@@ -40,7 +41,7 @@ class AddCategoryButton extends StatelessWidget {
 
     // user Selected one of existing category
     if (userData.category != null) {
-      context.read<CategoriesBloc>().add(CategoryAdded(userData.category!));
+      context.read<CategoriesBloc>().add(AddedNewCategory(userData.category!));
       return;
     }
     // User is try to add entirely new category
@@ -54,18 +55,23 @@ class AddCategoryButton extends StatelessWidget {
         color: userData.categoryColor!.value,
         status: userData.status,
       );
-      context.read<CategoriesBloc>().add(CategoryAdded(newCategory));
+      context.read<CategoriesBloc>().add(AddedNewCategory(newCategory));
 
       // pop-up the current route and display sanckbar
       context.popRoute();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(backgroundColor: Colors.green, content: Text('New category added')),
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text('New category added'),
+        ),
       );
     } else {
       context.popRoute();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            backgroundColor: Colors.red, content: Text('Please fill all the required fields')),
+          backgroundColor: Colors.red,
+          content: Text('Please fill all the required fields'),
+        ),
       );
     }
   }

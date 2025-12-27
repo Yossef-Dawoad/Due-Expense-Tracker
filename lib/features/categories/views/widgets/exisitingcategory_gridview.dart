@@ -13,7 +13,8 @@ class ExsistingCategoryGridViewContainer extends StatefulWidget {
       _ExsistingCategoryGridViewContainerState();
 }
 
-class _ExsistingCategoryGridViewContainerState extends State<ExsistingCategoryGridViewContainer> {
+class _ExsistingCategoryGridViewContainerState
+    extends State<ExsistingCategoryGridViewContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,12 +27,16 @@ class _ExsistingCategoryGridViewContainerState extends State<ExsistingCategoryGr
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: BlocBuilder<CategoriesBloc, CategoriesState>(
-          bloc: sl<CategoriesBloc>()..add(const CategoriesFetched()),
+          bloc: sl<CategoriesBloc>()..add(const FetchedAllCategories()),
           builder: (context, state) {
-            return state.maybeWhen(
-              orElse: () => const Center(child: CircularProgressIndicator()),
-              fetshedsuccess: (categories) => ExsistingCategoryGridView(categories),
-            );
+            return switch (state) {
+              CategoriesLoading() => const Center(
+                child: CircularProgressIndicator(),
+              ),
+              CategoriesFetchSuccess(:final categories) =>
+                ExsistingCategoryGridView(categories),
+              _ => const Center(child: CircularProgressIndicator()),
+            };
           },
         ),
       ),
@@ -44,7 +49,8 @@ class ExsistingCategoryGridView extends StatefulWidget {
   final List<TransactionCategory> categories;
 
   @override
-  State<ExsistingCategoryGridView> createState() => _ExsistingCategoryGridViewState();
+  State<ExsistingCategoryGridView> createState() =>
+      _ExsistingCategoryGridViewState();
 }
 
 class _ExsistingCategoryGridViewState extends State<ExsistingCategoryGridView> {
@@ -99,16 +105,13 @@ class PredfiendCategoryItem extends StatelessWidget {
             shape: BoxShape.circle,
             border: isSelected ? Border.all(width: 4) : null,
           ),
-          child: Icon(
-            category.icon,
-            color: Colors.white,
-          ),
+          child: Icon(category.icon, color: Colors.white),
         ),
         Text(
           category.title,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(color: Colors.grey),
-        )
+        ),
       ],
     );
   }

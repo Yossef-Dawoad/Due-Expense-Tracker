@@ -6,10 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
 class GradientColorfulContainer extends StatelessWidget {
-  const GradientColorfulContainer({
-    super.key,
-    required this.child,
-  });
+  const GradientColorfulContainer({super.key, required this.child});
   final Widget child;
 
   @override
@@ -43,9 +40,7 @@ class GradientColorfulContainer extends StatelessWidget {
 }
 
 class CardContentWidget extends StatelessWidget {
-  const CardContentWidget({
-    super.key,
-  });
+  const CardContentWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +56,20 @@ class CardContentWidget extends StatelessWidget {
         ),
         BlocBuilder<OverviewSummaryBloc, OverviewSummaryState>(
           buildWhen: (prev, curr) =>
-              curr is TotalTransactionLoading ||
+              curr is OverviewSummaryLoading ||
               curr is TotalTransactionSuccess ||
-              curr is TotalTransactionFailure,
-          builder: (context, state) => state.maybeWhen(
-            totalTransactionLoading: () => const CircularProgressIndicator(),
-            totalTransactionSuccess: (amount) => Text('\$ $amount',
-                style: f38BlackBold.copyWith(color: Colors.white)),
-            orElse: () => Text('\$ ---,--',
-                style: f38BlackBold.copyWith(color: Colors.white)),
-          ),
+              curr is OverviewSummaryFailure,
+          builder: (context, state) => switch (state) {
+            OverviewSummaryLoading() => const CircularProgressIndicator(),
+            TotalTransactionSuccess(:final totalAmount) => Text(
+              '\$ $totalAmount',
+              style: f38BlackBold.copyWith(color: Colors.white),
+            ),
+            _ => Text(
+              '\$ ---,--',
+              style: f38BlackBold.copyWith(color: Colors.white),
+            ),
+          },
         ),
         const SizedBox(height: 35),
         Row(
@@ -78,45 +77,47 @@ class CardContentWidget extends StatelessWidget {
           children: [
             BlocBuilder<OverviewSummaryBloc, OverviewSummaryState>(
               buildWhen: (prev, curr) =>
-                  curr is TotalIncomeLoading ||
-                  curr is TotalIncomeSuccess ||
-                  curr is TotalIncomeFailure,
-              builder: (context, state) => state.maybeWhen(
-                totalIncomeLoading: () => const CircularProgressIndicator(),
-                totalIncomeSuccess: (amount) => TransactionTotalSummary(
-                  title: 'income',
-                  amount: amount,
-                  color: Colors.green,
-                  icon: Iconsax.arrow_up_3,
-                ),
-                orElse: () => const TransactionTotalSummary(
+                  curr is OverviewSummaryLoading ||
+                  curr is TotalIncomeRequested ||
+                  curr is OverviewSummaryFailure,
+              builder: (context, state) => switch (state) {
+                OverviewSummaryLoading() => const CircularProgressIndicator(),
+                TotalTransactionSuccess(:final totalAmount) =>
+                  TransactionTotalSummary(
+                    title: 'income',
+                    amount: totalAmount,
+                    color: Colors.green,
+                    icon: Iconsax.arrow_up_3,
+                  ),
+                _ => const TransactionTotalSummary(
                   title: 'income',
                   amount: 0.0,
                   color: Colors.green,
                   icon: Iconsax.arrow_up_3,
                 ),
-              ),
+              },
             ),
             BlocBuilder<OverviewSummaryBloc, OverviewSummaryState>(
               buildWhen: (prev, curr) =>
-                  curr is TotalExpenseLoading ||
-                  curr is TotalExpenseSuccess ||
-                  curr is TotalExpenseFailure,
-              builder: (context, state) => state.maybeWhen(
-                totalExpenseLoading: () => const CircularProgressIndicator(),
-                totalExpenseSuccess: (amount) => TransactionTotalSummary(
-                  title: 'expense',
-                  amount: amount,
-                  color: Colors.redAccent[700]!,
-                  icon: Iconsax.arrow_down,
-                ),
-                orElse: () => TransactionTotalSummary(
+                  curr is OverviewSummaryLoading ||
+                  curr is TotalTransactionSuccess ||
+                  curr is OverviewSummaryFailure,
+              builder: (context, state) => switch (state) {
+                OverviewSummaryLoading() => const CircularProgressIndicator(),
+                TotalTransactionSuccess(:final totalAmount) =>
+                  TransactionTotalSummary(
+                    title: 'expense',
+                    amount: totalAmount,
+                    color: Colors.redAccent[700]!,
+                    icon: Iconsax.arrow_down,
+                  ),
+                _ => TransactionTotalSummary(
                   title: 'expense',
                   amount: 0.0,
                   color: Colors.redAccent[700]!,
                   icon: Iconsax.arrow_down,
                 ),
-              ),
+              },
             ),
           ],
         ),

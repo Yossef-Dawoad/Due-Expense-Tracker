@@ -13,7 +13,8 @@ class TransactionListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<TransactionsBloc>()..add(const FetchedAllTransactions()),
+      create: (context) =>
+          sl<TransactionsBloc>()..add(const FetchedAllTransactions()),
       child: BlocBuilder<TransactionsBloc, TransactionState>(
         buildWhen: (prev, curr) =>
             curr is TransactionLoading ||
@@ -22,19 +23,30 @@ class TransactionListView extends StatelessWidget {
         builder: (context, state) {
           //TODO handle error WITH IMAGE and something wrong happen
 
-          return state.maybeWhen(
-            fetchSuccess: (transactions) => ListView.separated(
+          return switch (state) {
+            TransactionLoading() => ListView.separated(
+              separatorBuilder: (_, __) => const SizedBox(height: 10),
+              itemCount: 6,
+              itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
+            ),
+            TransactionFetchSuccess(:final transactions) => ListView.separated(
               separatorBuilder: (_, __) => const SizedBox(height: 10),
               itemCount: transactions.length,
-              itemBuilder: (_, idx) => TransactionTileWidget(transaction: transactions[idx]),
+              itemBuilder: (_, idx) =>
+                  TransactionTileWidget(transaction: transactions[idx]),
             ),
-            orElse: () => ListView.separated(
+            TransactionFetchFailure(:final error) => ListView.separated(
               separatorBuilder: (_, __) => const SizedBox(height: 10),
               itemCount: 6,
               itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
             ),
             // SkeletonTransactionTiles
-          );
+            _ => ListView.separated(
+              separatorBuilder: (_, __) => const SizedBox(height: 10),
+              itemCount: 6,
+              itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
+            ),
+          };
         },
       ),
     );

@@ -1,35 +1,33 @@
 import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
 import 'package:expancetracker/features/categories/domain/repositories/categories_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'categories_event.dart';
 part 'categories_state.dart';
-part 'categories_bloc.freezed.dart';
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   final CategoriesRepository _categoriesRepo;
-  CategoriesBloc(this._categoriesRepo) : super(const _Initial()) {
-    on<CategoryAdded>(_onCategoryAdded);
-    on<CategoriesFetched>(_onCategoriesFetched);
+  CategoriesBloc(this._categoriesRepo) : super(const _CategoriesInitial()) {
+    on<AddedNewCategory>(_onCategoryAdded);
+    on<FetchedAllCategories>(_onCategoriesFetched);
   }
   void _onCategoryAdded(event, emit) async {
-    emit(const CategoriesState.loading());
+    emit(const CategoriesLoading());
     try {
       final category = await _categoriesRepo.addNewCategory(event.category);
-      emit(CategoriesState.addedsuccess(category));
+      emit(CategoryAddSuccess(category));
     } catch (e) {
-      emit(CategoriesState.failure(e.toString()));
+      emit(CategoryFailure(e.toString()));
     }
   }
 
   void _onCategoriesFetched(event, emit) async {
-    emit(const CategoriesState.loading());
+    emit(const CategoriesLoading());
     try {
       final categories = await _categoriesRepo.getAllCategories();
-      emit(CategoriesState.fetshedsuccess(categories));
+      emit(CategoriesFetchSuccess(categories));
     } catch (e) {
-      emit(CategoriesState.failure(e.toString()));
+      emit(CategoryFailure(e.toString()));
     }
   }
 }

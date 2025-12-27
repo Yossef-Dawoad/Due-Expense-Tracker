@@ -43,7 +43,10 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
               if (!addNewCategory)
                 Column(
                   children: [
-                    Text('Select Category', style: f18BlackBold.copyWith(color: Colors.black54)),
+                    Text(
+                      'Select Category',
+                      style: f18BlackBold.copyWith(color: Colors.black54),
+                    ),
                     const SizedBox(height: 20),
                     // Pre-defined Categories
                     const ExsistingCategoryGridViewContainer(),
@@ -57,11 +60,14 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
                   ? HeaderTitle(
                       title: 'Want to Select Existing One?',
                       actionIcon: Iconsax.arrow_square_up,
-                      onActionTap: () => setState(() => addNewCategory = !addNewCategory))
+                      onActionTap: () =>
+                          setState(() => addNewCategory = !addNewCategory),
+                    )
                   : HeaderTitle(
                       title: 'Or You Add New Category',
                       actionIcon: Iconsax.arrow_square_down,
-                      onActionTap: () => setState(() => addNewCategory = !addNewCategory),
+                      onActionTap: () =>
+                          setState(() => addNewCategory = !addNewCategory),
                     ),
               const SizedBox(height: 20),
               // show the category form if user want to enter new category
@@ -87,7 +93,7 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
                     const SizedBox(height: 30),
                     Text('Expense Type', style: f14greyRegularText),
                     const SizedBox(height: 10),
-                    const ExpenseActionChoice()
+                    const ExpenseActionChoice(),
                   ],
                 ),
 
@@ -98,28 +104,28 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
               // a listener when user add new category
               BlocListener<CategoriesBloc, CategoriesState>(
                 listenWhen: (prev, curr) => curr is CategoryAddSuccess,
-                listener: (context, state) => state.maybeWhen(
-                  addedsuccess: (category) {
-                    widget.onChanged(category);
-                    context.popRoute();
+                listener: (context, state) => switch (state) {
+                  CategoryAddSuccess(:final category) => {
+                    widget.onChanged(category),
+                    context.popRoute(),
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          backgroundColor: Colors.green, content: Text('New category added')),
-                    );
-                    return null;
+                        backgroundColor: Colors.green,
+                        content: Text('New category added'),
+                      ),
+                    ),
                   },
-                  orElse: () {
-                    context.popRoute();
+                  _ => {
+                    context.popRoute(),
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text('Please fill all the required fields')),
-                    );
-                    return null;
+                        backgroundColor: Colors.red,
+                        content: Text('Please fill all the required fields'),
+                      ),
+                    ),
                   },
-                ),
-                child: const SizedBox.shrink(),
-              )
+                },
+              ),
             ],
           ),
         ),

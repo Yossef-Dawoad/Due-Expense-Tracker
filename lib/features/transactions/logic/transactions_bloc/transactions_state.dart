@@ -1,15 +1,33 @@
 part of 'transactions_bloc.dart';
 
-@freezed
-class TransactionState with _$TransactionState {
-  const factory TransactionState.initial() = _Initial;
-  const factory TransactionState.loading() = TransactionLoading;
-  const factory TransactionState.addSuccess() = TransactionAddSuccess;
-  const factory TransactionState.fetchSuccess(
-      List<UserTransaction> transactions) = TransactionFetchSuccess;
+sealed class TransactionState {
+  const TransactionState();
+}
 
-  const factory TransactionState.addfailure(String message) =
-      TransactionAddFailure;
-  const factory TransactionState.fetchfailure(String message) =
-      TransactionFetchFailure;
+class _InitialTransactionStarted extends TransactionState {
+  const _InitialTransactionStarted();
+}
+
+class TransactionLoading extends TransactionState {
+  const TransactionLoading();
+}
+
+class TransactionAddSuccess extends TransactionState {
+  const TransactionAddSuccess(this.transaction);
+  final UserTransaction transaction;
+}
+
+class TransactionAddFailure extends TransactionState {
+  const TransactionAddFailure(this.error);
+  final String error;
+}
+
+class TransactionFetchFailure extends TransactionState {
+  const TransactionFetchFailure(this.error);
+  final String error;
+}
+
+class TransactionFetchSuccess extends TransactionState {
+  const TransactionFetchSuccess(this.transactions);
+  final List<UserTransaction> transactions;
 }
