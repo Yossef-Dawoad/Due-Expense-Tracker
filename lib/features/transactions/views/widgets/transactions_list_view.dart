@@ -35,10 +35,28 @@ class TransactionListView extends StatelessWidget {
               itemBuilder: (_, idx) =>
                   TransactionTileWidget(transaction: transactions[idx]),
             ),
-            TransactionFetchFailure(:final error) => ListView.separated(
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
-              itemCount: 6,
-              itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
+            // a beautiful error handling UI, with icon and text please try again later and retry button
+            TransactionFetchFailure() => Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error_outline, size: 100, color: Colors.red),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Error Occurred',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Please try again later',
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                ],
+              ),
             ),
             // SkeletonTransactionTiles
             _ => ListView.separated(

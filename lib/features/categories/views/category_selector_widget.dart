@@ -125,6 +125,7 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
                     ),
                   },
                 },
+                child: const SizedBox.shrink(),
               ),
             ],
           ),

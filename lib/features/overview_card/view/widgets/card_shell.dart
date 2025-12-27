@@ -78,11 +78,11 @@ class CardContentWidget extends StatelessWidget {
             BlocBuilder<OverviewSummaryBloc, OverviewSummaryState>(
               buildWhen: (prev, curr) =>
                   curr is OverviewSummaryLoading ||
-                  curr is TotalIncomeRequested ||
+                  curr is IncomeTransactionSuccess ||
                   curr is OverviewSummaryFailure,
               builder: (context, state) => switch (state) {
                 OverviewSummaryLoading() => const CircularProgressIndicator(),
-                TotalTransactionSuccess(:final totalAmount) =>
+                IncomeTransactionSuccess(:final totalAmount) =>
                   TransactionTotalSummary(
                     title: 'income',
                     amount: totalAmount,
@@ -100,11 +100,11 @@ class CardContentWidget extends StatelessWidget {
             BlocBuilder<OverviewSummaryBloc, OverviewSummaryState>(
               buildWhen: (prev, curr) =>
                   curr is OverviewSummaryLoading ||
-                  curr is TotalTransactionSuccess ||
+                  curr is ExpenseTransactionSuccess ||
                   curr is OverviewSummaryFailure,
               builder: (context, state) => switch (state) {
                 OverviewSummaryLoading() => const CircularProgressIndicator(),
-                TotalTransactionSuccess(:final totalAmount) =>
+                ExpenseTransactionSuccess(:final totalAmount) =>
                   TransactionTotalSummary(
                     title: 'expense',
                     amount: totalAmount,

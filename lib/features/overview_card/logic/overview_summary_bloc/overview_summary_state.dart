@@ -17,6 +17,16 @@ class TotalTransactionSuccess extends OverviewSummaryState {
   final double totalAmount;
 }
 
+class IncomeTransactionSuccess extends OverviewSummaryState {
+  const IncomeTransactionSuccess(this.totalAmount);
+  final double totalAmount;
+}
+
+class ExpenseTransactionSuccess extends OverviewSummaryState {
+  const ExpenseTransactionSuccess(this.totalAmount);
+  final double totalAmount;
+}
+
 class OverviewSummaryFailure extends OverviewSummaryState {
   const OverviewSummaryFailure(this.error);
   final String error;

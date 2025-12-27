@@ -145,6 +145,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   },
                   _ => const CircularProgressIndicator(),
                 },
+                child: const SizedBox.shrink(),
               ),
             ],
           ),

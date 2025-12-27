@@ -27,7 +27,7 @@ class OverviewSummaryBloc
     emit(const OverviewSummaryLoading());
     try {
       final totalAmount = await _service.getTotalIncomeAmount();
-      emit(TotalTransactionSuccess(totalAmount));
+      emit(IncomeTransactionSuccess(totalAmount));
     } catch (e) {
       emit(OverviewSummaryFailure(e.toString()));
     }
@@ -37,7 +37,7 @@ class OverviewSummaryBloc
     emit(const OverviewSummaryLoading());
     try {
       final totalAmount = await _service.getTotalExpanseAmount();
-      emit(TotalTransactionSuccess(totalAmount));
+      emit(ExpenseTransactionSuccess(totalAmount));
     } catch (e) {
       emit(OverviewSummaryFailure(e.toString()));
     }

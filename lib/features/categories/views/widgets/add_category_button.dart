@@ -52,7 +52,7 @@ class AddCategoryButton extends StatelessWidget {
         id: const Uuid().v4(),
         title: categoryTite.text.trim(),
         icon: userData.categoryIcon!,
-        color: userData.categoryColor!.value,
+        color: userData.categoryColor!.toARGB32(),
         status: userData.status,
       );
       context.read<CategoriesBloc>().add(AddedNewCategory(newCategory));

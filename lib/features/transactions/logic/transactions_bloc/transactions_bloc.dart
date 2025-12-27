@@ -34,7 +34,7 @@ class TransactionsBloc extends Bloc<TransactionEvent, TransactionState> {
       final userTransactionlist = preDefinedTransactions + cloudTranscations;
       emit(TransactionFetchSuccess(userTransactionlist));
     } catch (e) {
-      emit(TransactionAddFailure(e.toString()));
+      emit(TransactionFetchFailure(e.toString()));
     }
   }
 }
