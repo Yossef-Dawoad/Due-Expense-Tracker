@@ -1,5 +1,6 @@
 import 'package:expancetracker/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   AppTheme._();
@@ -13,6 +14,7 @@ class AppTheme {
     ),
     scaffoldBackgroundColor: Palette.background,
     useMaterial3: true,
-    fontFamily: 'Poppins',
+    fontFamily: GoogleFonts.manrope().fontFamily,
+    textTheme: GoogleFonts.manropeTextTheme(),
   );
 }
