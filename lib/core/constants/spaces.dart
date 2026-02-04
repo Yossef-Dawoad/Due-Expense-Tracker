@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Spaces {
   static double xSmall = 4;
@@ -15,6 +14,6 @@ class Spaces {
   static const double btnPadding = medium;
   static const double btnPaddingLg = large;
 
-  static SizedBox verticalSpace(double height) => SizedBox(height: height.h);
-  static SizedBox horizontalSpace(double width) => SizedBox(width: width.w);
+  static SizedBox verticalSpace(double height) => SizedBox(height: height);
+  static SizedBox horizontalSpace(double width) => SizedBox(width: width);
 }

@@ -30,24 +30,24 @@ class ExpansesTabScreen extends StatelessWidget {
               //TODO handle error WITH IMAGE and something wrong happen
               return switch (state) {
                 TransactionLoading() => SliverList.separated(
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
+                  separatorBuilder: (_, _) => const SizedBox(height: 10),
                   itemCount: 6,
                   itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
                 ),
                 TransactionFetchSuccess(:final transactions) =>
                   SliverList.separated(
-                    separatorBuilder: (_, __) => const SizedBox(height: 10),
+                    separatorBuilder: (_, _) => const SizedBox(height: 10),
                     itemCount: transactions.length,
                     itemBuilder: (_, idx) =>
                         TransactionTileWidget(transaction: transactions[idx]),
                   ),
                 TransactionFetchFailure(:final error) => SliverList.separated(
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
+                  separatorBuilder: (_, _) => const SizedBox(height: 10),
                   itemCount: 6,
                   itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
                 ),
                 _ => SliverList.separated(
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
+                  separatorBuilder: (_, _) => const SizedBox(height: 10),
                   itemCount: 6,
                   itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
                 ),

@@ -1,14 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:expancetracker/core/common/domain/data/pre_defiend_transactions.dart';
-import 'package:expancetracker/core/common/domain/intrefaces/firebase_base.dart';
+import 'package:expancetracker/core/common/domain/intrefaces/remote_base.dart';
 import 'package:expancetracker/features/transactions/domain/models/user_transaction.dart';
 
 part 'transactions_event.dart';
 part 'transactions_state.dart';
 
 class TransactionsBloc extends Bloc<TransactionEvent, TransactionState> {
-  final BaseFireBaseDB<UserTransaction> _transactionService;
+  final RemoteDataBase<UserTransaction> _transactionService;
   TransactionsBloc(this._transactionService)
     : super(const _InitialTransactionStarted()) {
     on<AddedNewTransaction>(_onAddingNewExpense);

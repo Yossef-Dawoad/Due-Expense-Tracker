@@ -1,14 +1,10 @@
-import 'dart:math';
-
 import 'package:expancetracker/core/routes/routes.dart';
 import 'package:expancetracker/core/utils/extensions/context_ext.dart';
 import 'package:expancetracker/features/screens/home_screen_v2.dart';
-import 'package:expancetracker/features/stats/views/stats.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../stats/views/stats_screen.dart';
-import 'home_screen.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
@@ -33,7 +29,12 @@ class _NavigationMenuState extends State<NavigationMenu> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildNavItem(0, Iconsax.home, Iconsax.element_equal5, 'HOME'),
-              _buildNavItem(1, Icons.bar_chart, Iconsax.element_equal5, 'STATS'),
+              _buildNavItem(
+                1,
+                Icons.bar_chart,
+                Iconsax.element_equal5,
+                'STATS',
+              ),
               GestureDetector(
                 onTap: () => context.pushNamedRoute(Routes.addExpense),
                 child: Container(
@@ -65,7 +66,12 @@ class _NavigationMenuState extends State<NavigationMenu> {
     );
   }
 
-  Widget _buildNavItem(int index, IconData icon, IconData selectedIcon, String label) {
+  Widget _buildNavItem(
+    int index,
+    IconData icon,
+    IconData selectedIcon,
+    String label,
+  ) {
     final isSelected = currentPageIndex == index;
     final color = isSelected ? Color(0xFF39E079) : Colors.grey;
     return GestureDetector(

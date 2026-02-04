@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:expancetracker/core/common/domain/intrefaces/firebase_base.dart';
+import 'package:expancetracker/core/common/domain/intrefaces/remote_base.dart';
 
 import '../models/transaction_category.dart';
 
-typedef CategoriesRemoteService = BaseFireBaseDB<TransactionCategory>;
+typedef CategoriesRemoteService = RemoteDataBase<TransactionCategory>;
 
 class CategoriesRemoteDataSource implements CategoriesRemoteService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

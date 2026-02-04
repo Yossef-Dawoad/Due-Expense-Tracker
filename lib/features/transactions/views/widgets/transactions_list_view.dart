@@ -25,12 +25,12 @@ class TransactionListView extends StatelessWidget {
 
           return switch (state) {
             TransactionLoading() => ListView.separated(
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
+              separatorBuilder: (_, _) => const SizedBox(height: 10),
               itemCount: 6,
               itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
             ),
             TransactionFetchSuccess(:final transactions) => ListView.separated(
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
+              separatorBuilder: (_, _) => const SizedBox(height: 10),
               itemCount: transactions.length,
               itemBuilder: (_, idx) =>
                   TransactionTileWidget(transaction: transactions[idx]),
@@ -60,7 +60,7 @@ class TransactionListView extends StatelessWidget {
             ),
             // SkeletonTransactionTiles
             _ => ListView.separated(
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
+              separatorBuilder: (_, _) => const SizedBox(height: 10),
               itemCount: 6,
               itemBuilder: (_, idx) => const SkeletonTransactionTiles(),
             ),

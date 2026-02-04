@@ -7,7 +7,8 @@ class TransactionHistoryBarChar extends StatefulWidget {
   const TransactionHistoryBarChar({super.key});
 
   @override
-  State<TransactionHistoryBarChar> createState() => _TransactionHistoryBarCharState();
+  State<TransactionHistoryBarChar> createState() =>
+      _TransactionHistoryBarCharState();
 }
 
 class _TransactionHistoryBarCharState extends State<TransactionHistoryBarChar> {
@@ -43,8 +44,12 @@ class _TransactionHistoryBarCharState extends State<TransactionHistoryBarChar> {
                   borderData: FlBorderData(show: false),
                   titlesData: const FlTitlesData(
                     show: true,
-                    rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                    topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    rightTitles: AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    topTitles: AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
                   ),
                   barGroups: [
                     makeGroupDataLine(1, 10),
@@ -81,7 +86,7 @@ class _TransactionHistoryBarCharState extends State<TransactionHistoryBarChar> {
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             // toY: 0,
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withValues(alpha: 0.5),
           ),
         ),
       ],

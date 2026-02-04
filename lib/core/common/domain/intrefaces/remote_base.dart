@@ -13,7 +13,7 @@ abstract interface class BaseFirebaseTransctionDB {
   Future<void> deleteTransaction(UserTransaction transaction);
 }
 
-abstract interface class BaseFireBaseDB<T> {
+abstract interface class RemoteDataBase<T> {
   final String collectionName = '';
   Future<T> addNewItem(T item);
   Future<T> getItemById(String id);
