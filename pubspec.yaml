@@ -49,6 +49,7 @@ dependencies:
 
   dart_mappable: ^4.6.1
   google_fonts: ^8.0.0
+  pocketbase: ^0.23.2
   
 
 dev_dependencies:
