@@ -15,7 +15,7 @@ class NavigationMenu extends StatefulWidget {
 
 class _NavigationMenuState extends State<NavigationMenu> {
   int currentPageIndex = 0;
-  final screens = [const HomeScreenV2(), const StatsScreenV2()];
+  final screens = [const HomeScreenV2(), const StatsScreen()];
 
   @override
   Widget build(BuildContext context) {

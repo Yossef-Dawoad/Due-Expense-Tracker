@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#39E079",
+                        "accent": "#8B5CF6", // Purple
+                        "background-light": "#FFFFFF",
+                        "background-dark": "#122017",
+                        "surface-light": "#F3F4F6",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .glow-button {
+            box-shadow: 0 4px 20px -2px rgba(57, 224, 121, 0.5);
+        }
+
+        .chart-glow {
+            filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.5));
+        }
+
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        @keyframes blob {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-900 transition-colors duration-300 pb-32">
+    <div class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm px-4 pt-12 pb-2">
+        <div class="flex items-center justify-between max-w-md mx-auto">
+            <button
+                class="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors text-slate-900">
+                <span class="material-symbols-outlined text-2xl">arrow_back</span>
+            </button>
+            <h2 class="text-base font-bold tracking-tight text-slate-900">Wallet Details</h2>
+            <button
+                class="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors text-slate-900">
+                <span class="material-symbols-outlined text-2xl">more_horiz</span>
+            </button>
+        </div>
+    </div>
+    <main class="pt-24 px-4 max-w-md mx-auto relative overflow-hidden">
+        <div
+            class="absolute top-[350px] -left-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob">
+        </div>
+        <div
+            class="absolute top-[350px] -right-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000">
+        </div>
+        <div class="text-center py-8 relative z-10 bg-white">
+            <p class="text-slate-400 font-semibold mb-2 tracking-wide uppercase text-xs">Total Balance</p>
+            <h1 class="text-5xl font-extrabold tracking-tight text-slate-900 mb-3">$12,450.80</h1>
+            <div
+                class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold border border-emerald-100">
+                <span class="material-symbols-outlined text-sm">trending_up</span>
+                <span>+2.4% vs last month</span>
+            </div>
+        </div>
+        <div class="mb-10 relative z-10">
+            <div class="flex justify-between items-center mb-6 px-2">
+                <div class="flex gap-2 bg-slate-100 p-1 rounded-lg">
+                    <button
+                        class="text-xs font-bold text-slate-900 bg-white shadow-sm px-4 py-1.5 rounded-md">30D</button>
+                    <button class="text-xs font-medium text-slate-500 hover:text-slate-900 px-3 py-1.5">1W</button>
+                    <button class="text-xs font-medium text-slate-500 hover:text-slate-900 px-3 py-1.5">3M</button>
+                    <button class="text-xs font-medium text-slate-500 hover:text-slate-900 px-3 py-1.5">1Y</button>
+                </div>
+            </div>
+            <div class="w-full h-48 relative">
+                <svg class="w-full h-full overflow-visible" viewBox="0 0 350 150">
+                    <line stroke="#f1f5f9" stroke-width="1" x1="0" x2="350" y1="150" y2="150"></line>
+                    <line stroke="#f1f5f9" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="350" y1="100" y2="100">
+                    </line>
+                    <line stroke="#f1f5f9" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="350" y1="50" y2="50">
+                    </line>
+                    <defs>
+                        <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.15"></stop>
+                            <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"></stop>
+                        </linearGradient>
+                    </defs>
+                    <path d="M0,120 C40,110 60,130 100,80 C140,30 160,60 200,40 C240,20 280,90 350,30 V150 H0 Z"
+                        fill="url(#chartFill)"></path>
+                    <path class="chart-glow"
+                        d="M0,120 C40,110 60,130 100,80 C140,30 160,60 200,40 C240,20 280,90 350,30" fill="none"
+                        stroke="#8B5CF6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+                    <circle class="drop-shadow-md cursor-pointer" cx="200" cy="40" fill="#fff" r="6" stroke="#8B5CF6"
+                        stroke-width="3"></circle>
+                    <g transform="translate(165, 0)">
+                        <rect class="shadow-lg" fill="#1e293b" height="28" rx="8" width="70"></rect>
+                        <text fill="white" font-family="Manrope" font-size="11" font-weight="bold" text-anchor="middle"
+                            x="35" y="18">$12,450</text>
+                        <path d="M35,28 L30,33 L40,33 Z" fill="#1e293b"></path>
+                    </g>
+                </svg>
+                <div class="flex justify-between text-[10px] font-medium text-slate-400 mt-4 px-1">
+                    <span>01 Sep</span>
+                    <span>08 Sep</span>
+                    <span>15 Sep</span>
+                    <span>22 Sep</span>
+                    <span>30 Sep</span>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-10 relative z-10">
+            <div
+                class="glass-card rounded-2xl p-5 flex flex-col justify-between h-36 transition-transform hover:scale-[1.02]">
+                <div class="size-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 mb-2">
+                    <span class="material-symbols-outlined">account_balance_wallet</span>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Available Balance</p>
+                    <p class="text-xl font-extrabold text-slate-900 tracking-tight">$8,250.00</p>
+                </div>
+            </div>
+            <div
+                class="glass-card rounded-2xl p-5 flex flex-col justify-between h-36 transition-transform hover:scale-[1.02]">
+                <div class="size-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 mb-2">
+                    <span class="material-symbols-outlined">credit_card</span>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Total Liabilities</p>
+                    <p class="text-xl font-extrabold text-slate-900 tracking-tight">$4,200.80</p>
+                </div>
+            </div>
+        </div>
+        <div class="relative z-10 pb-10">
+            <div class="flex items-center justify-between mb-5">
+                <h3 class="text-lg font-bold text-slate-900">Linked Accounts</h3>
+                <button
+                    class="size-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors text-slate-600">
+                    <span class="material-symbols-outlined text-xl">add</span>
+                </button>
+            </div>
+            <div class="space-y-3">
+                <div
+                    class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="size-12 rounded-xl bg-[#117ACA] flex items-center justify-center text-white font-bold text-lg shadow-blue-200 shadow-lg">
+                            <span class="material-symbols-outlined">account_balance</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">Chase Checking</p>
+                            <p class="text-xs text-slate-400 mt-0.5">**** 4589</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-base text-slate-900">$5,450.00</p>
+                        <p class="text-xs text-emerald-500 font-bold mt-0.5">Active</p>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="size-12 rounded-xl bg-indigo-500 flex items-center justify-center text-white shadow-indigo-200 shadow-lg">
+                            <span class="material-symbols-outlined">savings</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">High Yield Savings</p>
+                            <p class="text-xs text-slate-400 mt-0.5">Wealthfront</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-base text-slate-900">$2,800.00</p>
+                        <p class="text-xs text-slate-400 font-medium mt-0.5">+3.1% APY</p>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="size-12 rounded-xl bg-[#0052FF] flex items-center justify-center text-white shadow-blue-200 shadow-lg">
+                            <span class="material-symbols-outlined">currency_bitcoin</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">Coinbase</p>
+                            <p class="text-xs text-slate-400 mt-0.5">Crypto Portfolio</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-base text-slate-900">$4,200.80</p>
+                        <div class="flex items-center gap-0.5 justify-end text-xs text-rose-500 font-bold mt-0.5">
+                            <span class="material-symbols-outlined text-[10px]">arrow_downward</span>
+                            1.2%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="fixed bottom-0 left-0 right-0 z-50 nav-glass border-t border-slate-200 px-6 pb-8 pt-4">
+        <div class="flex items-center justify-between relative max-w-md mx-auto">
+            <button
+                class="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity text-slate-800">
+                <span class="material-symbols-outlined text-2xl">home</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-primary">
+                <span class="material-symbols-outlined text-2xl font-bold">pie_chart</span>
+            </button>
+            <div class="absolute -top-12 left-1/2 -translate-x-1/2">
+                <button
+                    class="size-16 rounded-full bg-primary flex items-center justify-center text-white glow-button hover:scale-105 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">add</span>
+                </button>
+            </div>
+            <div class="w-16"></div>
+            <button
+                class="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity text-slate-800">
+                <span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+            </button>
+            <button
+                class="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity text-slate-800">
+                <span class="material-symbols-outlined text-2xl">person</span>
+            </button>
+        </div>
+    </div>
+
+</body>
+
+</html>

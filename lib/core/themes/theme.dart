@@ -7,14 +7,17 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     colorScheme: const ColorScheme.light(
       primary: Palette.primary,
-      secondary: Palette.secondary,
-      tertiary: Palette.tertiary,
-      surface: Palette.background,
-      onSurface: Colors.black,
+      secondary: Palette.accent,
+      surface: Palette.white,
+      onSurface: Palette.black, // Explicitly white as per design
     ),
     scaffoldBackgroundColor: Palette.background,
     useMaterial3: true,
     fontFamily: GoogleFonts.manrope().fontFamily,
     textTheme: GoogleFonts.manropeTextTheme(),
+    extensions: [
+      // If we needed custom theme extensions, they would go here.
+      // For now, mapping accent to secondary covers most cases.
+    ],
   );
 }
