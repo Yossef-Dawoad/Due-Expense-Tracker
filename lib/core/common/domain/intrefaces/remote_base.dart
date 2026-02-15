@@ -1,22 +1,20 @@
-import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
-import 'package:expancetracker/features/transactions/domain/models/user_transaction.dart';
-
-abstract interface class BaseFirebaseTransctionDB {
-  Future<void> setNewCategoryTransction(TransactionCategory transaction);
-  Future<TransactionCategory> getCategoryTransction(String id);
-  Future<List<TransactionCategory>> getAllCategoryTransctions();
-  Future<void> deleteCategoryTransaction(TransactionCategory transaction);
-
-  Future<void> setNewTransction(UserTransaction transaction);
-  Future<UserTransaction> getTransction(String id);
-  Future<List<UserTransaction>> getAllTransctions();
-  Future<void> deleteTransaction(UserTransaction transaction);
-}
-
+/// Remote data source contract for PocketBase API interactions.
 abstract interface class RemoteDataBase<T> {
+  /// The PocketBase collection name.
   final String collectionName = '';
+
+  /// Creates a new item on the remote server.
   Future<T> addNewItem(T item);
+
+  /// Retrieves a single item by ID.
   Future<T> getItemById(String id);
+
+  /// Retrieves all items from the remote collection.
   Future<List<T>> getAllItems();
+
+  /// Updates an existing item on the remote server.
+  Future<T> updateItem(T item);
+
+  /// Deletes an item from the remote server.
   Future<void> deleteItem(T item);
 }

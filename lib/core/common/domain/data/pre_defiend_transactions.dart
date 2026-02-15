@@ -1,23 +1,33 @@
-import 'package:expancetracker/features/categories/domain/models/transaction_category.dart';
-import 'package:expancetracker/features/transactions/domain/models/user_transaction.dart';
+import 'package:expancetracker/core/common/domain/enums/transaction_type.dart';
+import 'package:expancetracker/features/transactions/data/models/transaction.dart';
 
+/// Pre-defined sample transactions for development/testing.
 final preDefinedTransactions = [
-  UserTransaction(
+  Transaction(
     id: '0',
+    userId: 'demo',
+    accountId: 'default',
     amount: 45.0,
-    datetime: DateTime.now(),
-    category: TransactionCategory.home(),
+    type: TransactionType.expense,
+    date: DateTime.now(),
+    categoryId: 'home',
   ),
-  UserTransaction(
+  Transaction(
     id: '1',
+    userId: 'demo',
+    accountId: 'default',
     amount: 90.0,
-    datetime: DateTime.now(),
-    category: TransactionCategory.shopping(),
+    type: TransactionType.expense,
+    date: DateTime.now(),
+    categoryId: 'shopping',
   ),
-  UserTransaction(
+  Transaction(
     id: '3',
+    userId: 'demo',
+    accountId: 'default',
     amount: 60.0,
-    datetime: DateTime.now(),
-    category: TransactionCategory.food(),
-  )
+    type: TransactionType.expense,
+    date: DateTime.now(),
+    categoryId: 'food',
+  ),
 ];
