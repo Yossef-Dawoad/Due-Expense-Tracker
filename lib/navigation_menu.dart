@@ -1,10 +1,10 @@
 import 'package:expancetracker/core/routes/routes.dart';
 import 'package:expancetracker/core/utils/extensions/context_ext.dart';
-import 'package:expancetracker/features/screens/home_screen_v2.dart';
+import 'package:expancetracker/features/home/views/home_screen_v2.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../stats/views/stats_screen.dart';
+import 'package:expancetracker/features/wallet/wallet_details/views/wallet_details_screen.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
@@ -15,7 +15,7 @@ class NavigationMenu extends StatefulWidget {
 
 class _NavigationMenuState extends State<NavigationMenu> {
   int currentPageIndex = 0;
-  final screens = [const HomeScreenV2(), const StatsScreen()];
+  final screens = [const HomeScreen(), const WalletDetailsScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
                 'STATS',
               ),
               GestureDetector(
-                onTap: () => context.pushNamedRoute(Routes.addExpense),
+                onTap: () => context.pushNamedRoute(Routes.addTransaction),
                 child: Container(
                   width: 120,
                   height: 55,
