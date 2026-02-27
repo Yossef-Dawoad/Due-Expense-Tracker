@@ -1,3 +1,4 @@
+import 'package:flutter/widget_previews.dart';
 import 'package:expancetracker/features/home/viewmodel/home_viewmodel.dart';
 import 'package:expancetracker/features/home/views/widgets/expense_summary_card.dart';
 import 'package:expancetracker/features/home/views/widgets/home_app_bar.dart';
@@ -96,4 +97,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+@Preview()
+Widget homeScreenPreview() {
+  return MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Scaffold(body: Center(child: HomeScreen())),
+  );
 }

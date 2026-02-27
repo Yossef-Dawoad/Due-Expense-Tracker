@@ -1,3 +1,4 @@
+import 'package:flutter/widget_previews.dart';
 import 'package:expancetracker/core/bindings/dependancy_injection.dart';
 import 'package:expancetracker/features/transactions/categories/viewmodels/categories_viewmodel.dart';
 import 'package:expancetracker/features/transactions/data/repositories/category_repository.dart';
@@ -61,4 +62,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ),
     );
   }
+}
+
+@Preview()
+Widget categoriesScreenPreview() {
+  return MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Scaffold(body: Center(child: CategoriesScreen())),
+  );
 }

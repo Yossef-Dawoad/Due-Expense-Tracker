@@ -1,3 +1,4 @@
+import 'package:flutter/widget_previews.dart';
 import 'package:expancetracker/core/bindings/dependancy_injection.dart';
 import 'package:expancetracker/core/common/domain/enums/transaction_type.dart';
 import 'package:expancetracker/core/services/transaction_service.dart';
@@ -560,4 +561,12 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       },
     );
   }
+}
+
+@Preview()
+Widget addTransactionScreenPreview() {
+  return MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Scaffold(body: Center(child: AddTransactionScreen())),
+  );
 }
