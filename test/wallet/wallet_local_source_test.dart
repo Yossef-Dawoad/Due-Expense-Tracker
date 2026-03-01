@@ -1,7 +1,7 @@
 import 'package:expancetracker/core/database/app_database.dart';
 import 'package:expancetracker/core/abstractions/database_abstraction.dart';
-import 'package:expancetracker/features/wallet/data/datasources/wallet_local_source.dart';
-import 'package:expancetracker/features/wallet/data/models/account.dart';
+import 'package:expancetracker/wallet/data/datasources/wallet_local_source.dart';
+import 'package:expancetracker/wallet/data/models/account.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:drift/native.dart';
 

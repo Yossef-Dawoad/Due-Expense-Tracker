@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:expancetracker/core/utils/navigation/routes.dart';
-import 'package:expancetracker/features/onboarding/views/onboarding_screen.dart';
-import 'package:expancetracker/navigation_menu.dart';
-import 'package:expancetracker/features/wallet/wallet_details/views/wallet_details_screen.dart';
-import 'package:expancetracker/features/transactions/add_transaction/views/add_transaction_screen.dart';
-import 'package:expancetracker/features/not_found/not_found_view.dart';
+import 'package:expancetracker/onboarding/views/onboarding_screen.dart';
+import 'package:expancetracker/navigation/navigation_menu.dart';
+import 'package:expancetracker/wallet/wallet_details/views/wallet_details_screen.dart';
+import 'package:expancetracker/transactions/add_transaction/views/add_transaction_screen.dart';
+import 'package:expancetracker/not_found/not_found_view.dart';
 
 final routes = [
   GoRoute(

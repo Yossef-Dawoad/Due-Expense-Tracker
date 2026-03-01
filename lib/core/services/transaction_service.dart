@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:expancetracker/features/transactions/data/models/category.dart';
-import 'package:expancetracker/features/transactions/data/models/transaction.dart';
-import 'package:expancetracker/features/transactions/data/repositories/category_repository.dart';
-import 'package:expancetracker/features/transactions/data/repositories/transaction_repository.dart';
+import 'package:expancetracker/transactions/data/models/category.dart';
+import 'package:expancetracker/transactions/data/models/transaction.dart';
+import 'package:expancetracker/transactions/data/repositories/category_repository.dart';
+import 'package:expancetracker/transactions/data/repositories/transaction_repository.dart';
 import 'package:flutter/material.dart';
 
 /// Service for managing transaction state shared across the app.

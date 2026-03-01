@@ -1,4 +1,4 @@
-import 'package:expancetracker/features/transactions/data/models/transaction.dart';
+import 'package:expancetracker/transactions/data/models/transaction.dart';
 
 /// Pre-defined sample transactions for development/testing.
 final preDefinedTransactions = [

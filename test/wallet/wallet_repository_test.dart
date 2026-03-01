@@ -1,8 +1,8 @@
-import 'package:expancetracker/features/wallet/data/datasources/wallet_local_source.dart';
-import 'package:expancetracker/features/wallet/data/datasources/wallet_remote_source.dart';
-import 'package:expancetracker/features/wallet/data/repositories/wallet_repository_impl.dart';
-import 'package:expancetracker/features/wallet/data/models/account.dart';
-import 'package:expancetracker/features/wallet/data/repositories/wallet_repository.dart';
+import 'package:expancetracker/wallet/data/datasources/wallet_local_source.dart';
+import 'package:expancetracker/wallet/data/datasources/wallet_remote_source.dart';
+import 'package:expancetracker/wallet/data/repositories/wallet_repository_impl.dart';
+import 'package:expancetracker/wallet/data/models/account.dart';
+import 'package:expancetracker/wallet/data/repositories/wallet_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:expancetracker/features/wallet/data/models/account.dart';
-import 'package:expancetracker/features/wallet/data/repositories/wallet_repository.dart';
+import 'package:expancetracker/wallet/data/models/account.dart';
+import 'package:expancetracker/wallet/data/repositories/wallet_repository.dart';
 import 'package:flutter/material.dart';
 
 /// Service for managing wallet state shared across the app.

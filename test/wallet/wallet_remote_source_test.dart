@@ -1,5 +1,5 @@
-import 'package:expancetracker/features/wallet/data/datasources/wallet_remote_source.dart';
-import 'package:expancetracker/features/wallet/data/models/account.dart';
+import 'package:expancetracker/wallet/data/datasources/wallet_remote_source.dart';
+import 'package:expancetracker/wallet/data/models/account.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:pocketbase/pocketbase.dart';
