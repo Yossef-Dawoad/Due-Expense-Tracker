@@ -1,4 +1,4 @@
-import 'package:expancetracker/core/constants/textstyles.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatefulWidget {
@@ -15,7 +15,7 @@ class MyTextField extends StatefulWidget {
     this.hintTextStyle,
     this.showBorder = false,
     this.maxLines = 1,
-    this.fillColor = Colors.white,
+    this.fillColor,
   });
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -28,7 +28,7 @@ class MyTextField extends StatefulWidget {
   final TextStyle? hintTextStyle;
   final bool showBorder;
   final int maxLines;
-  final Color fillColor;
+  final Color? fillColor;
 
   @override
   State<MyTextField> createState() => _MyTextFieldState();
@@ -41,23 +41,27 @@ class _MyTextFieldState extends State<MyTextField> {
       onTap: widget.onTap,
       readOnly: widget.readOnly,
       textAlignVertical: TextAlignVertical.center,
-      style: f14greyRegularText.copyWith(fontSize: 20),
+      style: context.textStyles.bodyMD.copyWith(fontSize: 20),
       controller: widget.controller,
       maxLines: widget.maxLines,
       minLines: 1,
       decoration: InputDecoration(
         filled: true,
-        fillColor: widget.fillColor,
+        fillColor: widget.fillColor ?? context.kitColors.bgSurfaceSecondary,
         suffixIcon: widget.suffixIcon,
         prefixIcon: widget.prefixIcon,
         contentPadding: EdgeInsets.all(widget.contentPadding),
         hintText: widget.hintText,
-        hintStyle: widget.hintTextStyle,
+        hintStyle:
+            widget.hintTextStyle ??
+            context.textStyles.bodyMD.copyWith(
+              color: context.kitColors.textPlaceholder,
+            ),
         border: OutlineInputBorder(
           borderSide: widget.showBorder
-              ? const BorderSide(color: Colors.blue)
+              ? BorderSide(color: context.kitColors.brandPrimary)
               : BorderSide.none,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: context.borderRadius.input,
         ),
       ),
     );

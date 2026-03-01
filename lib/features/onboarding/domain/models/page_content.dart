@@ -1,6 +1,3 @@
-import 'package:expancetracker/core/constants/images.dart';
-import 'package:expancetracker/core/constants/text_strings.dart';
-
 class OnBoardingPageContent {
   final String title;
   final String subTitle;
@@ -22,14 +19,7 @@ class OnBoardingPageContent {
 }
 
 const List<OnBoardingPageContent> onBoardingPages = [
-  OnBoardingPageContent(
-    image: Images.onBoardingImage1,
-    title: Texts.onBoardingTitle1,
-    subTitle: Texts.onBoardingSubTitle1,
-  ),
-  OnBoardingPageContent(
-    image: Images.onBoardingImage2,
-    title: Texts.onBoardingTitle2,
-    subTitle: Texts.onBoardingSubTitle2,
-  ),
+  // TODO: Add images and Data
+  OnBoardingPageContent(image: "", title: "", subTitle: ""),
+  OnBoardingPageContent(image: "", title: "", subTitle: ""),
 ];

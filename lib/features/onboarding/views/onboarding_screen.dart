@@ -1,4 +1,3 @@
-import 'package:expancetracker/core/constants/colors.dart';
 import 'package:expancetracker/core/utils/navigation/routes.dart';
 import 'package:go_router/go_router.dart';
 import 'package:expancetracker/features/onboarding/domain/models/page_content.dart';
@@ -27,7 +26,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Palette.white,
       body: Stack(
         children: [
           /// horizontal scrollable pages
@@ -65,21 +63,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             right: 24,
             bottom: kBottomNavigationBarHeight,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 18.0,
-                  vertical: 12,
-                ),
-                shape: const StadiumBorder(),
-                backgroundColor: Palette.primary,
-              ),
               onPressed: () => _navigateToNextPage(exitsRouteName: Routes.home),
               child: (_currentPageIndex == onBoardingPages.length - 1)
-                  ? const Text(
-                      "Continue",
-                      style: TextStyle(color: Palette.white),
-                    )
-                  : const Icon(Icons.arrow_forward_ios, color: Palette.white),
+                  ? const Text("Continue")
+                  : const Icon(Icons.arrow_forward_ios),
             ),
           ),
         ],

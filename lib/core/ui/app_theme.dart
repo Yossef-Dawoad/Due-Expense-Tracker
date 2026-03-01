@@ -9,153 +9,234 @@ import 'package:expancetracker/core/ui/constants/spacing.dart';
 import 'package:expancetracker/core/ui/constants/text_styles.dart';
 
 /// AppTheme is a class that builds a theme for the app.
-/// By default this will support light and dark mode.
-///
-/// you can access different theme extensions from the context
-///
-/// ```dart
-/// context.textStyles.standard
-/// context.neutralColors.neutral50
-/// context.borderRadius.md
-/// context.spacing.md
-/// context.durations.duration200
-/// context.shadows.sm
-/// ```
-///
-/// Some are also just instances of the class, so you can access them directly without context:
-///
-/// ```dart
-/// CustomSpacing.instance.md
-/// CustomDurations.instance.duration200
-/// ```
+/// Based directly on the design tokens (light mode optimized).
 class AppTheme {
   static ThemeData buildTheme(Brightness brightness) {
-    final isDark = brightness == Brightness.dark;
-    final textStyles = CustomTextStyles();
-    final borderRadius = CustomBorderRadius();
+    // Current design tokens are primarily light-mode based. We map them directly.
+    final textStyles = const CustomTextStyles();
+    final borderRadius = const CustomBorderRadius();
     final breakpoints = CustomBreakpoints();
-    final shadows = CustomShadows();
-    final kitColors = KitColorsExtension();
+    final shadows = const CustomShadows();
+    final kitColors = const KitColorsExtension();
+    final spacing = CustomSpacing.instance;
 
     return ThemeData(
       brightness: brightness,
-      colorScheme: ColorScheme(
-        brightness: brightness,
-        surface: isDark ? kitColors.neutral900 : kitColors.neutral100,
-        primary: isDark ? kitColors.neutral50 : kitColors.neutral950,
-        onPrimary: isDark ? kitColors.neutral950 : kitColors.neutral50,
-        secondary: isDark ? kitColors.neutral50 : kitColors.neutral950,
-        onSecondary: isDark ? kitColors.neutral950 : kitColors.neutral50,
-        error: Colors.red.shade400,
-        onError: kitColors.neutral50,
-        onSurface: isDark ? kitColors.neutral50 : kitColors.neutral950,
-        surfaceTint: isDark ? kitColors.neutral900 : kitColors.neutral100,
+      colorScheme: ColorScheme.light(
+        surface: kitColors.bgBase,
+        primary: kitColors.brandPrimary,
+        onPrimary: kitColors.textOnPrimary,
+        secondary: kitColors.bgSurfaceSecondary,
+        onSecondary: kitColors.textPrimary,
+        error: kitColors.semanticNegative,
+        onError: kitColors.bgSurface,
+        onSurface: kitColors.textPrimary,
+        surfaceTint: Colors.transparent, // Disable default MD3 surface tinting
       ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
-          // Set the predictive back transitions for Android.
           TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
         },
       ),
-      scaffoldBackgroundColor: isDark
-          ? kitColors.neutral900
-          : kitColors.neutral100,
+      scaffoldBackgroundColor: kitColors.bgBase,
       appBarTheme: AppBarTheme(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        foregroundColor: isDark ? kitColors.neutral50 : kitColors.neutral950,
-        systemOverlayStyle: SystemUiOverlayStyle(
+        foregroundColor: kitColors.textPrimary,
+        systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          // For iOS: dark icons in light mode, light icons in dark mode
-          statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
-          // For Android: dark icons in light mode, light icons in dark mode
-          statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
         ),
       ),
       dividerTheme: DividerThemeData(
-        color: isDark ? kitColors.neutral800 : kitColors.neutral200,
+        color: kitColors.borderDefault,
+        thickness: 1,
       ),
       textTheme: TextTheme(
-        bodyLarge: textStyles.lg.copyWith(
-          color: isDark ? kitColors.neutral50 : kitColors.neutral950,
+        bodyLarge: textStyles.bodyMD.copyWith(color: kitColors.textPrimary),
+        bodyMedium: textStyles.bodySM.copyWith(color: kitColors.textSecondary),
+        titleMedium: textStyles.headingMD.copyWith(
+          color: kitColors.textPrimary,
         ),
-        bodyMedium: textStyles.standard.copyWith(
-          color: isDark ? kitColors.neutral50 : kitColors.neutral950,
-        ),
-        titleMedium: textStyles.standard.copyWith(
-          color: isDark ? kitColors.neutral50 : kitColors.neutral950,
-        ),
-        headlineLarge: textStyles.xxl.copyWith(
-          color: kitColors.neutral950,
-          fontWeight: FontWeight.bold,
+        headlineLarge: textStyles.displayMD.copyWith(
+          color: kitColors.textPrimary,
         ),
       ),
-      iconTheme: IconThemeData(
-        color: isDark ? kitColors.neutral50 : kitColors.neutral950,
-      ),
+      iconTheme: IconThemeData(color: kitColors.textSecondary),
       extensions: [textStyles, borderRadius, breakpoints, shadows, kitColors],
       useMaterial3: true,
       splashFactory: NoSplash.splashFactory,
-      highlightColor: Colors.white.withValues(alpha: .1),
-      dropdownMenuTheme: DropdownMenuThemeData(
-        textStyle: TextStyle(
-          color: isDark ? kitColors.neutral50 : kitColors.neutral950,
+      highlightColor: Colors.transparent,
+
+      // COMPONENTS MAPPING
+      cardTheme: CardThemeData(
+        color: kitColors.bgSurface,
+        elevation:
+            0, // Enforce custom shadows via Container instead of default Material shadows
+        shape: RoundedRectangleBorder(borderRadius: borderRadius.card),
+        margin: EdgeInsets.zero,
+      ),
+
+      chipTheme: ChipThemeData(
+        backgroundColor: kitColors.bgSurface,
+        disabledColor: kitColors.bgSurfaceSecondary,
+        selectedColor: kitColors.bgSurface,
+        secondarySelectedColor: kitColors.bgSurface,
+        padding: EdgeInsets.symmetric(
+          horizontal: spacing.s3,
+          vertical: spacing.s2,
         ),
+        labelStyle: textStyles.bodySM.copyWith(color: kitColors.textPrimary),
+        secondaryLabelStyle: textStyles.bodySM.copyWith(
+          color: kitColors.brandPrimary,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius.chip,
+          side: BorderSide(color: kitColors.borderDefault, width: 1),
+        ),
+      ),
+
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: kitColors.brandPrimary,
+        linearTrackColor: kitColors.bgSurfaceSecondary,
+        circularTrackColor: kitColors.bgSurfaceSecondary,
+      ),
+
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return kitColors.brandPrimary;
+          }
+          return kitColors.textPlaceholder;
+        }),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return kitColors.brandPrimary.withValues(
+              alpha: 0.2,
+            ); // Token active bg approx
+          }
+          return kitColors.bgSurfaceSecondary; // #F3F4F6
+        }),
+        trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
+      ),
+
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: kitColors.bgSurface,
+        selectedItemColor: kitColors.brandPrimary,
+        unselectedItemColor: kitColors.textPlaceholder,
+        selectedLabelStyle: textStyles.tabLabel.copyWith(
+          color: kitColors.brandPrimary,
+        ),
+        unselectedLabelStyle: textStyles.tabLabel.copyWith(
+          color: kitColors.textPlaceholder,
+        ),
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
+      ),
+
+      badgeTheme: BadgeThemeData(
+        backgroundColor: kitColors.semanticPositive.withValues(
+          alpha: 0.15,
+        ), // Matches #DCFCE7 visually roughly
+        textColor: kitColors.semanticPositive, // #16A34A
+        textStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+      ),
+
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: kitColors.brandPrimary,
+        foregroundColor: kitColors.textOnPrimary,
+        elevation: 0, // Suggest using custom shadows wrapper or 0
+        shape: RoundedRectangleBorder(borderRadius: borderRadius.fab),
+        iconSize: 24,
+      ),
+
+      dropdownMenuTheme: DropdownMenuThemeData(
+        textStyle: TextStyle(color: kitColors.textPrimary),
         menuStyle: MenuStyle(
-          backgroundColor: WidgetStatePropertyAll(
-            isDark ? kitColors.neutral900 : kitColors.neutral100,
-          ),
-          surfaceTintColor: WidgetStatePropertyAll(Colors.transparent),
+          backgroundColor: WidgetStatePropertyAll(kitColors.bgSurface),
+          surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: isDark ? kitColors.neutral900 : kitColors.neutral100,
+          fillColor: kitColors.bgSurfaceSecondary,
           border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: isDark ? kitColors.neutral800 : kitColors.neutral200,
-            ),
-            borderRadius: borderRadius.md,
+            borderSide: BorderSide(color: kitColors.borderDefault),
+            borderRadius: borderRadius.input,
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: isDark ? kitColors.neutral800 : kitColors.neutral200,
-            ),
-            borderRadius: borderRadius.md,
+            borderSide: BorderSide(color: kitColors.borderDefault),
+            borderRadius: borderRadius.input,
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: isDark ? kitColors.neutral800 : kitColors.neutral200,
-            ),
-            borderRadius: borderRadius.md,
+            borderSide: BorderSide(color: kitColors.borderFocus),
+            borderRadius: borderRadius.input,
           ),
           contentPadding: EdgeInsets.symmetric(
-            horizontal: CustomSpacing.instance.md,
-            vertical: CustomSpacing.instance.sm,
+            horizontal: spacing.cardPadding,
+            vertical: spacing.inputVerticalPadding,
+          ),
+          hintStyle: textStyles.bodyMD.copyWith(
+            color: kitColors.textPlaceholder,
           ),
         ),
       ),
-      popupMenuTheme: PopupMenuThemeData(
-        color: isDark ? kitColors.neutral900 : kitColors.neutral100,
-        textStyle: TextStyle(
-          color: isDark ? kitColors.neutral50 : kitColors.neutral950,
+
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: kitColors.bgSurface, // Tokens map specific inputs to #FFFFFF
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: kitColors.borderDefault),
+          borderRadius: borderRadius.input,
         ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kitColors.borderDefault),
+          borderRadius: borderRadius.input,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kitColors.borderFocus, width: 2),
+          borderRadius: borderRadius.input,
+        ),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: spacing.s4, // 16px
+          vertical: spacing.inputVerticalPadding, // 14px
+        ),
+        hintStyle: textStyles.bodyMD.copyWith(color: kitColors.textPlaceholder),
       ),
+
+      popupMenuTheme: PopupMenuThemeData(
+        color: kitColors.bgSurface,
+        textStyle: textStyles.bodyMD.copyWith(color: kitColors.textPrimary),
+      ),
+
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: borderRadius.md),
+          backgroundColor: kitColors.brandPrimary,
+          foregroundColor: kitColors.textOnPrimary,
+          textStyle: textStyles.cta,
+          shape: RoundedRectangleBorder(borderRadius: borderRadius.button),
+          elevation: 0,
+          minimumSize: const Size.fromHeight(56), // Token height: 56px
+          padding: EdgeInsets.symmetric(
+            horizontal: spacing.cardPaddingLG,
+            vertical: spacing.s4,
+          ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: borderRadius.md),
-          side: BorderSide(
-            color: isDark ? kitColors.neutral800 : kitColors.neutral200,
-          ),
+          foregroundColor: kitColors.textPrimary,
+          shape: RoundedRectangleBorder(borderRadius: borderRadius.button),
+          side: BorderSide(color: kitColors.borderDefault),
+          minimumSize: const Size(64, 56), // 56px height consistency
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: borderRadius.md),
+          foregroundColor: kitColors.textLink,
+          textStyle: textStyles.cta,
+          shape: RoundedRectangleBorder(borderRadius: borderRadius.button),
+          minimumSize: const Size(64, 56), // Optional height consistency
         ),
       ),
     );

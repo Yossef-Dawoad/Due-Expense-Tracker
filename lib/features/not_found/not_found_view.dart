@@ -26,7 +26,7 @@ class _NotFoundViewState extends State<NotFoundView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(context.spacing.xl),
+        padding: EdgeInsets.all(context.spacing.s8),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -34,16 +34,16 @@ class _NotFoundViewState extends State<NotFoundView> {
             children: [
               Text(
                 context.translate.notFoundTitle,
-                style: context.textStyles.xxxl,
+                style: context.textStyles.displayLG,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: context.spacing.md),
+              SizedBox(height: context.spacing.s4),
               Text(
                 context.translate.notFoundMessage,
-                style: context.textStyles.standard,
+                style: context.textStyles.bodyMD,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: context.spacing.xl),
+              SizedBox(height: context.spacing.s8),
               OutlinedButton(
                 onPressed: _viewModel.navigateToHome,
                 child: Text(context.translate.notFoundGoHome),

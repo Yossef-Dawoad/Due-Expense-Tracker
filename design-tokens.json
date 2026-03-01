@@ -1,0 +1,481 @@
+{
+  "meta": {
+    "appName": "Personal Finance / Budget Tracker App",
+    "screens": ["Home Dashboard", "Add New Transaction", "Wallet Details"],
+    "theme": "light",
+    "extractedFrom": "3 mobile UI screenshots",
+    "designLanguage": "Clean Fintech — soft whites, high-contrast black typography, bold green accent system"
+  },
+
+  "color": {
+    "brand": {
+      "primary": {
+        "value": "#22C55E",
+        "description": "Main green accent — used for CTAs, active icons, progress bars, positive indicators, FAB button"
+      },
+      "primaryLight": {
+        "value": "#DCFCE7",
+        "description": "Light green tint — used for badge/pill backgrounds, category chip selected state, toggle highlight"
+      },
+      "primaryDark": {
+        "value": "#16A34A",
+        "description": "Darker green — used for hover/pressed state on primary elements"
+      }
+    },
+    "semantic": {
+      "positive": {
+        "value": "#22C55E",
+        "description": "Income values, upward trend indicator, savings confirmation"
+      },
+      "negative": {
+        "value": "#EF4444",
+        "description": "Expense arrow indicators, downward trend (crypto -1.2%), liability values"
+      },
+      "neutral": {
+        "value": "#6B7280",
+        "description": "Secondary labels, timestamps, account subtitles, chart axis labels"
+      }
+    },
+    "background": {
+      "base": {
+        "value": "#F8FAF8",
+        "description": "App-wide background — very light off-white with slight green tint"
+      },
+      "surface": {
+        "value": "#FFFFFF",
+        "description": "Card / panel backgrounds"
+      },
+      "surfaceSecondary": {
+        "value": "#F3F4F6",
+        "description": "Input field backgrounds, icon container backgrounds, toggle track"
+      },
+      "overlay": {
+        "value": "rgba(0, 0, 0, 0.04)",
+        "description": "Subtle card shadow fill / pressed state overlay"
+      }
+    },
+    "text": {
+      "primary": {
+        "value": "#0F172A",
+        "description": "Main headings, large numeric values, transaction names"
+      },
+      "secondary": {
+        "value": "#374151",
+        "description": "Body text, section labels"
+      },
+      "tertiary": {
+        "value": "#6B7280",
+        "description": "Timestamps, subtitles, placeholder text, metadata"
+      },
+      "placeholder": {
+        "value": "#9CA3AF",
+        "description": "Input placeholder text (e.g. 'What was this for?')"
+      },
+      "onPrimary": {
+        "value": "#0F172A",
+        "description": "Text/icon on green primary button (dark on bright green)"
+      },
+      "link": {
+        "value": "#22C55E",
+        "description": "Actionable labels: 'History', 'View All', 'Reset'"
+      }
+    },
+    "border": {
+      "default": {
+        "value": "#E5E7EB",
+        "description": "Card borders, input borders, divider lines"
+      },
+      "selected": {
+        "value": "#22C55E",
+        "description": "Selected category chip border"
+      },
+      "focus": {
+        "value": "#22C55E",
+        "description": "Active input ring"
+      }
+    },
+    "chart": {
+      "lineColor": {
+        "value": "#7C3AED",
+        "description": "Balance trend line in Wallet Details (purple/violet)"
+      },
+      "lineFill": {
+        "value": "rgba(124, 58, 237, 0.08)",
+        "description": "Area fill under the balance chart line"
+      },
+      "progressBar": {
+        "value": "#22C55E",
+        "description": "Budget progress bar fill"
+      },
+      "progressTrack": {
+        "value": "#E5E7EB",
+        "description": "Budget progress bar track"
+      }
+    },
+    "notification": {
+      "badge": {
+        "value": "#EF4444",
+        "description": "Red notification dot on bell icon"
+      }
+    }
+  },
+
+  "typography": {
+    "fontFamily": {
+      "primary": {
+        "value": "-apple-system, 'SF Pro Display', 'SF Pro Text', BlinkMacSystemFont, sans-serif",
+        "description": "System sans-serif stack — iOS native feel"
+      }
+    },
+    "scale": {
+      "displayXL": {
+        "size": "36px",
+        "weight": "800",
+        "lineHeight": "1.1",
+        "letterSpacing": "-0.02em",
+        "usage": "Today's Spending hero value ($124.50)"
+      },
+      "displayLG": {
+        "size": "32px",
+        "weight": "800",
+        "lineHeight": "1.1",
+        "letterSpacing": "-0.02em",
+        "usage": "Total Balance ($12,450.80)"
+      },
+      "displayMD": {
+        "size": "24px",
+        "weight": "700",
+        "lineHeight": "1.2",
+        "letterSpacing": "-0.01em",
+        "usage": "Remaining budget ($2,140.00), Available ($8,250.00)"
+      },
+      "headingLG": {
+        "size": "20px",
+        "weight": "700",
+        "lineHeight": "1.3",
+        "letterSpacing": "0",
+        "usage": "Section headings: 'Budget Overview', 'Recent Activity', 'Linked Accounts'"
+      },
+      "headingMD": {
+        "size": "17px",
+        "weight": "600",
+        "lineHeight": "1.4",
+        "usage": "Screen titles: 'Add New Transaction', 'Wallet Details', greeting name 'Alex Rivera'"
+      },
+      "bodyMD": {
+        "size": "15px",
+        "weight": "500",
+        "lineHeight": "1.5",
+        "usage": "Transaction names, account names, category labels"
+      },
+      "bodySM": {
+        "size": "13px",
+        "weight": "400",
+        "lineHeight": "1.5",
+        "usage": "Timestamps, subtitles (e.g. '4:30 PM • Store', 'Chase •••• 4589')"
+      },
+      "labelSM": {
+        "size": "11px",
+        "weight": "600",
+        "lineHeight": "1.4",
+        "letterSpacing": "0.08em",
+        "usage": "Uppercase micro-labels: 'INCOME', 'EXPENSES', 'REMAINING', 'LIMIT', 'AMOUNT', 'TODAY'S SPENDING'"
+      },
+      "caption": {
+        "size": "12px",
+        "weight": "400",
+        "lineHeight": "1.4",
+        "usage": "Budget meta: '62% used', '12 days left', APY labels, percentage badges"
+      },
+      "cta": {
+        "size": "16px",
+        "weight": "700",
+        "lineHeight": "1",
+        "usage": "Primary button: 'Save Transaction'"
+      },
+      "tabLabel": {
+        "size": "10px",
+        "weight": "600",
+        "letterSpacing": "0.05em",
+        "usage": "Bottom nav labels: 'HOME', 'WALLET', 'STATS', 'SETUP'"
+      }
+    }
+  },
+
+  "spacing": {
+    "base": "4px",
+    "scale": {
+      "0": "0px",
+      "1": "4px",
+      "2": "8px",
+      "3": "12px",
+      "4": "16px",
+      "5": "20px",
+      "6": "24px",
+      "8": "32px",
+      "10": "40px",
+      "12": "48px",
+      "16": "64px"
+    },
+    "semantic": {
+      "screenHorizontalPadding": "20px",
+      "screenTopPadding": "16px",
+      "cardPadding": "16px",
+      "cardPaddingLG": "20px",
+      "sectionGap": "24px",
+      "listItemGap": "16px",
+      "iconTextGap": "12px",
+      "chipGap": "12px",
+      "inputVerticalPadding": "14px"
+    }
+  },
+
+  "borderRadius": {
+    "none": "0px",
+    "sm": "8px",
+    "md": "12px",
+    "lg": "16px",
+    "xl": "20px",
+    "pill": "999px",
+    "circle": "50%",
+    "semantic": {
+      "card": "16px",
+      "button": "16px",
+      "input": "12px",
+      "chip": "12px",
+      "badge": "999px",
+      "avatar": "50%",
+      "fab": "50%",
+      "progressBar": "999px",
+      "toggle": "999px",
+      "iconContainer": "12px"
+    }
+  },
+
+  "elevation": {
+    "0": {
+      "boxShadow": "none",
+      "usage": "Flat surfaces, backgrounds"
+    },
+    "1": {
+      "boxShadow": "0px 1px 3px rgba(0, 0, 0, 0.06), 0px 1px 2px rgba(0, 0, 0, 0.04)",
+      "usage": "Cards, list items, input fields"
+    },
+    "2": {
+      "boxShadow": "0px 4px 12px rgba(0, 0, 0, 0.08), 0px 2px 4px rgba(0, 0, 0, 0.04)",
+      "usage": "Elevated cards (Budget Overview card)"
+    },
+    "3": {
+      "boxShadow": "0px 8px 24px rgba(34, 197, 94, 0.30)",
+      "usage": "FAB button (green glow shadow)"
+    },
+    "modal": {
+      "boxShadow": "0px 20px 60px rgba(0, 0, 0, 0.15)",
+      "usage": "Bottom sheet / modal (Add Transaction screen)"
+    }
+  },
+
+  "iconography": {
+    "sizes": {
+      "sm": "16px",
+      "md": "20px",
+      "lg": "24px",
+      "xl": "28px"
+    },
+    "style": "Outlined with slight weight, rounded corners — consistent stroke-based icons",
+    "containerSize": "40px",
+    "containerRadius": "12px",
+    "containerBackground": "#F3F4F6",
+    "catalog": {
+      "home": "grid-2x2",
+      "wallet": "wallet / card",
+      "stats": "bar-chart",
+      "setup": "gear / settings",
+      "notification": "bell",
+      "add": "plus",
+      "close": "x",
+      "back": "chevron-left",
+      "more": "ellipsis-horizontal",
+      "calendar": "calendar",
+      "lightbulb": "lightbulb (insight)",
+      "lifestyle": "shopping-bag",
+      "dining": "utensils / fork-knife",
+      "transport": "car",
+      "beverages": "coffee-cup",
+      "food": "utensils",
+      "shopping": "shopping-bag",
+      "health": "activity / heartbeat",
+      "rent": "house",
+      "other": "ellipsis",
+      "checking": "bank / building-columns",
+      "savings": "piggy-bank",
+      "crypto": "bitcoin",
+      "arrowUp": "arrow-up (red, expenses)",
+      "arrowDown": "arrow-down (green, income)",
+      "trendUp": "trending-up (green pill badge)",
+      "trendDown": "trending-down (green pill badge — still green fill)"
+    }
+  },
+
+  "components": {
+    "card": {
+      "background": "#FFFFFF",
+      "borderRadius": "16px",
+      "padding": "16px",
+      "shadow": "0px 1px 3px rgba(0,0,0,0.06)",
+      "border": "none"
+    },
+    "badge": {
+      "background": "#DCFCE7",
+      "textColor": "#16A34A",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "borderRadius": "999px",
+      "paddingVertical": "4px",
+      "paddingHorizontal": "10px"
+    },
+    "button": {
+      "primary": {
+        "background": "#22C55E",
+        "textColor": "#0F172A",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "borderRadius": "16px",
+        "height": "56px",
+        "shadow": "0px 4px 16px rgba(34, 197, 94, 0.35)"
+      },
+      "fab": {
+        "background": "#22C55E",
+        "size": "56px",
+        "borderRadius": "50%",
+        "iconColor": "#FFFFFF",
+        "shadow": "0px 8px 24px rgba(34, 197, 94, 0.40)"
+      }
+    },
+    "input": {
+      "background": "#FFFFFF",
+      "borderRadius": "12px",
+      "border": "1px solid #E5E7EB",
+      "padding": "14px 16px",
+      "fontSize": "15px",
+      "placeholderColor": "#9CA3AF"
+    },
+    "toggle": {
+      "background": "#F3F4F6",
+      "activeBackground": "#DCFCE7",
+      "borderRadius": "999px",
+      "activeTextColor": "#22C55E",
+      "inactiveTextColor": "#374151"
+    },
+    "categoryChip": {
+      "default": {
+        "background": "#FFFFFF",
+        "border": "1px solid #E5E7EB",
+        "borderRadius": "12px",
+        "textColor": "#374151"
+      },
+      "selected": {
+        "background": "#FFFFFF",
+        "border": "2px solid #22C55E",
+        "iconColor": "#22C55E",
+        "textColor": "#22C55E"
+      }
+    },
+    "progressBar": {
+      "height": "8px",
+      "borderRadius": "999px",
+      "trackColor": "#E5E7EB",
+      "fillColor": "#22C55E"
+    },
+    "listItem": {
+      "paddingVertical": "12px",
+      "divider": "1px solid #F3F4F6",
+      "iconContainerSize": "40px",
+      "iconContainerRadius": "12px",
+      "iconContainerBackground": "#F3F4F6"
+    },
+    "bottomNav": {
+      "background": "#FFFFFF",
+      "height": "72px",
+      "activeColor": "#22C55E",
+      "inactiveColor": "#9CA3AF",
+      "borderTop": "1px solid #F3F4F6",
+      "labelFontSize": "10px",
+      "labelFontWeight": "600",
+      "labelLetterSpacing": "0.05em"
+    },
+    "avatar": {
+      "size": "40px",
+      "borderRadius": "50%"
+    },
+    "insightCard": {
+      "background": "#FFFFFF",
+      "borderRadius": "16px",
+      "padding": "16px",
+      "iconColor": "#22C55E",
+      "textColor": "#374151"
+    },
+    "timeframeSelector": {
+      "background": "#F3F4F6",
+      "borderRadius": "12px",
+      "activeBackground": "#FFFFFF",
+      "activeShadow": "0px 1px 3px rgba(0,0,0,0.10)",
+      "fontSize": "13px",
+      "fontWeight": "600"
+    },
+    "linkedAccountRow": {
+      "paddingVertical": "14px",
+      "divider": "1px solid #F3F4F6",
+      "metaPositiveColor": "#22C55E",
+      "metaNegativeColor": "#EF4444"
+    }
+  },
+
+  "motion": {
+    "duration": {
+      "instant": "0ms",
+      "fast": "150ms",
+      "normal": "250ms",
+      "slow": "400ms",
+      "verySlow": "600ms"
+    },
+    "easing": {
+      "standard": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "enter": "cubic-bezier(0, 0, 0.2, 1)",
+      "exit": "cubic-bezier(0.4, 0, 1, 1)",
+      "spring": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+    },
+    "transitions": {
+      "buttonPress": "transform 150ms cubic-bezier(0.4, 0, 0.2, 1)",
+      "chipSelect": "border-color 150ms, color 150ms",
+      "progressFill": "width 400ms cubic-bezier(0, 0, 0.2, 1)",
+      "chartLine": "stroke-dashoffset 600ms cubic-bezier(0, 0, 0.2, 1)"
+    }
+  },
+
+  "layout": {
+    "maxWidth": "390px",
+    "screenPaddingHorizontal": "20px",
+    "screenPaddingTop": "16px",
+    "screenPaddingBottom": "88px",
+    "gridColumns": 2,
+    "gridGap": "12px",
+    "sectionSpacing": "28px",
+    "bottomNavHeight": "72px"
+  },
+
+  "dataDisplay": {
+    "currency": {
+      "positivePrefix": "+$",
+      "negativePrefix": "-$",
+      "positiveColor": "#22C55E",
+      "negativeColor": "#EF4444",
+      "neutralColor": "#0F172A"
+    },
+    "percentage": {
+      "positiveColor": "#22C55E",
+      "negativeColor": "#EF4444",
+      "badgeBackground": "#DCFCE7"
+    }
+  }
+}

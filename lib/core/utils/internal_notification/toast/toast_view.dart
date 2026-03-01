@@ -114,8 +114,9 @@ class _Toast extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final radius = context.borderRadius.lg;
+    // Current design uses single theme (light mode optimized), but we can still check brightness
+    // However, kit colors now uses semantic naming and handles dark/light inherently if configured
+    final radius = context.borderRadius.card;
 
     final iconData = switch (toastEvent) {
       ToastEventSuccess() => Icons.check_circle_rounded,
@@ -133,26 +134,23 @@ class _Toast extends StatelessWidget {
             onVerticalDragStart: onVerticalDragStart,
             onVerticalDragUpdate: onVerticalDragUpdate,
             child: Container(
-              margin: EdgeInsets.all(context.spacing.md),
+              margin: EdgeInsets.all(context.spacing.s4),
               decoration: BoxDecoration(
-                color: isDark
-                    ? context.kitColors.neutral800
-                    : context.kitColors.neutral100,
+                color: context.kitColors.bgSurfaceSecondary,
                 border: Border.all(
-                  color: isDark
-                      ? context.kitColors.neutral700
-                      : context.kitColors.neutral300,
+                  color: context.kitColors.borderDefault,
                   width: 1,
                 ),
                 borderRadius: radius,
-                boxShadow: context.shadows.md,
+                boxShadow: context.shadows.elevation2,
               ),
               child: Material(
                 borderRadius: radius,
+                color: Colors.transparent,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: context.spacing.md,
-                    vertical: context.spacing.md,
+                    horizontal: context.spacing.s4,
+                    vertical: context.spacing.s4,
                   ),
                   child: Row(
                     children: [
@@ -162,17 +160,17 @@ class _Toast extends StatelessWidget {
                           children: [
                             Icon(
                               iconData,
-                              color: isDark
-                                  ? context.kitColors.neutral100
-                                  : context.kitColors.neutral900,
+                              color: context.kitColors.textPrimary,
                             ),
-                            SizedBox(width: context.spacing.sm),
+                            SizedBox(width: context.spacing.iconTextGap),
                           ],
                         ),
                       Expanded(
                         child: Text(
                           toastEvent.message,
-                          style: context.textStyles.standard,
+                          style: context.textStyles.bodyMD.copyWith(
+                            color: context.kitColors.textPrimary,
+                          ),
                         ),
                       ),
                     ],

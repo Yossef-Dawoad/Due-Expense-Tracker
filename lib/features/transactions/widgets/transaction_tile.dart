@@ -1,4 +1,4 @@
-import 'package:expancetracker/core/constants/textstyles.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/features/transactions/data/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,9 +15,10 @@ class TransactionTileWidget extends StatelessWidget {
 
     return Card(
       elevation: 0.0,
-      color: Colors.white,
+      color: context.kitColors.bgSurface,
+      margin: EdgeInsets.only(bottom: context.spacing.s4),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 25.0),
+        padding: EdgeInsets.symmetric(vertical: context.spacing.s6),
         child: Row(
           children: [
             const SizedBox(width: 20),
@@ -27,20 +28,26 @@ class TransactionTileWidget extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     backgroundColor: isExpense
-                        ? Colors.red.shade100
-                        : Colors.green.shade100,
-                    radius: 32,
+                        ? context.kitColors.semanticNegative.withValues(
+                            alpha: 0.15,
+                          )
+                        : context.kitColors.semanticPositive.withValues(
+                            alpha: 0.15,
+                          ),
+                    radius: 28,
                     child: Icon(
                       isExpense ? Icons.arrow_downward : Icons.arrow_upward,
-                      color: isExpense ? Colors.red : Colors.green,
+                      color: isExpense
+                          ? context.kitColors.semanticNegative
+                          : context.kitColors.semanticPositive,
                     ),
                   ),
                   const SizedBox(width: 12),
                   Flexible(
                     child: Text(
                       transaction.note ?? transaction.type.name,
-                      style: f18BlackBold.copyWith(
-                        fontWeight: FontWeight.normal,
+                      style: context.textStyles.headingMD.copyWith(
+                        color: context.kitColors.textPrimary,
                       ),
                     ),
                   ),
@@ -52,14 +59,31 @@ class TransactionTileWidget extends StatelessWidget {
               child: Row(
                 children: [
                   isExpense
-                      ? const Icon(Icons.arrow_downward, color: Colors.red)
-                      : const Icon(Icons.arrow_upward, color: Colors.green),
-                  const SizedBox(width: 4),
+                      ? Icon(
+                          Icons.arrow_downward,
+                          color: context.kitColors.semanticNegative,
+                          size: 16,
+                        )
+                      : Icon(
+                          Icons.arrow_upward,
+                          color: context.kitColors.semanticPositive,
+                          size: 16,
+                        ),
+                  SizedBox(width: context.spacing.s1),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text('\$${transaction.amount}', style: f18BlackBold),
-                      Text(dateFormat, style: f14greyRegularText),
+                      Text(
+                        '\$${transaction.amount}',
+                        style: context.textStyles.headingMD,
+                      ),
+                      Text(
+                        dateFormat,
+                        style: context.textStyles.bodySM.copyWith(
+                          color: context.kitColors.textSecondary,
+                        ),
+                      ),
                     ],
                   ),
                 ],

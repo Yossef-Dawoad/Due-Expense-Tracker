@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create New Budget</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#36e278",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#112117",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-switch {
+            width: 51px;
+            height: 31px;
+            background-color: #e5e7eb;
+            border-radius: 100px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .ios-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 27px;
+            height: 27px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .ios-switch-active {
+            background-color: #36e278;
+        }
+        .ios-switch-active::after {
+            transform: translateX(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0e1b13] dark:text-white font-display min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<div class="flex items-center px-4 pt-4 pb-2 justify-between">
+<button class="text-[#0e1b13] dark:text-white size-10 flex items-center justify-center hover:bg-primary/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</button>
+<h2 class="text-lg font-bold">Create New Budget</h2>
+<div class="size-10"></div> <!-- Spacer for centering title -->
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 px-6 pt-10 pb-32 max-w-md mx-auto w-full">
+<!-- Amount Input Section -->
+<div class="text-center mb-12">
+<p class="text-primary font-medium mb-2">Monthly Limit</p>
+<div class="flex items-center justify-center">
+<span class="text-4xl font-bold opacity-40">$</span>
+<h1 class="text-6xl font-bold tracking-tight">2,400.00</h1>
+<div class="w-1 h-12 bg-primary ml-1 animate-pulse"></div>
+</div>
+<p class="text-sm text-gray-500 mt-4 px-12">How much would you like to spend this month?</p>
+</div>
+<!-- Form Elements -->
+<div class="space-y-6">
+<!-- Category Selection -->
+<div>
+<label class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3 block">Category</label>
+<div class="flex items-center gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl border border-primary/10 shadow-sm cursor-pointer hover:border-primary/40 transition-all">
+<div class="bg-primary/10 text-primary p-2.5 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">shopping_basket</span>
+</div>
+<div class="flex-1">
+<p class="font-bold text-[#0e1b13] dark:text-white leading-none">Groceries</p>
+<p class="text-xs text-gray-500 mt-1">Daily essentials &amp; food</p>
+</div>
+<span class="material-symbols-outlined text-gray-400">chevron_right</span>
+</div>
+</div>
+<!-- Frequency Toggle -->
+<div>
+<label class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3 block">Frequency</label>
+<div class="flex bg-white dark:bg-gray-800 p-1.5 rounded-xl border border-primary/10 shadow-sm">
+<button class="flex-1 py-2.5 text-sm font-bold rounded-lg transition-all text-gray-500 hover:text-[#0e1b13]">Weekly</button>
+<button class="flex-1 py-2.5 text-sm font-bold rounded-lg transition-all bg-primary text-white shadow-lg shadow-primary/20">Monthly</button>
+<button class="flex-1 py-2.5 text-sm font-bold rounded-lg transition-all text-gray-500 hover:text-[#0e1b13]">Yearly</button>
+</div>
+</div>
+<!-- Notifications / Alert Toggle -->
+<div>
+<label class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3 block">Preferences</label>
+<div class="bg-white dark:bg-gray-800 rounded-xl border border-primary/10 shadow-sm divide-y divide-gray-50 dark:divide-gray-700">
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 text-primary p-1.5 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">notifications_active</span>
+</div>
+<div>
+<p class="font-bold text-sm">Alert at 80% limit</p>
+<p class="text-xs text-gray-500">Get notified before overspending</p>
+</div>
+</div>
+<div class="ios-switch ios-switch-active"></div>
+</div>
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-3">
+<div class="bg-gray-100 dark:bg-gray-700 text-gray-400 p-1.5 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">history_toggle_off</span>
+</div>
+<div>
+<p class="font-bold text-sm">Rollover Balance</p>
+<p class="text-xs text-gray-500">Move unused funds to next month</p>
+</div>
+</div>
+<div class="ios-switch"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Action Button -->
+<div class="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light/95 to-transparent">
+<div class="max-w-md mx-auto">
+<button class="w-full bg-primary text-white font-bold py-5 rounded-xl text-lg shadow-xl shadow-primary/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span>Set Budget</span>
+<span class="material-symbols-outlined">check_circle</span>
+</button>
+</div>
+</div>
+<!-- Decorative Elements (Appears as clean negative space focus) -->
+<div class="fixed top-0 right-0 -mt-20 -mr-20 size-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+<div class="fixed bottom-0 left-0 -mb-20 -ml-20 size-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+</body></html>

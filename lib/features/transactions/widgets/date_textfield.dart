@@ -1,13 +1,10 @@
-import 'package:expancetracker/core/constants/textstyles.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 class DateTextField extends StatefulWidget {
-  const DateTextField({
-    super.key,
-    required this.dateNotifier,
-  });
+  const DateTextField({super.key, required this.dateNotifier});
 
   final ValueNotifier<DateTime> dateNotifier;
 
@@ -29,7 +26,8 @@ class _DateTextFieldState extends State<DateTextField> {
     return TextFormField(
       controller: dateController,
       onTap: () async {
-        selectedDate = await showDatePicker(
+        selectedDate =
+            await showDatePicker(
               context: context,
               initialDate: selectedDate,
               firstDate: DateTime.now(),
@@ -42,16 +40,20 @@ class _DateTextFieldState extends State<DateTextField> {
       },
       readOnly: true,
       textAlignVertical: TextAlignVertical.center,
-      style: f14greyRegularText.copyWith(fontSize: 20),
+      style: context.textStyles.bodyMD.copyWith(fontSize: 20),
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
-        prefixIcon: const Icon(Iconsax.clock, size: 28),
-        contentPadding: const EdgeInsets.all(24.0),
+        fillColor: context.kitColors.bgSurface,
+        prefixIcon: Icon(
+          Iconsax.clock,
+          size: 28,
+          color: context.kitColors.textSecondary,
+        ),
+        contentPadding: EdgeInsets.all(context.spacing.s6),
         hintText: 'Date',
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: context.borderRadius.input,
         ),
       ),
     );

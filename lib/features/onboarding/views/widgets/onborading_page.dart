@@ -1,5 +1,4 @@
-import 'package:expancetracker/core/constants/spaces.dart';
-import 'package:expancetracker/core/utils/extensions/context_ext.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/features/onboarding/domain/models/page_content.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +12,7 @@ class OnBoardingPage extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.all(Spaces.medium),
+      padding: EdgeInsets.all(context.spacing.s2),
       child: Column(
         children: [
           const SizedBox(height: 50),
@@ -24,13 +23,17 @@ class OnBoardingPage extends StatelessWidget {
           ),
           Text(
             title,
-            style: context.textTheme.headlineMedium,
+            style: context.textStyles.displayMD.copyWith(
+              color: context.kitColors.textPrimary,
+            ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: Spaces.spBetweenItem),
+          SizedBox(height: context.spacing.s4),
           Text(
             subTitle,
-            style: context.textTheme.bodyMedium,
+            style: context.textStyles.bodyMD.copyWith(
+              color: context.kitColors.textSecondary,
+            ),
             textAlign: TextAlign.center,
           ),
         ],

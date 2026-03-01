@@ -1,4 +1,4 @@
-import 'package:expancetracker/core/constants/colors.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseSummaryCard extends StatelessWidget {
@@ -25,21 +25,15 @@ class ExpenseSummaryCard extends StatelessWidget {
         // Using a gradient that aligns with the "Deep Green/Purple" theme or keeping the one from V2 if users liked it.
         // The V2 had: blue -> purple -> dark green.
         // Let's refine it to match the new Palette slightly better or keep it premium dark.
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Palette.accent, // Purple
-            Palette.backgroundDark, // Dark Green/Black
+            context.kitColors.brandPrimaryLight, // Lighter green
+            context.kitColors.brandPrimaryDark, // Darker green
           ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Palette.accent.withValues(alpha: 0.3),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
+        boxShadow: context.shadows.elevation3,
       ),
       child: Column(
         children: [

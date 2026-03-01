@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add New Transaction</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#39E079",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#122017",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0e1a13] dark:text-white min-h-screen flex justify-center">
+<!-- Mobile Container -->
+<div class="relative flex min-h-screen w-full max-w-[430px] flex-col bg-background-light dark:bg-background-dark overflow-x-hidden shadow-2xl">
+<!-- TopAppBar -->
+<div class="flex items-center p-4 pb-2 justify-between sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md z-10">
+<div class="text-[#0e1a13] dark:text-white flex size-12 shrink-0 items-center cursor-pointer">
+<span class="material-symbols-outlined">close</span>
+</div>
+<h2 class="text-[#0e1a13] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center font-display">Add New Transaction</h2>
+<div class="flex w-12 items-center justify-end cursor-pointer">
+<p class="text-primary text-base font-bold leading-normal tracking-[0.015em] shrink-0 font-display">Reset</p>
+</div>
+</div>
+<!-- Transaction Type Switch -->
+<div class="flex px-4 py-3">
+<div class="flex h-12 flex-1 items-center justify-center rounded-xl bg-primary/10 dark:bg-primary/5 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-[#1e3225] has-[:checked]:shadow-sm has-[:checked]:text-[#0e1a13] dark:has-[:checked]:text-white text-[#51946b] text-sm font-bold transition-all">
+<span class="truncate">Expense</span>
+<input checked="" class="invisible w-0" name="transaction-type" type="radio" value="Expense"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-[#1e3225] has-[:checked]:shadow-sm has-[:checked]:text-[#0e1a13] dark:has-[:checked]:text-white text-[#51946b] text-sm font-bold transition-all">
+<span class="truncate">Income</span>
+<input class="invisible w-0" name="transaction-type" type="radio" value="Income"/>
+</label>
+</div>
+</div>
+<!-- Amount Headline -->
+<div class="flex flex-col items-center justify-center py-8">
+<p class="text-[#51946b] text-sm font-semibold uppercase tracking-widest mb-1">Amount</p>
+<h1 class="text-[#0e1a13] dark:text-white tracking-tight text-[56px] font-extrabold leading-tight px-4 text-center font-display">
+<span class="text-primary opacity-60">$</span>124.50
+            </h1>
+</div>
+<!-- Section: Category -->
+<h3 class="text-[#0e1a13] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4 font-display">Category</h3>
+<!-- Category Grid -->
+<div class="grid grid-cols-2 gap-3 p-4">
+<div class="flex flex-1 gap-3 rounded-xl border-2 border-primary bg-white dark:bg-[#1a2e22] p-4 items-center cursor-pointer transition-all">
+<div class="text-primary">
+<span class="material-symbols-outlined text-[28px]">restaurant</span>
+</div>
+<h2 class="text-[#0e1a13] dark:text-white text-base font-bold leading-tight font-display">Food</h2>
+</div>
+<div class="flex flex-1 gap-3 rounded-xl border border-[#d1e6d9] dark:border-[#2a4535] bg-white dark:bg-[#1a2e22] p-4 items-center cursor-pointer hover:border-primary/50 transition-all">
+<div class="text-[#0e1a13] dark:text-white/70">
+<span class="material-symbols-outlined text-[28px]">shopping_bag</span>
+</div>
+<h2 class="text-[#0e1a13] dark:text-white text-base font-bold leading-tight font-display">Shopping</h2>
+</div>
+<div class="flex flex-1 gap-3 rounded-xl border border-[#d1e6d9] dark:border-[#2a4535] bg-white dark:bg-[#1a2e22] p-4 items-center cursor-pointer hover:border-primary/50 transition-all">
+<div class="text-[#0e1a13] dark:text-white/70">
+<span class="material-symbols-outlined text-[28px]">directions_car</span>
+</div>
+<h2 class="text-[#0e1a13] dark:text-white text-base font-bold leading-tight font-display">Transport</h2>
+</div>
+<div class="flex flex-1 gap-3 rounded-xl border border-[#d1e6d9] dark:border-[#2a4535] bg-white dark:bg-[#1a2e22] p-4 items-center cursor-pointer hover:border-primary/50 transition-all">
+<div class="text-[#0e1a13] dark:text-white/70">
+<span class="material-symbols-outlined text-[28px]">monitor_heart</span>
+</div>
+<h2 class="text-[#0e1a13] dark:text-white text-base font-bold leading-tight font-display">Health</h2>
+</div>
+<div class="flex flex-1 gap-3 rounded-xl border border-[#d1e6d9] dark:border-[#2a4535] bg-white dark:bg-[#1a2e22] p-4 items-center cursor-pointer hover:border-primary/50 transition-all">
+<div class="text-[#0e1a13] dark:text-white/70">
+<span class="material-symbols-outlined text-[28px]">house</span>
+</div>
+<h2 class="text-[#0e1a13] dark:text-white text-base font-bold leading-tight font-display">Rent</h2>
+</div>
+<div class="flex flex-1 gap-3 rounded-xl border border-[#d1e6d9] dark:border-[#2a4535] bg-white dark:bg-[#1a2e22] p-4 items-center cursor-pointer hover:border-primary/50 transition-all">
+<div class="text-[#0e1a13] dark:text-white/70">
+<span class="material-symbols-outlined text-[28px]">more_horiz</span>
+</div>
+<h2 class="text-[#0e1a13] dark:text-white text-base font-bold leading-tight font-display">Other</h2>
+</div>
+</div>
+<!-- Transaction Details -->
+<h3 class="text-[#0e1a13] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-6 font-display">Details</h3>
+<div class="flex flex-col gap-4 px-4 pb-32">
+<!-- Date Input -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#51946b]">Date</label>
+<div class="flex items-center gap-3 rounded-xl border border-[#d1e6d9] dark:border-[#2a4535] bg-white dark:bg-[#1a2e22] px-4 py-3 cursor-pointer">
+<span class="material-symbols-outlined text-[#51946b]">calendar_today</span>
+<span class="text-base font-medium">May 24, 2024</span>
+</div>
+</div>
+<!-- Notes Input -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#51946b]">Notes</label>
+<textarea class="w-full rounded-xl border border-[#d1e6d9] dark:border-[#2a4535] bg-white dark:bg-[#1a2e22] p-4 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none min-h-[100px] resize-none" placeholder="What was this for?"></textarea>
+</div>
+</div>
+<!-- Floating Action Button at Bottom -->
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] p-6 bg-gradient-to-t from-background-light via-background-light dark:from-background-dark dark:via-background-dark to-transparent">
+<button class="w-full h-14 bg-primary text-[#0e1a13] font-extrabold text-lg rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+<span>Save Transaction</span>
+<span class="material-symbols-outlined">check_circle</span>
+</button>
+</div>
+</div>
+</body></html>

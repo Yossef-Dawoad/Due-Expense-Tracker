@@ -2,55 +2,114 @@ import 'package:flutter/material.dart';
 
 @immutable
 class CustomTextStyles extends ThemeExtension<CustomTextStyles> {
-  /// 12
-  final TextStyle xs;
+  // Display Scale
+  final TextStyle displayXL;
+  final TextStyle displayLG;
+  final TextStyle displayMD;
 
-  /// 14
-  final TextStyle sm;
+  // Heading Scale
+  final TextStyle headingLG;
+  final TextStyle headingMD;
 
-  /// 16
-  final TextStyle standard;
+  // Body Scale
+  final TextStyle bodyMD;
+  final TextStyle bodySM;
 
-  /// 18, semi-bold
-  final TextStyle lg;
-
-  /// 20
-  final TextStyle xl;
-
-  /// 24, bold
-  final TextStyle xxl;
-
-  /// 32, bold
-  final TextStyle xxxl;
+  // Utilities
+  final TextStyle labelSM;
+  final TextStyle caption;
+  final TextStyle cta;
+  final TextStyle tabLabel;
 
   const CustomTextStyles({
-    this.xs = const TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal),
-    this.sm = const TextStyle(fontSize: 14.0),
-    this.standard = const TextStyle(fontSize: 16.0),
-    this.lg = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
-    this.xl = const TextStyle(fontSize: 20.0),
-    this.xxl = const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-    this.xxxl = const TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
+    this.displayXL = const TextStyle(
+      fontSize: 36.0,
+      fontWeight: FontWeight.w800,
+      height: 1.1,
+      letterSpacing: -0.72,
+    ), // -0.02em = -0.72px
+    this.displayLG = const TextStyle(
+      fontSize: 32.0,
+      fontWeight: FontWeight.w800,
+      height: 1.1,
+      letterSpacing: -0.64,
+    ), // -0.02em
+    this.displayMD = const TextStyle(
+      fontSize: 24.0,
+      fontWeight: FontWeight.w700,
+      height: 1.2,
+      letterSpacing: -0.24,
+    ), // -0.01em
+    this.headingLG = const TextStyle(
+      fontSize: 20.0,
+      fontWeight: FontWeight.w700,
+      height: 1.3,
+      letterSpacing: 0,
+    ),
+    this.headingMD = const TextStyle(
+      fontSize: 17.0,
+      fontWeight: FontWeight.w600,
+      height: 1.4,
+    ),
+    this.bodyMD = const TextStyle(
+      fontSize: 15.0,
+      fontWeight: FontWeight.w500,
+      height: 1.5,
+    ),
+    this.bodySM = const TextStyle(
+      fontSize: 13.0,
+      fontWeight: FontWeight.w400,
+      height: 1.5,
+    ),
+    this.labelSM = const TextStyle(
+      fontSize: 11.0,
+      fontWeight: FontWeight.w600,
+      height: 1.4,
+      letterSpacing: 0.88,
+    ), // 0.08em
+    this.caption = const TextStyle(
+      fontSize: 12.0,
+      fontWeight: FontWeight.w400,
+      height: 1.4,
+    ),
+    this.cta = const TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.w700,
+      height: 1.0,
+    ),
+    this.tabLabel = const TextStyle(
+      fontSize: 10.0,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.5,
+    ), // 0.05em
   });
 
   @override
   CustomTextStyles copyWith({
-    TextStyle? xs,
-    TextStyle? sm,
-    TextStyle? standard,
-    TextStyle? lg,
-    TextStyle? xl,
-    TextStyle? xxl,
-    TextStyle? xxxl,
+    TextStyle? displayXL,
+    TextStyle? displayLG,
+    TextStyle? displayMD,
+    TextStyle? headingLG,
+    TextStyle? headingMD,
+    TextStyle? bodyMD,
+    TextStyle? bodySM,
+    TextStyle? labelSM,
+    TextStyle? caption,
+    TextStyle? cta,
+    TextStyle? tabLabel,
   }) {
     return CustomTextStyles(
-      xs: xs ?? this.xs,
-      sm: sm ?? this.sm,
-      standard: standard ?? this.standard,
-      lg: lg ?? this.lg,
-      xl: xl ?? this.xl,
-      xxl: xxl ?? this.xxl,
-      xxxl: xxxl ?? this.xxxl,
+      displayXL: displayXL ?? this.displayXL,
+      displayLG: displayLG ?? this.displayLG,
+      displayMD: displayMD ?? this.displayMD,
+      headingLG: headingLG ?? this.headingLG,
+      headingMD: headingMD ?? this.headingMD,
+      bodyMD: bodyMD ?? this.bodyMD,
+      bodySM: bodySM ?? this.bodySM,
+      labelSM: labelSM ?? this.labelSM,
+      caption: caption ?? this.caption,
+      cta: cta ?? this.cta,
+      tabLabel: tabLabel ?? this.tabLabel,
     );
   }
 
@@ -58,14 +117,17 @@ class CustomTextStyles extends ThemeExtension<CustomTextStyles> {
   CustomTextStyles lerp(ThemeExtension<CustomTextStyles>? other, double t) {
     if (other is! CustomTextStyles) return this;
     return CustomTextStyles(
-      // TextStyle.lerp handles interpolating all properties, including weight
-      xs: TextStyle.lerp(xs, other.xs, t)!,
-      sm: TextStyle.lerp(sm, other.sm, t)!,
-      standard: TextStyle.lerp(standard, other.standard, t)!,
-      lg: TextStyle.lerp(lg, other.lg, t)!,
-      xl: TextStyle.lerp(xl, other.xl, t)!,
-      xxl: TextStyle.lerp(xxl, other.xxl, t)!,
-      xxxl: TextStyle.lerp(xxxl, other.xxxl, t)!,
+      displayXL: TextStyle.lerp(displayXL, other.displayXL, t)!,
+      displayLG: TextStyle.lerp(displayLG, other.displayLG, t)!,
+      displayMD: TextStyle.lerp(displayMD, other.displayMD, t)!,
+      headingLG: TextStyle.lerp(headingLG, other.headingLG, t)!,
+      headingMD: TextStyle.lerp(headingMD, other.headingMD, t)!,
+      bodyMD: TextStyle.lerp(bodyMD, other.bodyMD, t)!,
+      bodySM: TextStyle.lerp(bodySM, other.bodySM, t)!,
+      labelSM: TextStyle.lerp(labelSM, other.labelSM, t)!,
+      caption: TextStyle.lerp(caption, other.caption, t)!,
+      cta: TextStyle.lerp(cta, other.cta, t)!,
+      tabLabel: TextStyle.lerp(tabLabel, other.tabLabel, t)!,
     );
   }
 }

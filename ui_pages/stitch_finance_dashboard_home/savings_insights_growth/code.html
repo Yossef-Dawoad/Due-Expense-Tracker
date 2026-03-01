@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Savings Insights &amp; Growth</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2bee75",
+              "background-light": "#f6f8f7",
+              "background-dark": "#102217",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .glow-line {
+            filter: drop-shadow(0 0 8px rgba(43, 238, 117, 0.4));
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen">
+<!-- Status Bar Spacer (iOS Style) -->
+<div class="h-12 w-full"></div>
+<!-- Main Content Container -->
+<main class="max-w-md mx-auto px-6 pb-32">
+<!-- Top Navigation / Header -->
+<header class="flex justify-between items-center mb-10">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-primary/10 border border-slate-200 dark:border-primary/20">
+<span class="material-icons-round text-slate-600 dark:text-primary">arrow_back_ios_new</span>
+</button>
+<h1 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Insights</h1>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-primary/10 border border-slate-200 dark:border-primary/20">
+<span class="material-icons-round text-slate-600 dark:text-primary">share</span>
+</button>
+</header>
+<!-- Hero Section: Total Saved -->
+<section class="mb-12">
+<p class="text-xs font-extrabold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2 text-center">Total Saved</p>
+<div class="text-center">
+<h2 class="text-6xl font-extrabold text-primary tracking-tight">
+                    $1,240<span class="text-3xl opacity-80">.00</span>
+</h2>
+<div class="inline-flex items-center mt-4 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold">
+<span class="material-icons-round text-sm mr-1">trending_up</span>
+                    +12.4% this month
+                </div>
+</div>
+</section>
+<!-- Growth Chart Section -->
+<section class="mb-12">
+<div class="flex justify-between items-end mb-6">
+<h3 class="text-lg font-bold">Growth Trend</h3>
+<div class="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
+<button class="px-3 py-1 text-xs font-bold rounded-md bg-white dark:bg-slate-700 shadow-sm">6M</button>
+<button class="px-3 py-1 text-xs font-bold text-slate-500">1Y</button>
+<button class="px-3 py-1 text-xs font-bold text-slate-500">ALL</button>
+</div>
+</div>
+<!-- SVG Line Chart Simulation -->
+<div class="relative w-full h-48 bg-white dark:bg-slate-900 rounded-2xl p-4 overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800">
+<svg class="w-full h-full" viewbox="0 0 400 150">
+<defs>
+<lineargradient id="gradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#2bee75" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#2bee75" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Area fill -->
+<path d="M0,150 L0,120 C50,110 80,130 130,100 C180,70 220,90 270,50 C320,10 350,30 400,10 L400,150 Z" fill="url(#gradient)"></path>
+<!-- Growth Line -->
+<path class="glow-line" d="M0,120 C50,110 80,130 130,100 C180,70 220,90 270,50 C320,10 350,30 400,10" fill="none" stroke="#2bee75" stroke-linecap="round" stroke-width="4"></path>
+<!-- Current Point -->
+<circle cx="400" cy="10" fill="#2bee75" r="5"></circle>
+<circle cx="400" cy="10" fill="#2bee75" fill-opacity="0.2" r="10"></circle>
+</svg>
+<!-- Chart Labels -->
+<div class="absolute bottom-4 left-4 right-4 flex justify-between text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
+<span>Jan</span>
+<span>Feb</span>
+<span>Mar</span>
+<span>Apr</span>
+<span>May</span>
+<span>Jun</span>
+</div>
+</div>
+</section>
+<!-- Milestones Section -->
+<section class="space-y-4">
+<h3 class="text-lg font-bold mb-4">Savings Milestones</h3>
+<!-- Milestone Card 1 -->
+<div class="group p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 hover:border-primary/50 transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-icons-round">medical_services</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-800 dark:text-slate-100">Emergency Fund</h4>
+<p class="text-xs text-slate-400">Target: $5,000</p>
+</div>
+</div>
+<span class="text-sm font-extrabold text-primary">50%</span>
+</div>
+<div class="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 50%"></div>
+</div>
+</div>
+<!-- Milestone Card 2 -->
+<div class="group p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 hover:border-primary/50 transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-icons-round">flight_takeoff</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-800 dark:text-slate-100">Vacation Goal</h4>
+<p class="text-xs text-slate-400">Target: $2,000</p>
+</div>
+</div>
+<span class="text-sm font-extrabold text-primary">80%</span>
+</div>
+<div class="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 80%"></div>
+</div>
+</div>
+<!-- Milestone Card 3 -->
+<div class="group p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 hover:border-primary/50 transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-icons-round">directions_car</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-800 dark:text-slate-100">New Car Fund</h4>
+<p class="text-xs text-slate-400">Target: $15,000</p>
+</div>
+</div>
+<span class="text-sm font-extrabold text-primary">15%</span>
+</div>
+<div class="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 15%"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 ios-blur bg-white/80 dark:bg-background-dark/80 border-t border-slate-200 dark:border-slate-800 px-8 py-4 z-50">
+<div class="max-w-md mx-auto flex justify-between items-center">
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-round">grid_view</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons-round">insights</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Savings</span>
+</button>
+<div class="relative -top-8">
+<button class="w-14 h-14 bg-primary text-background-dark rounded-full shadow-lg shadow-primary/40 flex items-center justify-center">
+<span class="material-icons-round text-3xl">add</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-round">account_balance_wallet</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Budget</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-round">person_outline</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Profile</span>
+</button>
+</div>
+<!-- Home Indicator -->
+<div class="w-32 h-1 bg-slate-300 dark:bg-slate-700 mx-auto mt-6 rounded-full"></div>
+</nav>
+</body></html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Budgeting &amp; Limits Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#36e278",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#112117",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        .ios-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0e1b13] dark:text-white min-h-screen flex justify-center">
+<div class="relative w-full max-w-md bg-white dark:bg-[#1a2e21] min-h-screen flex flex-col overflow-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between px-6 pt-12 pb-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<h2 class="text-lg font-bold tracking-tight">Budgeting</h2>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</header>
+<!-- Main Content Area Scrollable -->
+<main class="flex-1 overflow-y-auto px-6 pb-24">
+<!-- Summary Section -->
+<div class="text-center mt-6">
+<p class="text-[#50956b] text-xs font-extrabold uppercase tracking-widest mb-1">Monthly Budget</p>
+<h1 class="text-4xl font-extrabold tracking-tight mb-8">$3,500.00</h1>
+<!-- Circular Progress Ring -->
+<div class="relative flex items-center justify-center mb-10">
+<svg class="w-48 h-48">
+<circle class="text-primary/10" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-dasharray="502.65" stroke-dashoffset="175.92" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-3xl font-extrabold">65%</span>
+<span class="text-xs font-medium text-[#50956b]">Overall Spent</span>
+</div>
+</div>
+</div>
+<!-- Segmented Control -->
+<div class="bg-background-light dark:bg-[#112117] p-1 rounded-xl flex mb-8">
+<button class="flex-1 py-2 text-sm font-bold rounded-lg bg-white dark:bg-[#2a4533] shadow-sm text-[#0e1b13] dark:text-white">Monthly</button>
+<button class="flex-1 py-2 text-sm font-semibold text-[#50956b]">Weekly</button>
+</div>
+<!-- Category List -->
+<div class="space-y-4">
+<h3 class="text-sm font-bold text-[#50956b] uppercase tracking-wider">Active Budgets</h3>
+<!-- Housing Card -->
+<div class="p-4 rounded-xl border border-primary/10 bg-white dark:bg-[#1e3627] ios-shadow">
+<div class="flex items-center gap-4 mb-3">
+<div class="w-10 h-10 rounded-lg border border-primary/20 flex items-center justify-center bg-primary/5">
+<span class="material-symbols-outlined text-primary">home</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center">
+<span class="font-bold text-base">Housing</span>
+<span class="text-sm font-medium">$1,200.00</span>
+</div>
+</div>
+</div>
+<div class="w-full bg-primary/10 h-2 rounded-full mb-2 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 85%;"></div>
+</div>
+<div class="flex justify-between text-xs font-medium text-[#50956b]">
+<span>Remaining: $180.00</span>
+<span>Spent: $1,020.00</span>
+</div>
+</div>
+<!-- Food & Drinks Card -->
+<div class="p-4 rounded-xl border border-primary/10 bg-white dark:bg-[#1e3627] ios-shadow">
+<div class="flex items-center gap-4 mb-3">
+<div class="w-10 h-10 rounded-lg border border-primary/20 flex items-center justify-center bg-primary/5">
+<span class="material-symbols-outlined text-primary">restaurant</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center">
+<span class="font-bold text-base">Food &amp; Drinks</span>
+<span class="text-sm font-medium">$600.00</span>
+</div>
+</div>
+</div>
+<div class="w-full bg-primary/10 h-2 rounded-full mb-2 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 45%;"></div>
+</div>
+<div class="flex justify-between text-xs font-medium text-[#50956b]">
+<span>Remaining: $330.00</span>
+<span>Spent: $270.00</span>
+</div>
+</div>
+<!-- Fun & Entertainment Card -->
+<div class="p-4 rounded-xl border border-primary/10 bg-white dark:bg-[#1e3627] ios-shadow">
+<div class="flex items-center gap-4 mb-3">
+<div class="w-10 h-10 rounded-lg border border-primary/20 flex items-center justify-center bg-primary/5">
+<span class="material-symbols-outlined text-primary">celebration</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center">
+<span class="font-bold text-base">Fun</span>
+<span class="text-sm font-medium">$300.00</span>
+</div>
+</div>
+</div>
+<div class="w-full bg-primary/10 h-2 rounded-full mb-2 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 20%;"></div>
+</div>
+<div class="flex justify-between text-xs font-medium text-[#50956b]">
+<span>Remaining: $240.00</span>
+<span>Spent: $60.00</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="absolute bottom-28 right-6 w-14 h-14 bg-primary text-background-dark rounded-full shadow-lg shadow-primary/40 flex items-center justify-center z-10">
+<span class="material-symbols-outlined font-bold text-3xl">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="absolute bottom-0 w-full bg-white dark:bg-[#1a2e21] border-t border-primary/10 px-6 pb-8 pt-4">
+<div class="flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-[#50956b]" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">pie_chart</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Budgets</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#50956b]" href="#">
+<span class="material-symbols-outlined">credit_card</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Cards</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#50956b]" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Profile</span>
+</a>
+</div>
+</nav>
+</div>
+</body></html>

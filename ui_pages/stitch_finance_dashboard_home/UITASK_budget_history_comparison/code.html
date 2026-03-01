@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Budget Performance</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#36e278",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#112117",
+                        "neutral-custom": "#2a3a31", // Derived from primary hue
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .chart-container {
+            height: 200px;
+        }
+        .bar-transition {
+            transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-neutral-custom dark:text-gray-100 min-h-screen">
+<!-- Mobile Screen Wrapper -->
+<div class="max-w-md mx-auto min-h-screen bg-white dark:bg-background-dark relative shadow-2xl">
+<!-- Status Bar & Top Nav -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 ios-blur px-6 py-4 flex items-center justify-between border-b border-gray-100 dark:border-white/5">
+<button class="w-10 h-10 flex items-center justify-start rounded-full text-neutral-custom dark:text-gray-300">
+<span class="material-icons-round">arrow_back_ios</span>
+</button>
+<span class="text-sm font-bold tracking-widest uppercase opacity-40">Insights</span>
+<button class="w-10 h-10 flex items-center justify-end rounded-full text-neutral-custom dark:text-gray-300">
+<span class="material-icons-round text-xl">ios_share</span>
+</button>
+</header>
+<main class="px-6 pb-12 pt-8">
+<!-- Header Section -->
+<div class="mb-10">
+<h1 class="text-3xl font-extrabold tracking-tight text-neutral-custom dark:text-white leading-none">
+                    BUDGET<br/>PERFORMANCE
+                </h1>
+<p class="mt-3 text-sm text-gray-500 dark:text-gray-400 font-medium tracking-wide">
+                    Historical analysis of your fiscal efficiency.
+                </p>
+</div>
+<!-- Chart Section -->
+<div class="mb-12">
+<div class="chart-container flex items-end justify-between gap-4 px-2">
+<!-- May -->
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full flex justify-center items-end gap-1.5 h-40">
+<div class="w-3 bg-gray-200 dark:bg-white/10 rounded-full" style="height: 70%;" title="Budgeted"></div>
+<div class="w-3 bg-primary rounded-full" style="height: 62%;" title="Actual"></div>
+</div>
+<span class="mt-3 text-[10px] font-bold text-gray-400 uppercase tracking-tighter">May</span>
+</div>
+<!-- June -->
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full flex justify-center items-end gap-1.5 h-40">
+<div class="w-3 bg-gray-200 dark:bg-white/10 rounded-full" style="height: 70%;" title="Budgeted"></div>
+<div class="w-3 bg-primary rounded-full" style="height: 85%;" title="Actual"></div>
+</div>
+<span class="mt-3 text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Jun</span>
+</div>
+<!-- July -->
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full flex justify-center items-end gap-1.5 h-40">
+<div class="w-3 bg-gray-200 dark:bg-white/10 rounded-full" style="height: 85%;" title="Budgeted"></div>
+<div class="w-3 bg-primary rounded-full" style="height: 75%;" title="Actual"></div>
+</div>
+<span class="mt-3 text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Jul</span>
+</div>
+<!-- August -->
+<div class="flex-1 flex flex-col items-center gap-1 group">
+<div class="w-full flex justify-center items-end gap-1.5 h-40">
+<div class="w-3 bg-gray-200 dark:bg-white/10 rounded-full" style="height: 70%;" title="Budgeted"></div>
+<div class="w-3 bg-primary rounded-full" style="height: 55%;" title="Actual"></div>
+</div>
+<span class="mt-3 text-[10px] font-bold text-gray-900 dark:text-primary uppercase tracking-tighter">Aug</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="flex justify-center gap-6 mt-8">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-gray-200 dark:bg-white/20"></div>
+<span class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">Budgeted</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">Actual</span>
+</div>
+</div>
+</div>
+<!-- History List -->
+<div class="space-y-4">
+<h2 class="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Monthly Breakdown</h2>
+<!-- August Tile -->
+<div class="flex items-center p-4 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-xl">
+<div class="w-12 h-12 flex items-center justify-center border border-gray-100 dark:border-white/10 rounded-lg mr-4">
+<span class="material-icons-round text-primary">trending_down</span>
+</div>
+<div class="flex-1">
+<h3 class="text-sm font-bold text-neutral-custom dark:text-white">August</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium">$2,400 Total Spent</p>
+</div>
+<div class="text-right">
+<div class="text-[10px] font-bold uppercase tracking-widest text-primary bg-primary/10 px-2 py-1 rounded-full mb-1">
+                            Under Budget
+                        </div>
+<p class="text-xs font-bold text-neutral-custom dark:text-gray-300">-$200</p>
+</div>
+</div>
+<!-- July Tile -->
+<div class="flex items-center p-4 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-xl">
+<div class="w-12 h-12 flex items-center justify-center border border-gray-100 dark:border-white/10 rounded-lg mr-4">
+<span class="material-icons-round text-gray-400">trending_up</span>
+</div>
+<div class="flex-1">
+<h3 class="text-sm font-bold text-neutral-custom dark:text-white">July</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium">$3,100 Total Spent</p>
+</div>
+<div class="text-right">
+<div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 bg-gray-100 dark:bg-white/10 px-2 py-1 rounded-full mb-1">
+                            Over Budget
+                        </div>
+<p class="text-xs font-bold text-neutral-custom dark:text-gray-300">+$400</p>
+</div>
+</div>
+<!-- June Tile -->
+<div class="flex items-center p-4 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-xl opacity-80">
+<div class="w-12 h-12 flex items-center justify-center border border-gray-100 dark:border-white/10 rounded-lg mr-4">
+<span class="material-icons-round text-primary">trending_down</span>
+</div>
+<div class="flex-1">
+<h3 class="text-sm font-bold text-neutral-custom dark:text-white">June</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium">$2,850 Total Spent</p>
+</div>
+<div class="text-right">
+<div class="text-[10px] font-bold uppercase tracking-widest text-primary bg-primary/10 px-2 py-1 rounded-full mb-1">
+                            Under Budget
+                        </div>
+<p class="text-xs font-bold text-neutral-custom dark:text-gray-300">-$50</p>
+</div>
+</div>
+<!-- May Tile -->
+<div class="flex items-center p-4 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-xl opacity-60">
+<div class="w-12 h-12 flex items-center justify-center border border-gray-100 dark:border-white/10 rounded-lg mr-4">
+<span class="material-icons-round text-primary">trending_down</span>
+</div>
+<div class="flex-1">
+<h3 class="text-sm font-bold text-neutral-custom dark:text-white">May</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium">$2,100 Total Spent</p>
+</div>
+<div class="text-right">
+<div class="text-[10px] font-bold uppercase tracking-widest text-primary bg-primary/10 px-2 py-1 rounded-full mb-1">
+                            Under Budget
+                        </div>
+<p class="text-xs font-bold text-neutral-custom dark:text-gray-300">-$180</p>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center">
+<button class="px-8 py-4 bg-primary text-background-dark font-extrabold text-xs uppercase tracking-[0.2em] rounded-full shadow-lg shadow-primary/20">
+                    View Full Report
+                </button>
+</div>
+</main>
+<!-- Dynamic Visual Accent (Bottom) -->
+<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+</div>
+</body></html>

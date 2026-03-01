@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modern Wallets &amp; Assets List</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2bee75",
+              "background": "#ffffff",
+              "surface": "#f9fafb",
+              "text-main": "#111827",
+              "text-muted": "#6b7280",
+              "border-light": "#f3f4f6",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+                "DEFAULT": "0.5rem", 
+                "lg": "1rem", 
+                "xl": "1.5rem", 
+                "2xl": "2rem",
+                "full": "9999px"
+            },
+            boxShadow: {
+              'fab': '0 8px 24px rgba(43, 238, 117, 0.4)',
+              'soft': '0 2px 8px rgba(0, 0, 0, 0.04)',
+            }
+          },
+        },
+      }
+    </script>
+<style type="text/tailwindcss">
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .list-item-border {
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .list-item-border:last-child {
+            border-bottom: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-display antialiased min-h-screen relative pb-32 text-text-main selection:bg-primary selection:text-black">
+<div class="flex items-center p-6 justify-between sticky top-0 z-50 bg-white/90 backdrop-blur-md">
+<div class="flex size-10 shrink-0 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-1 ring-black/5" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAuzOqyFqsMPz-C9ygL6b6rhUNdJNz9b7sjHGOuWH7y5CVoeyY059-_zmBLce3ySt6nLOYzBHq4Yu6N9gix1jd8MERb9H7cKrmZrKOQiyfnOrSIpnLez0ae25G-JwYHj4-Py2-bZ9VNFJnnzFqS0jmV2eKMHJLYvIU4GAn4-lLzss_SkzpWlsg_yVfADr17Dc2HZOYbzHwz_xNuBIqiIqMM9Cex6luaYLioJ5DVnHtncNzXTmVKi48n1o7v5qjfFqTp_FP-D2dtwnpt");'></div>
+</div>
+<div class="flex items-center justify-end">
+<button class="flex items-center justify-center rounded-full size-10 bg-surface text-text-main hover:bg-gray-100 transition-colors">
+<span class="material-symbols-outlined text-[24px]">notifications</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center px-6 pt-2 pb-10">
+<p class="text-text-muted text-[11px] font-bold tracking-[0.2em] uppercase mb-1">Total Balance</p>
+<h1 class="text-text-main text-[44px] font-black leading-tight tracking-tight text-center">$45,280.00</h1>
+<div class="mt-3 flex items-center gap-1.5 bg-primary/10 px-4 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-primary text-[16px] font-bold">trending_up</span>
+<p class="text-primary text-[12px] font-bold tracking-tight">+$1,240.00 (2.4%)</p>
+</div>
+</div>
+<div class="px-6 mb-10">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-text-main text-[17px] font-bold tracking-tight">My Wallets</h3>
+<button class="text-text-muted text-sm font-medium">See all</button>
+</div>
+<div class="flex flex-col bg-white rounded-2xl overflow-hidden">
+<div class="flex items-center justify-between py-4 list-item-border cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-xl border border-gray-100 flex items-center justify-center bg-white shadow-soft group-active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-text-main text-[24px]">account_balance</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-bold text-text-main">Chase Bank</span>
+<span class="text-[12px] font-medium text-text-muted">•••• 4242</span>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[15px] font-bold text-text-main block">$3,250.00</span>
+<span class="text-[11px] font-medium text-text-muted">Primary</span>
+</div>
+</div>
+<div class="flex items-center justify-between py-4 list-item-border cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-xl border border-gray-100 flex items-center justify-center bg-white shadow-soft group-active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-text-main text-[24px]">savings</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-bold text-text-main">HYS Account</span>
+<span class="text-[12px] font-medium text-text-muted">•••• 8821</span>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[15px] font-bold text-text-main block">$12,500.00</span>
+<span class="text-[11px] font-medium text-emerald-500">4.5% APY</span>
+</div>
+</div>
+<div class="flex items-center justify-between py-4 list-item-border cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-xl border border-gray-100 flex items-center justify-center bg-white shadow-soft group-active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-text-main text-[24px]">credit_card</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-bold text-text-main">Apple Card</span>
+<span class="text-[12px] font-medium text-text-muted">•••• 9012</span>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[15px] font-bold text-text-main block">$420.00</span>
+<span class="text-[11px] font-medium text-text-muted">Credit</span>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 pb-24">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-text-main text-[17px] font-bold tracking-tight">Other Assets</h3>
+<button class="text-primary text-[11px] font-bold tracking-wider uppercase">Analytics</button>
+</div>
+<div class="flex flex-col bg-white rounded-2xl overflow-hidden">
+<div class="flex items-center justify-between py-4 list-item-border cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-xl border border-gray-100 flex items-center justify-center bg-white shadow-soft">
+<span class="material-symbols-outlined text-text-main text-[24px]">currency_bitcoin</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-bold text-text-main">Bitcoin Wallet</span>
+<span class="text-[12px] font-medium text-text-muted">0.45 BTC</span>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[15px] font-bold text-text-main block">$18,400.00</span>
+<span class="text-[11px] font-bold text-emerald-500 uppercase">+5.2%</span>
+</div>
+</div>
+<div class="flex items-center justify-between py-4 list-item-border cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-xl border border-gray-100 flex items-center justify-center bg-white shadow-soft">
+<span class="material-symbols-outlined text-text-main text-[24px]">show_chart</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-bold text-text-main">Vanguard Index</span>
+<span class="text-[12px] font-medium text-text-muted">VTSAX</span>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[15px] font-bold text-text-main block">$10,710.00</span>
+<span class="text-[11px] font-bold text-emerald-500 uppercase">+1.8%</span>
+</div>
+</div>
+<div class="flex items-center justify-between py-4 list-item-border cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-xl border border-gray-100 flex items-center justify-center bg-white shadow-soft">
+<span class="material-symbols-outlined text-text-main text-[24px]">home_work</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-bold text-text-main">Real Estate Fund</span>
+<span class="text-[12px] font-medium text-text-muted">REIT</span>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[15px] font-bold text-text-main block">$2,500.00</span>
+<span class="text-[11px] font-bold text-emerald-500 uppercase">+0.5%</span>
+</div>
+</div>
+</div>
+</div>
+<button class="fixed bottom-28 right-6 size-14 rounded-full bg-primary text-black shadow-fab flex items-center justify-center z-40 transition-all active:scale-90 hover:scale-105">
+<span class="material-symbols-outlined text-[32px] font-black">add</span>
+</button>
+<div class="fixed bottom-0 w-full h-[92px] bg-white/95 backdrop-blur-xl border-t border-gray-100 flex justify-around items-start pt-4 z-50">
+<button class="flex flex-col items-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-primary text-[26px]">account_balance_wallet</span>
+<span class="text-[10px] font-bold text-primary uppercase tracking-widest">Wallets</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-text-muted group-hover:text-text-main transition-colors text-[26px]">analytics</span>
+<span class="text-[10px] font-bold text-text-muted group-hover:text-text-main transition-colors uppercase tracking-widest">Stats</span>
+</button>
+<div class="w-12"></div> 
+<button class="flex flex-col items-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-text-muted group-hover:text-text-main transition-colors text-[26px]">swap_horiz</span>
+<span class="text-[10px] font-bold text-text-muted group-hover:text-text-main transition-colors uppercase tracking-widest">Swap</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-text-muted group-hover:text-text-main transition-colors text-[26px]">person</span>
+<span class="text-[10px] font-bold text-text-muted group-hover:text-text-main transition-colors uppercase tracking-widest">User</span>
+</button>
+</div>
+
+</body></html>

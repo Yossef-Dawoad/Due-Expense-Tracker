@@ -14,6 +14,7 @@ class ExpanseTrackerApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.buildTheme(Brightness.light),
+      darkTheme: AppTheme.buildTheme(Brightness.dark),
       themeMode: ThemeMode.system,
       routerConfig: routerService.goRouter,
     );

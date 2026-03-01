@@ -1,4 +1,4 @@
-import 'package:expancetracker/core/constants/colors.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class Indicator extends StatelessWidget {
@@ -35,8 +35,10 @@ class Indicator extends StatelessWidget {
             height: dotHeight,
             margin: const EdgeInsets.symmetric(horizontal: 6.0),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: index == currentIndex ? Palette.primary : Palette.grey,
+              borderRadius: context.borderRadius.pill,
+              color: index == currentIndex
+                  ? context.kitColors.brandPrimary
+                  : context.kitColors.semanticNeutral,
             ),
           ),
         ),

@@ -1,4 +1,4 @@
-import 'package:expancetracker/core/constants/textstyles.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class HeaderTitle extends StatelessWidget {
@@ -18,12 +18,17 @@ class HeaderTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: f18BlackBold.copyWith(color: Colors.black54)),
+        Text(
+          title,
+          style: context.textStyles.headingMD.copyWith(
+            color: context.kitColors.textSecondary,
+          ),
+        ),
         if (actionIcon != null)
           IconButton(
-            icon: Icon(actionIcon, color: Colors.blue),
+            icon: Icon(actionIcon, color: context.kitColors.textLink),
             onPressed: onActionTap,
-          )
+          ),
       ],
     );
   }

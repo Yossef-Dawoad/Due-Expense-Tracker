@@ -1,3 +1,4 @@
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class SkeltonContainer extends StatefulWidget {
@@ -20,7 +21,8 @@ class SkeltonContainer extends StatefulWidget {
   State<SkeltonContainer> createState() => _SkeltonContainerState();
 }
 
-class _SkeltonContainerState extends State<SkeltonContainer> with SingleTickerProviderStateMixin {
+class _SkeltonContainerState extends State<SkeltonContainer>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -55,7 +57,10 @@ class _SkeltonContainerState extends State<SkeltonContainer> with SingleTickerPr
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.radius),
           gradient: LinearGradient(
-            colors: const [Color.fromARGB(3, 214, 214, 214), Colors.white],
+            colors: [
+              context.kitColors.borderDefault,
+              context.kitColors.bgSurfaceSecondary,
+            ],
             stops: [0, _controller.value],
           ),
         ),

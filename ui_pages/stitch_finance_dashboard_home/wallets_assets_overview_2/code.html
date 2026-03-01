@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Connect Bank Selection</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2bee75",
+                        "background": "#ffffff",
+                        "surface": "#f9fafb",
+                        "text-main": "#111827",
+                        "text-muted": "#6b7280",
+                        "border-light": "#f3f4f6",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'fab': '0 8px 24px rgba(43, 238, 117, 0.4)',
+                        'soft': '0 2px 8px rgba(0, 0, 0, 0.04)',
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .bank-card {
+            @apply flex flex-col items-center justify-center p-6 bg-white border border-gray-100 rounded-2xl transition-all active:scale-95 hover:border-primary/30;
+        }
+    </style>
+<style>
+        body {
+            min-height: 100dvh;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-display antialiased text-text-main selection:bg-primary selection:text-black">
+<div class="sticky top-0 z-50 bg-white/90 backdrop-blur-md px-6 pt-6 pb-2">
+<div class="flex items-center justify-between mb-8">
+<button class="flex items-center justify-center rounded-full size-10 bg-surface text-text-main">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<div class="flex items-center gap-1.5 bg-surface px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-text-muted text-[14px]">lock</span>
+<span class="text-[11px] font-bold text-text-muted uppercase tracking-wider">Secure</span>
+</div>
+</div>
+<div class="flex flex-col mb-8">
+<h1 class="text-text-main text-[28px] font-black leading-tight tracking-tight uppercase">Connect Bank</h1>
+<p class="text-text-muted text-[14px] mt-1">Select your institution to sync transactions</p>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-muted text-[20px] group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="w-full h-14 bg-surface border-none rounded-2xl pl-12 pr-4 text-[15px] font-medium placeholder:text-text-muted focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search your bank" type="text"/>
+</div>
+</div>
+<div class="px-6 pt-8 pb-32">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-text-main text-[15px] font-bold tracking-tight uppercase">Popular Banks</h3>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="bank-card">
+<div class="size-12 mb-3 flex items-center justify-center">
+<span class="material-symbols-outlined text-[40px] text-blue-800">account_balance</span>
+</div>
+<span class="text-[13px] font-bold text-text-main">Chase</span>
+</button>
+<button class="bank-card">
+<div class="size-12 mb-3 flex items-center justify-center">
+<span class="material-symbols-outlined text-[40px] text-red-600">account_balance</span>
+</div>
+<span class="text-[13px] font-bold text-text-main">Bank of America</span>
+</button>
+<button class="bank-card">
+<div class="size-12 mb-3 flex items-center justify-center">
+<span class="material-symbols-outlined text-[40px] text-yellow-600">account_balance</span>
+</div>
+<span class="text-[13px] font-bold text-text-main">Wells Fargo</span>
+</button>
+<button class="bank-card">
+<div class="size-12 mb-3 flex items-center justify-center">
+<span class="material-symbols-outlined text-[40px] text-blue-600">account_balance</span>
+</div>
+<span class="text-[13px] font-bold text-text-main">Citi</span>
+</button>
+<button class="bank-card">
+<div class="size-12 mb-3 flex items-center justify-center">
+<span class="material-symbols-outlined text-[40px] text-blue-900">account_balance</span>
+</div>
+<span class="text-[13px] font-bold text-text-main">Capital One</span>
+</button>
+<button class="bank-card">
+<div class="size-12 mb-3 flex items-center justify-center">
+<span class="material-symbols-outlined text-[40px] text-orange-600">account_balance</span>
+</div>
+<span class="text-[13px] font-bold text-text-main">PNC Bank</span>
+</button>
+</div>
+<div class="mt-10 text-center">
+<button class="text-text-muted text-[14px] font-semibold hover:text-text-main transition-colors inline-flex items-center gap-2">
+                Search all institutions
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="fixed bottom-0 w-full p-6 bg-gradient-to-t from-white via-white to-transparent pointer-events-none">
+<button class="pointer-events-auto w-full h-14 bg-text-main text-white rounded-2xl font-bold text-[15px] shadow-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined text-[20px]">add_link</span>
+            Link Manually Instead
+        </button>
+</div>
+
+</body></html>

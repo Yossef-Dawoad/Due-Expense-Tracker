@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Spending Statistics Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#39E079",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#122017",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bar-chart-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 160px;
+            padding: 0 16px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0e1a13] dark:text-white min-h-screen flex justify-center">
+<div class="relative flex min-h-screen w-full max-w-[430px] flex-col bg-background-light dark:bg-background-dark overflow-x-hidden shadow-2xl">
+<div class="flex items-center p-4 pb-2 justify-between sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md z-10">
+<div class="text-[#0e1a13] dark:text-white flex size-12 shrink-0 items-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-[#0e1a13] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center font-display">Statistics</h2>
+<div class="flex w-12 items-center justify-end cursor-pointer">
+<span class="material-symbols-outlined text-[#0e1a13] dark:text-white">calendar_month</span>
+</div>
+</div>
+<div class="flex px-4 py-3">
+<div class="flex h-12 flex-1 items-center justify-center rounded-xl bg-[#e8edeb] dark:bg-primary/5 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-[#1e3225] has-[:checked]:shadow-sm has-[:checked]:text-[#0e1a13] dark:has-[:checked]:text-white text-[#51946b] text-sm font-bold transition-all">
+<span class="truncate">Expense</span>
+<input checked="" class="invisible w-0" name="stat-type" type="radio" value="Expense"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-[#1e3225] has-[:checked]:shadow-sm has-[:checked]:text-[#0e1a13] dark:has-[:checked]:text-white text-[#51946b] text-sm font-bold transition-all">
+<span class="truncate">Income</span>
+<input class="invisible w-0" name="stat-type" type="radio" value="Income"/>
+</label>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center py-8">
+<p class="text-[#51946b] text-sm font-semibold uppercase tracking-widest mb-1">Total Spending</p>
+<h1 class="text-[#0e1a13] dark:text-white tracking-tight text-[56px] font-extrabold leading-tight px-4 text-center font-display">
+<span class="text-primary">$</span>4,820.50
+            </h1>
+<p class="text-[#51946b] text-sm font-medium mt-1">May 1 - May 31, 2024</p>
+</div>
+<div class="px-4 py-4">
+<div class="bg-white dark:bg-[#1a2e22] rounded-2xl p-6 border border-[#d1e6d9] dark:border-[#2a4535]">
+<div class="flex justify-between items-center mb-6">
+<p class="text-sm font-bold text-[#0e1a13] dark:text-white">Last 7 Days</p>
+<p class="text-xs text-[#51946b] font-medium">Avg: $164.20/day</p>
+</div>
+<div class="bar-chart-container gap-3">
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary rounded-t-lg" style="height: 60%;"></div>
+<span class="text-[10px] font-bold text-[#51946b]">Mon</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary rounded-t-lg" style="height: 40%;"></div>
+<span class="text-[10px] font-bold text-[#51946b]">Tue</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary rounded-t-lg" style="height: 85%;"></div>
+<span class="text-[10px] font-bold text-[#51946b]">Wed</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary rounded-t-lg" style="height: 35%;"></div>
+<span class="text-[10px] font-bold text-[#51946b]">Thu</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary rounded-t-lg" style="height: 70%;"></div>
+<span class="text-[10px] font-bold text-[#51946b]">Fri</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary rounded-t-lg" style="height: 95%;"></div>
+<span class="text-[10px] font-bold text-[#51946b]">Sat</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1">
+<div class="w-full bg-primary rounded-t-lg" style="height: 50%;"></div>
+<span class="text-[10px] font-bold text-[#51946b]">Sun</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between px-4 pb-2 pt-6">
+<h3 class="text-[#0e1a13] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] font-display">Top Categories</h3>
+<p class="text-primary text-sm font-bold font-display cursor-pointer">See All</p>
+</div>
+<div class="flex flex-col gap-4 px-4 pb-12">
+<div class="flex items-center gap-4 group">
+<div class="size-12 rounded-xl border border-[#d1e6d9] dark:border-[#2a4535] bg-white dark:bg-[#1a2e22] flex items-center justify-center text-[#0e1a13] dark:text-white shrink-0">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div class="flex flex-col flex-1 gap-1">
+<div class="flex justify-between items-end">
+<span class="text-base font-bold text-[#0e1a13] dark:text-white">Food &amp; Drinks</span>
+<span class="text-sm font-extrabold text-[#0e1a13] dark:text-white">$1,240.50</span>
+</div>
+<div class="w-full h-1 bg-[#e8edeb] dark:bg-[#1a2e22] rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[65%]"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 group">
+<div class="size-12 rounded-xl border border-[#d1e6d9] dark:border-[#2a4535] bg-white dark:bg-[#1a2e22] flex items-center justify-center text-[#0e1a13] dark:text-white shrink-0">
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+<div class="flex flex-col flex-1 gap-1">
+<div class="flex justify-between items-end">
+<span class="text-base font-bold text-[#0e1a13] dark:text-white">Shopping</span>
+<span class="text-sm font-extrabold text-[#0e1a13] dark:text-white">$850.20</span>
+</div>
+<div class="w-full h-1 bg-[#e8edeb] dark:bg-[#1a2e22] rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[45%]"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 group">
+<div class="size-12 rounded-xl border border-[#d1e6d9] dark:border-[#2a4535] bg-white dark:bg-[#1a2e22] flex items-center justify-center text-[#0e1a13] dark:text-white shrink-0">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<div class="flex flex-col flex-1 gap-1">
+<div class="flex justify-between items-end">
+<span class="text-base font-bold text-[#0e1a13] dark:text-white">Transport</span>
+<span class="text-sm font-extrabold text-[#0e1a13] dark:text-white">$420.00</span>
+</div>
+<div class="w-full h-1 bg-[#e8edeb] dark:bg-[#1a2e22] rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[25%]"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 group">
+<div class="size-12 rounded-xl border border-[#d1e6d9] dark:border-[#2a4535] bg-white dark:bg-[#1a2e22] flex items-center justify-center text-[#0e1a13] dark:text-white shrink-0">
+<span class="material-symbols-outlined">monitor_heart</span>
+</div>
+<div class="flex flex-col flex-1 gap-1">
+<div class="flex justify-between items-end">
+<span class="text-base font-bold text-[#0e1a13] dark:text-white">Health</span>
+<span class="text-sm font-extrabold text-[#0e1a13] dark:text-white">$310.80</span>
+</div>
+<div class="w-full h-1 bg-[#e8edeb] dark:bg-[#1a2e22] rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[15%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>
