@@ -1,6 +1,6 @@
 import 'package:pocketbase/pocketbase.dart';
 
-import '../../../../core/common/domain/intrefaces/remote_base.dart';
+import '../../../../core/common/intrefaces/remote_base.dart';
 import 'package:expancetracker/features/wallet/data/models/account.dart';
 
 /// Remote data source for accounts using PocketBase.

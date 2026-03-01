@@ -1,4 +1,3 @@
-import 'package:expancetracker/core/common/domain/enums/transaction_type.dart';
 import 'package:expancetracker/features/transactions/data/models/transaction.dart';
 
 /// Pre-defined sample transactions for development/testing.

@@ -10,4 +10,5 @@ class Routes {
   static const String editExpense = '/editExpense';
   static const String walletDetails = '/walletDetails';
   static const String settings = '/settings';
+  static const String notFound = '/404';
 }

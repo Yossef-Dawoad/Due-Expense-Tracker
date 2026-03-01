@@ -1,4 +1,4 @@
-import 'package:expancetracker/core/common/domain/intrefaces/remote_base.dart';
+import 'package:expancetracker/core/common/intrefaces/remote_base.dart';
 import '../models/category.dart';
 import 'package:pocketbase/pocketbase.dart';
 

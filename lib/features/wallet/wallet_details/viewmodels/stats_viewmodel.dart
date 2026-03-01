@@ -1,4 +1,4 @@
-import 'package:expancetracker/core/bindings/dependancy_injection.dart';
+import 'package:expancetracker/core/utils/locator.dart';
 import 'package:expancetracker/core/services/wallet_service.dart';
 import 'package:expancetracker/features/wallet/data/models/account.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 enum ChartPeriod { threeDays, week, month, quarter }
 
 class StatsViewModel {
-  StatsViewModel() : _walletService = sl<WalletService>() {
+  StatsViewModel() : _walletService = locator<WalletService>() {
     _loadInitialData();
   }
 

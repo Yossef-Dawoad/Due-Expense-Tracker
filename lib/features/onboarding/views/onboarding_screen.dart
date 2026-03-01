@@ -1,5 +1,6 @@
 import 'package:expancetracker/core/constants/colors.dart';
-import 'package:expancetracker/core/routes/routes.dart';
+import 'package:expancetracker/core/utils/navigation/routes.dart';
+import 'package:go_router/go_router.dart';
 import 'package:expancetracker/features/onboarding/domain/models/page_content.dart';
 import 'package:flutter/material.dart';
 
@@ -30,12 +31,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       body: Stack(
         children: [
           /// horizontal scrollable pages
-
           PageView.builder(
             controller: _pageController,
             onPageChanged: _updatePageIndicator,
             itemCount: onBoardingPages.length,
-            itemBuilder: (context, index) => OnBoardingPage(pageContent: onBoardingPages[index]),
+            itemBuilder: (context, index) =>
+                OnBoardingPage(pageContent: onBoardingPages[index]),
           ),
 
           /// skip Button
@@ -65,24 +66,22 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             bottom: kBottomNavigationBarHeight,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18.0,
+                  vertical: 12,
+                ),
                 shape: const StadiumBorder(),
                 backgroundColor: Palette.primary,
               ),
-              onPressed: () => _navigateToNextPage(
-                exitsRouteName: Routes.home,
-              ),
+              onPressed: () => _navigateToNextPage(exitsRouteName: Routes.home),
               child: (_currentPageIndex == onBoardingPages.length - 1)
                   ? const Text(
                       "Continue",
                       style: TextStyle(color: Palette.white),
                     )
-                  : const Icon(
-                      Icons.arrow_forward_ios,
-                      color: Palette.white,
-                    ),
+                  : const Icon(Icons.arrow_forward_ios, color: Palette.white),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -107,10 +106,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       return;
     }
 
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      exitRouteName,
-      (Route<dynamic> route) => route.isFirst,
-    );
+    context.go(exitRouteName);
   }
 
   /// Navigates to the next page in the onboarding sequence.

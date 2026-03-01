@@ -1,6 +1,5 @@
 import 'package:flutter/widget_previews.dart';
-import 'package:expancetracker/core/bindings/dependancy_injection.dart';
-import 'package:expancetracker/core/common/domain/enums/transaction_type.dart';
+import 'package:expancetracker/core/utils/locator.dart';
 import 'package:expancetracker/core/services/transaction_service.dart';
 import 'package:expancetracker/core/services/wallet_service.dart';
 import 'package:expancetracker/features/transactions/data/models/category.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../../data/models/transaction.dart';
 import '../viewmodels/add_transaction_viewmodel.dart';
 
 class AddTransactionScreen extends StatefulWidget {
@@ -24,8 +24,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   void initState() {
     super.initState();
     _viewModel = AddTransactionViewModel(
-      walletService: sl<WalletService>(),
-      transactionService: sl<TransactionService>(),
+      walletService: locator<WalletService>(),
+      transactionService: locator<TransactionService>(),
     );
   }
 

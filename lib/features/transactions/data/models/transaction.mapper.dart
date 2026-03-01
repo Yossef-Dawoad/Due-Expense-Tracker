@@ -8,6 +8,56 @@
 
 part of 'transaction.dart';
 
+class TransactionTypeMapper extends EnumMapper<TransactionType> {
+  TransactionTypeMapper._();
+
+  static TransactionTypeMapper? _instance;
+  static TransactionTypeMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = TransactionTypeMapper._());
+    }
+    return _instance!;
+  }
+
+  static TransactionType fromValue(dynamic value) {
+    ensureInitialized();
+    return MapperContainer.globals.fromValue(value);
+  }
+
+  @override
+  TransactionType decode(dynamic value) {
+    switch (value) {
+      case r'expense':
+        return TransactionType.expense;
+      case r'income':
+        return TransactionType.income;
+      case r'transfer':
+        return TransactionType.transfer;
+      default:
+        throw MapperException.unknownEnumValue(value);
+    }
+  }
+
+  @override
+  dynamic encode(TransactionType self) {
+    switch (self) {
+      case TransactionType.expense:
+        return r'expense';
+      case TransactionType.income:
+        return r'income';
+      case TransactionType.transfer:
+        return r'transfer';
+    }
+  }
+}
+
+extension TransactionTypeMapperExtension on TransactionType {
+  String toValue() {
+    TransactionTypeMapper.ensureInitialized();
+    return MapperContainer.globals.toValue<TransactionType>(this) as String;
+  }
+}
+
 class TransactionMapper extends ClassMapperBase<Transaction> {
   TransactionMapper._();
 
@@ -15,6 +65,7 @@ class TransactionMapper extends ClassMapperBase<Transaction> {
   static TransactionMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = TransactionMapper._());
+      TransactionTypeMapper.ensureInitialized();
     }
     return _instance!;
   }

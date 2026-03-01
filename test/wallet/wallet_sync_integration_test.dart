@@ -1,5 +1,6 @@
 import 'package:drift/native.dart';
 import 'package:expancetracker/core/database/app_database.dart';
+import 'package:expancetracker/core/abstractions/database_abstraction.dart';
 import 'package:expancetracker/features/wallet/data/datasources/wallet_local_source.dart';
 import 'package:expancetracker/features/wallet/data/datasources/wallet_remote_source.dart';
 import 'package:expancetracker/features/wallet/data/repositories/wallet_repository_impl.dart';
@@ -36,7 +37,7 @@ void main() {
   setUp(() {
     // Create in-memory database for testing
     database = AppDatabase.forTesting(NativeDatabase.memory());
-    localSource = WalletLocalSource(database: database);
+    localSource = WalletLocalSource(database: DriftDatabaseProvider(database));
 
     // Create mocked remote source
     mockPocketBase = MockPocketBase();

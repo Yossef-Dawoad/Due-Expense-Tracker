@@ -1,5 +1,4 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:expancetracker/core/common/domain/enums/transaction_type.dart';
 
 part 'transaction.mapper.dart';
 
@@ -82,4 +81,25 @@ class Transaction with TransactionMappable {
   /// Convenience getters for serialization.
   static final fromMap = TransactionMapper.fromMap;
   static final fromJson = TransactionMapper.fromJson;
+}
+
+/// Transaction type enum per database_structure.md.
+///
+/// Determines money flow direction:
+/// - [expense]: money leaves the account
+/// - [income]: money enters the account
+/// - [transfer]: money moves between accounts (requires two transactions)
+@MappableEnum()
+enum TransactionType {
+  expense,
+  income,
+  transfer;
+
+  /// Parse from string (e.g., from PocketBase or Drift).
+  static TransactionType fromString(String value) {
+    return TransactionType.values.firstWhere(
+      (e) => e.name == value,
+      orElse: () => TransactionType.expense,
+    );
+  }
 }

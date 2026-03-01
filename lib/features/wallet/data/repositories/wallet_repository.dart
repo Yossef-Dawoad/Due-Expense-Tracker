@@ -1,4 +1,4 @@
-import 'package:expancetracker/core/common/domain/intrefaces/datasource_interfaces.dart';
+import 'package:expancetracker/core/common/intrefaces/datasource_interfaces.dart';
 import 'package:expancetracker/features/wallet/data/models/account.dart';
 
 /// Abstract interface for Wallet Repository.

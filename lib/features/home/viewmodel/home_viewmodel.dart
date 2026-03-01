@@ -1,4 +1,4 @@
-import 'package:expancetracker/core/bindings/dependancy_injection.dart';
+import 'package:expancetracker/core/utils/locator.dart';
 import 'package:expancetracker/core/services/transaction_service.dart';
 import 'package:expancetracker/core/services/wallet_service.dart';
 import 'package:expancetracker/features/transactions/data/models/category.dart';
@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 
 class HomeViewModel {
   HomeViewModel()
-    : _walletService = sl<WalletService>(),
-      _transactionService = sl<TransactionService>();
+    : _walletService = locator<WalletService>(),
+      _transactionService = locator<TransactionService>();
 
   final WalletService _walletService;
   final TransactionService _transactionService;

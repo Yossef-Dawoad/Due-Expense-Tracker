@@ -1,4 +1,5 @@
 import 'package:expancetracker/core/database/app_database.dart';
+import 'package:expancetracker/core/abstractions/database_abstraction.dart';
 import 'package:expancetracker/features/wallet/data/datasources/wallet_local_source.dart';
 import 'package:expancetracker/features/wallet/data/models/account.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,7 +12,7 @@ void main() {
   setUp(() {
     // Use in-memory database for testing
     database = AppDatabase.forTesting(NativeDatabase.memory());
-    localSource = WalletLocalSource(database: database);
+    localSource = WalletLocalSource(database: DriftDatabaseProvider(database));
   });
 
   tearDown(() async {

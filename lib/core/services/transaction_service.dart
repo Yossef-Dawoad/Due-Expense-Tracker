@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:expancetracker/core/common/domain/enums/transaction_type.dart';
-
 import 'package:expancetracker/features/transactions/data/models/category.dart';
 import 'package:expancetracker/features/transactions/data/models/transaction.dart';
 import 'package:expancetracker/features/transactions/data/repositories/category_repository.dart';

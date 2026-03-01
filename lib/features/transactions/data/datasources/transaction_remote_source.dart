@@ -1,5 +1,4 @@
-import 'package:expancetracker/core/common/domain/enums/transaction_type.dart';
-import 'package:expancetracker/core/common/domain/intrefaces/remote_base.dart';
+import 'package:expancetracker/core/common/intrefaces/remote_base.dart';
 import 'package:expancetracker/features/transactions/data/models/transaction.dart';
 import 'package:pocketbase/pocketbase.dart';
 

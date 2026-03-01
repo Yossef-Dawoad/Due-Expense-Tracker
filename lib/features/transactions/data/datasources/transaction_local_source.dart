@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
-import 'package:expancetracker/core/common/domain/enums/transaction_type.dart';
-import 'package:expancetracker/core/common/domain/intrefaces/datasource_interfaces.dart';
+import 'package:expancetracker/core/common/intrefaces/datasource_interfaces.dart';
 import 'package:expancetracker/core/database/app_database.dart';
 import 'package:expancetracker/features/transactions/data/models/transaction.dart';
+import 'package:expancetracker/core/abstractions/database_abstraction.dart';
 
 /// Local data source for transactions using Drift (SQLite).
 ///
@@ -10,8 +10,8 @@ import 'package:expancetracker/features/transactions/data/models/transaction.dar
 /// Transactions store [categoryId] as a flat string reference.
 /// Category data is resolved at the ViewModel/UI layer when needed.
 class TransactionLocalSource implements LocalDataSource<Transaction> {
-  TransactionLocalSource({AppDatabase? database})
-    : _db = database ?? AppDatabase.instance;
+  TransactionLocalSource({OfflineDatabaseAbstraction? database})
+    : _db = database?.getClient<AppDatabase>() ?? AppDatabase.instance;
 
   final AppDatabase _db;
 

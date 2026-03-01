@@ -1,5 +1,5 @@
 import 'package:flutter/widget_previews.dart';
-import 'package:expancetracker/core/bindings/dependancy_injection.dart';
+import 'package:expancetracker/core/utils/locator.dart';
 import 'package:expancetracker/features/transactions/categories/viewmodels/categories_viewmodel.dart';
 import 'package:expancetracker/features/transactions/data/repositories/category_repository.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   void initState() {
     super.initState();
-    _viewModel = CategoriesViewModel(repository: sl<CategoryRepository>());
+    _viewModel = CategoriesViewModel(repository: locator<CategoryRepository>());
   }
 
   @override

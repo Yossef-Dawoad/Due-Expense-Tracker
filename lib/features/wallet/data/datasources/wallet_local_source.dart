@@ -1,15 +1,16 @@
 import 'package:drift/drift.dart';
 
-import '../../../../core/common/domain/intrefaces/datasource_interfaces.dart';
+import 'package:expancetracker/core/common/intrefaces/datasource_interfaces.dart';
 import '../../../../core/database/app_database.dart';
 import 'package:expancetracker/features/wallet/data/models/account.dart';
+import 'package:expancetracker/core/abstractions/database_abstraction.dart';
 
 /// Local data source for accounts using Drift (SQLite).
 ///
 /// Provides CRUD, soft-delete, dirty tracking, and reactive streams.
 class WalletLocalSource implements LocalDataSource<Account> {
-  WalletLocalSource({AppDatabase? database})
-    : _db = database ?? AppDatabase.instance;
+  WalletLocalSource({OfflineDatabaseAbstraction? database})
+    : _db = database?.getClient<AppDatabase>() ?? AppDatabase.instance;
 
   final AppDatabase _db;
 

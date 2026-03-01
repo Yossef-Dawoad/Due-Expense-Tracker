@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 extension ContextThemingExtension on BuildContext {
   ThemeData get theme => Theme.of(this);
@@ -20,35 +21,37 @@ extension ContextThemingExtension on BuildContext {
 
 extension NavigatingExtensions on BuildContext {
   Future<T?> pushRoute<T>(Widget page) {
-    return Navigator.of(this).push(MaterialPageRoute(builder: (context) => page));
+    return Navigator.of(
+      this,
+    ).push(MaterialPageRoute(builder: (context) => page));
   }
 
   Future<T?> pushNamedRoute<T>(String routeName, {Object? arguments}) {
-    return Navigator.of(this).pushNamed(routeName, arguments: arguments);
+    return push<T>(routeName, extra: arguments);
   }
 
-  Future<T?> pushNamedRouteAndRemoveUntil<T>(
+  void pushNamedRouteAndRemoveUntil<T>(
     String routeName, {
     String? routeNameToRemove,
     Object? arguments,
   }) {
-    return Navigator.of(this).pushNamedAndRemoveUntil(
-      routeName,
-      ModalRoute.withName(routeNameToRemove ?? routeName),
-      arguments: arguments,
-    );
+    go(routeName, extra: arguments);
   }
 
   void pushReplacementRoute(Widget page) {
-    Navigator.of(this).pushReplacement(MaterialPageRoute(builder: (context) => page));
+    Navigator.of(
+      this,
+    ).pushReplacement(MaterialPageRoute(builder: (context) => page));
   }
 
-  Future<T?> pushReplacementNamedRoute<T>(String routeName, {Object? arguments}) {
-    return Navigator.of(this).pushReplacementNamed(routeName, arguments: arguments);
+  void pushReplacementNamedRoute<T>(String routeName, {Object? arguments}) {
+    replace(routeName, extra: arguments);
   }
 
   void popRoute<T>([T? result]) {
-    Navigator.of(this).pop(result);
+    if (canPop()) {
+      pop(result);
+    }
   }
 
   bool get isDarkMode => theme.brightness == Brightness.dark;
@@ -58,10 +61,7 @@ extension NavigatingExtensions on BuildContext {
     ScaffoldMessenger.of(this)
       ..removeCurrentSnackBar()
       ..showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: backgroundColor,
-        ),
+        SnackBar(content: Text(message), backgroundColor: backgroundColor),
       );
   }
 }
