@@ -1,5 +1,5 @@
-import 'package:expancetracker/transactions/data/models/category.dart';
-import 'package:expancetracker/transactions/data/models/transaction.dart';
+import 'package:expancetracker/transactions/models/category.dart';
+import 'package:expancetracker/transactions/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';

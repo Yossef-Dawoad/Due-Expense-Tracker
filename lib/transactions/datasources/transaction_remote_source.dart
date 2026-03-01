@@ -1,5 +1,5 @@
 import 'package:expancetracker/core/common/intrefaces/remote_base.dart';
-import 'package:expancetracker/transactions/data/models/transaction.dart';
+import 'package:expancetracker/transactions/models/transaction.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 /// Remote data source for transactions using PocketBase.

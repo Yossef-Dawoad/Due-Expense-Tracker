@@ -1,7 +1,7 @@
 import 'package:expancetracker/core/common/intrefaces/datasource_interfaces.dart';
-import 'package:expancetracker/transactions/data/datasources/categories_local_source.dart';
-import 'package:expancetracker/transactions/data/datasources/categories_remote_datasource.dart';
-import 'package:expancetracker/transactions/data/models/category.dart';
+import 'package:expancetracker/transactions/datasources/categories_local_source.dart';
+import 'package:expancetracker/transactions/datasources/categories_remote_datasource.dart';
+import 'package:expancetracker/transactions/models/category.dart';
 
 /// Offline-first repository for transaction categories.
 ///

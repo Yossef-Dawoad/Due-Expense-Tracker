@@ -6,7 +6,7 @@ import 'package:expancetracker/core/utils/navigation/routes.dart';
 import 'package:expancetracker/onboarding/views/onboarding_screen.dart';
 import 'package:expancetracker/navigation/navigation_menu.dart';
 import 'package:expancetracker/wallet/wallet_details/views/wallet_details_screen.dart';
-import 'package:expancetracker/transactions/add_transaction/views/add_transaction_screen.dart';
+import 'package:expancetracker/transactions/views/add_transaction_screen.dart';
 import 'package:expancetracker/not_found/not_found_view.dart';
 
 final routes = [

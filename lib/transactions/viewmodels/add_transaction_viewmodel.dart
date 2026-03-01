@@ -1,7 +1,7 @@
 import 'package:expancetracker/core/services/transaction_service.dart';
 import 'package:expancetracker/core/services/wallet_service.dart';
-import 'package:expancetracker/transactions/data/models/category.dart';
-import 'package:expancetracker/transactions/data/models/transaction.dart';
+import 'package:expancetracker/transactions/models/category.dart';
+import 'package:expancetracker/transactions/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 

@@ -1,5 +1,5 @@
 import 'package:expancetracker/core/common/intrefaces/remote_base.dart';
-import 'package:expancetracker/transactions/data/models/tag.dart';
+import 'package:expancetracker/transactions/models/tag.dart';
 
 /// Remote data source for tags (PocketBase).
 class TagRemoteSource implements RemoteDataBase<Tag> {

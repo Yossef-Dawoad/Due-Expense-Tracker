@@ -1,5 +1,5 @@
-import 'package:expancetracker/transactions/data/models/category.dart';
-import 'package:expancetracker/transactions/data/repositories/category_repository.dart';
+import 'package:expancetracker/transactions/models/category.dart';
+import 'package:expancetracker/transactions/repositories/category_repository.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesViewModel extends ChangeNotifier {

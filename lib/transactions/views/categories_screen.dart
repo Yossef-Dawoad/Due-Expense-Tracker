@@ -1,7 +1,7 @@
 import 'package:flutter/widget_previews.dart';
 import 'package:expancetracker/core/utils/locator.dart';
-import 'package:expancetracker/transactions/categories/viewmodels/categories_viewmodel.dart';
-import 'package:expancetracker/transactions/data/repositories/category_repository.dart';
+import 'package:expancetracker/transactions/viewmodels/categories_viewmodel.dart';
+import 'package:expancetracker/transactions/repositories/category_repository.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesScreen extends StatefulWidget {

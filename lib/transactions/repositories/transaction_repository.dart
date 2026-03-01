@@ -1,5 +1,5 @@
 import 'package:expancetracker/core/common/intrefaces/datasource_interfaces.dart';
-import 'package:expancetracker/transactions/data/models/transaction.dart';
+import 'package:expancetracker/transactions/models/transaction.dart';
 
 /// Repository interface for Transactions.
 ///

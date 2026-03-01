@@ -1,7 +1,7 @@
 import 'package:expancetracker/core/common/intrefaces/datasource_interfaces.dart';
-import 'package:expancetracker/transactions/data/datasources/tag_local_source.dart';
-import 'package:expancetracker/transactions/data/datasources/tag_remote_source.dart';
-import 'package:expancetracker/transactions/data/models/tag.dart';
+import 'package:expancetracker/transactions/datasources/tag_local_source.dart';
+import 'package:expancetracker/transactions/datasources/tag_remote_source.dart';
+import 'package:expancetracker/transactions/models/tag.dart';
 
 /// Offline-first repository for transaction tags.
 class TagRepository implements OfflineFirstRepository<Tag> {

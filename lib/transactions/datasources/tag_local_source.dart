@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:expancetracker/core/common/intrefaces/datasource_interfaces.dart';
 import 'package:expancetracker/core/database/app_database.dart';
-import 'package:expancetracker/transactions/data/models/tag.dart';
+import 'package:expancetracker/transactions/models/tag.dart';
 import 'package:expancetracker/core/abstractions/database_abstraction.dart';
 
 /// Local data source for tags using Drift (SQLite).

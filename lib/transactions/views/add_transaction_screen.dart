@@ -2,12 +2,12 @@ import 'package:flutter/widget_previews.dart';
 import 'package:expancetracker/core/utils/locator.dart';
 import 'package:expancetracker/core/services/transaction_service.dart';
 import 'package:expancetracker/core/services/wallet_service.dart';
-import 'package:expancetracker/transactions/data/models/category.dart';
+import 'package:expancetracker/transactions/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-import '../../data/models/transaction.dart';
+import '../models/transaction.dart';
 import '../viewmodels/add_transaction_viewmodel.dart';
 
 class AddTransactionScreen extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:expancetracker/core/ui/app_theme.dart';
-import 'package:expancetracker/transactions/data/models/transaction.dart';
+import 'package:expancetracker/transactions/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

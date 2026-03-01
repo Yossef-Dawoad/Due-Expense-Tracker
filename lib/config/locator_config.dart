@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:expancetracker/transactions/data/datasources/categories_local_source.dart';
-import 'package:expancetracker/transactions/data/datasources/categories_remote_datasource.dart';
-import 'package:expancetracker/transactions/data/repositories/category_repository.dart';
-import 'package:expancetracker/transactions/data/datasources/transaction_local_source.dart';
-import 'package:expancetracker/transactions/data/datasources/transaction_remote_source.dart';
-import 'package:expancetracker/transactions/data/repositories/transaction_repository_impl.dart';
-import 'package:expancetracker/transactions/data/datasources/tag_local_source.dart';
-import 'package:expancetracker/transactions/data/datasources/tag_remote_source.dart';
-import 'package:expancetracker/transactions/data/repositories/tag_repository.dart';
+import 'package:expancetracker/transactions/datasources/categories_local_source.dart';
+import 'package:expancetracker/transactions/datasources/categories_remote_datasource.dart';
+import 'package:expancetracker/transactions/repositories/category_repository.dart';
+import 'package:expancetracker/transactions/datasources/transaction_local_source.dart';
+import 'package:expancetracker/transactions/datasources/transaction_remote_source.dart';
+import 'package:expancetracker/transactions/repositories/transaction_repository_impl.dart';
+import 'package:expancetracker/transactions/datasources/tag_local_source.dart';
+import 'package:expancetracker/transactions/datasources/tag_remote_source.dart';
+import 'package:expancetracker/transactions/repositories/tag_repository.dart';
 
 import 'package:expancetracker/core/database/app_database.dart';
 import 'package:expancetracker/core/services/wallet_service.dart';
@@ -17,7 +17,7 @@ import 'package:expancetracker/wallet/data/datasources/wallet_remote_source.dart
 import 'package:expancetracker/wallet/data/repositories/wallet_repository.dart';
 import 'package:expancetracker/wallet/data/repositories/wallet_repository_impl.dart';
 import 'package:expancetracker/core/services/transaction_service.dart';
-import 'package:expancetracker/transactions/data/repositories/transaction_repository.dart';
+import 'package:expancetracker/transactions/repositories/transaction_repository.dart';
 
 import '../core/abstractions/database_abstraction.dart';
 import '../core/utils/http/http_abstraction.dart';
