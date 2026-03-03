@@ -15,34 +15,55 @@ class Indicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = controller.page?.round() ?? 0;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        count,
-        (index) => InkWell(
-          onTap: () {
-            controller.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
+        // Safe controller page fallback for initial load frame
+        final pageValue =
+            controller.hasClients && controller.position.haveDimensions
+            ? (controller.page ?? 0.0)
+            : 0.0;
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(count, (index) {
+            // Calculate proximity to the current page frame
+            final difference = (pageValue - index).abs();
+            final closeness = (1.0 - difference).clamp(0.0, 1.0);
+
+            // Scale active width
+            final width = 20.0 + (30.0 * closeness);
+
+            // Interpolate activation colors smoothly
+            final activeColor = context.kitColors.brandPrimary;
+            final inactiveColor = context.kitColors.brandPrimary.withValues(
+              alpha: 0.2,
             );
-          },
-          child: AnimatedContainer(
-            curve: Curves.easeIn,
-            duration: const Duration(milliseconds: 300),
-            width: index == currentIndex ? 50 : 20,
-            height: dotHeight,
-            margin: const EdgeInsets.symmetric(horizontal: 6.0),
-            decoration: BoxDecoration(
-              borderRadius: context.borderRadius.pill,
-              color: index == currentIndex
-                  ? context.kitColors.brandPrimary
-                  : context.kitColors.semanticNeutral,
-            ),
-          ),
-        ),
-      ),
+            final color =
+                Color.lerp(inactiveColor, activeColor, closeness) ??
+                inactiveColor;
+
+            return InkWell(
+              onTap: () {
+                controller.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              },
+              child: Container(
+                width: width,
+                height: dotHeight,
+                margin: const EdgeInsets.symmetric(horizontal: 6.0),
+                decoration: BoxDecoration(
+                  borderRadius: context.borderRadius.pill,
+                  color: color,
+                ),
+              ),
+            );
+          }),
+        );
+      },
     );
   }
 }

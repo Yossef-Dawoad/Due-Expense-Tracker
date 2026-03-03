@@ -79,6 +79,9 @@ When providing motion recommendations, structure as:
 
 See [animation-module.md](references/animation-module.md) for complete documentation of available components.
 
+**Custom Animations Encouraged:**
+While pre-defined Animation Widgets are available , do not feel restricted by the standard animation module. We encourage you to use your creative judgment to design and implement custom animations that best enhance the specific layout and user experience of the current screen, BUT if you deside to create a specific animation that is exactly the same as one of the pre-defined Animation Widgets in the animation module, you MUST use the pre-defined Animation Widget instead of creating a new one.
+
 ### Quick Reference
 
 **Durations** (`AnimationDurations`):

@@ -17,7 +17,17 @@ final routes = [
   ),
   GoRoute(
     path: Routes.home,
-    pageBuilder: (context, state) => _buildPage(const NavigationMenu(), state),
+    pageBuilder: (context, state) => CustomTransitionPage(
+      key: state.pageKey,
+      child: const NavigationMenu(),
+      transitionDuration: const Duration(milliseconds: 500),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: CurveTween(curve: Curves.easeInOutCubic).animate(animation),
+          child: child,
+        );
+      },
+    ),
   ),
   GoRoute(
     path: Routes.walletDetails,

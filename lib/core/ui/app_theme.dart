@@ -21,18 +21,30 @@ class AppTheme {
     final spacing = CustomSpacing.instance;
 
     return ThemeData(
-      brightness: brightness,
-      colorScheme: ColorScheme.light(
-        surface: kitColors.bgBase,
-        primary: kitColors.brandPrimary,
-        onPrimary: kitColors.textOnPrimary,
-        secondary: kitColors.bgSurfaceSecondary,
-        onSecondary: kitColors.textPrimary,
-        error: kitColors.semanticNegative,
-        onError: kitColors.bgSurface,
-        onSurface: kitColors.textPrimary,
-        surfaceTint: Colors.transparent, // Disable default MD3 surface tinting
-      ),
+      colorScheme: brightness == Brightness.light
+          ? ColorScheme.light(
+              surface: kitColors.bgBase,
+              primary: kitColors.brandPrimary,
+              onPrimary: kitColors.textOnPrimary,
+              secondary: kitColors.bgSurfaceSecondary,
+              onSecondary: kitColors.textPrimary,
+              error: kitColors.semanticNegative,
+              onError: kitColors.bgSurface,
+              onSurface: kitColors.textPrimary,
+              surfaceTint:
+                  Colors.transparent, // Disable default MD3 surface tinting
+            )
+          : ColorScheme.dark(
+              surface: kitColors.bgBase,
+              primary: kitColors.brandPrimary,
+              onPrimary: kitColors.textOnPrimary,
+              secondary: kitColors.bgSurfaceSecondary,
+              onSecondary: kitColors.textPrimary,
+              error: kitColors.semanticNegative,
+              onError: kitColors.bgSurface,
+              onSurface: kitColors.textPrimary,
+              surfaceTint: Colors.transparent,
+            ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
           TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),

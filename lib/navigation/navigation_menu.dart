@@ -1,11 +1,12 @@
-import 'package:expancetracker/core/utils/navigation/routes.dart';
-import 'package:expancetracker/core/utils/extensions/context_ext.dart';
 import 'package:expancetracker/home/views/home_screen.dart';
 import 'package:expancetracker/navigation/viewmodels/navigation_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:expancetracker/wallet/wallet_details/views/wallet_details_screen.dart';
+
+import '../core/utils/locator.dart';
+import '../core/utils/navigation/router_service.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
@@ -15,7 +16,9 @@ class NavigationMenu extends StatefulWidget {
 }
 
 class _NavigationMenuState extends State<NavigationMenu> {
-  late final NavigationViewModel _viewModel = NavigationViewModel();
+  late final NavigationViewModel _viewModel = NavigationViewModel(
+    routerService: locator<RouterService>(),
+  );
   final screens = [const HomeScreen(), const WalletDetailsScreen()];
 
   @override
@@ -55,7 +58,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
                     onTap: _viewModel.updatePageIndex,
                   ),
                   GestureDetector(
-                    onTap: () => context.pushNamedRoute(Routes.addTransaction),
+                    onTap: () => _viewModel.goToAddTransaction(),
                     child: Container(
                       width: 120,
                       height: 55,
