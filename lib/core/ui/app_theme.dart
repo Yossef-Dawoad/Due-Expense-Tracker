@@ -17,7 +17,42 @@ class AppTheme {
     final borderRadius = const CustomBorderRadius();
     final breakpoints = CustomBreakpoints();
     final shadows = const CustomShadows();
-    final kitColors = const KitColorsExtension();
+    final kitColors = brightness == Brightness.dark
+        ? const KitColorsExtension(
+            // Brand — same across modes
+            brandPrimary: KitColors.brandPrimary,
+            brandPrimaryLight: Color(0xFF1A3D2A),
+            brandPrimaryDark: KitColors.brandPrimaryDark,
+            // Semantic — same across modes
+            semanticPositive: KitColors.semanticPositive,
+            semanticNegative: KitColors.semanticNegative,
+            semanticNeutral: Color(0xFF9CA3AF),
+            // Background — dark surfaces
+            bgBase: Color(0xFF0F1A14),
+            bgSurface: Color(0xFF1A2E22),
+            bgSurfaceSecondary: Color(0xFF152A1D),
+            bgOverlay: Color(0x33000000),
+            // Text — light on dark
+            textPrimary: Color(0xFFF1F5F3),
+            textSecondary: Color(0xFFB0C4B8),
+            textTertiary: Color(0xFF7A9988),
+            textPlaceholder: Color(0xFF5A7D6A),
+            textOnPrimary: Color(0xFF0F172A),
+            textLink: KitColors.brandPrimary,
+            // Border — subtle on dark
+            borderDefault: Color(0xFF2A4535),
+            borderLight: Color(0xFF1E3225),
+            borderSelected: KitColors.brandPrimary,
+            borderFocus: KitColors.brandPrimary,
+            // Chart
+            chartLineColor: Color(0xFFA78BFA),
+            chartLineFill: Color(0x14A78BFA),
+            chartProgressBar: KitColors.chartProgressBar,
+            chartProgressTrack: Color(0xFF2A4535),
+            // Notification
+            notificationBadge: KitColors.notificationBadge,
+          )
+        : const KitColorsExtension();
     final spacing = CustomSpacing.instance;
 
     return ThemeData(
@@ -55,10 +90,12 @@ class AppTheme {
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: kitColors.textPrimary,
-        systemOverlayStyle: const SystemUiOverlayStyle(
+        systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarBrightness: Brightness.light,
-          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: brightness,
+          statusBarIconBrightness: brightness == Brightness.dark
+              ? Brightness.light
+              : Brightness.dark,
         ),
       ),
       dividerTheme: DividerThemeData(

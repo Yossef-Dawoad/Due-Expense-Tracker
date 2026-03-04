@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:expancetracker/transactions/models/category.dart';
+import 'package:expancetracker/transactions/models/tag.dart';
 import 'package:expancetracker/transactions/models/transaction.dart';
 import 'package:expancetracker/transactions/repositories/category_repository.dart';
+import 'package:expancetracker/transactions/repositories/tag_repository.dart';
 import 'package:expancetracker/transactions/repositories/transaction_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -14,19 +16,24 @@ class TransactionService {
   TransactionService({
     required TransactionRepository repository,
     required CategoryRepository categoryRepository,
+    required TagRepository tagRepository,
   }) : _repository = repository,
-       _categoryRepository = categoryRepository {
+       _categoryRepository = categoryRepository,
+       _tagRepository = tagRepository {
     _initialize();
   }
 
   final TransactionRepository _repository;
   final CategoryRepository _categoryRepository;
+  final TagRepository _tagRepository;
   StreamSubscription<List<Transaction>>? _transactionsSubscription;
-  StreamSubscription<List<Category>>? _categoriesSubscription;
+  StreamSubscription<List<CategoryModel>>? _categoriesSubscription;
+  StreamSubscription<List<Tag>>? _tagsSubscription;
 
   // Shared State
   final ValueNotifier<List<Transaction>> transactions = ValueNotifier([]);
-  final ValueNotifier<List<Category>> categories = ValueNotifier([]);
+  final ValueNotifier<List<CategoryModel>> categories = ValueNotifier([]);
+  final ValueNotifier<List<Tag>> tags = ValueNotifier([]);
   final ValueNotifier<double> monthlyIncome = ValueNotifier(0.0);
   final ValueNotifier<double> monthlyExpenses = ValueNotifier(0.0);
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
@@ -39,6 +46,9 @@ class TransactionService {
     );
     _categoriesSubscription = _categoryRepository.watchAll().listen(
       _onCategoriesChanged,
+    );
+    _tagsSubscription = _tagRepository.watchAll().listen(
+      (items) => tags.value = items,
     );
     // Initial sync attempt
     refresh();
@@ -68,7 +78,7 @@ class TransactionService {
   }
 
   /// Called when categories change in the local database.
-  void _onCategoriesChanged(List<Category> items) {
+  void _onCategoriesChanged(List<CategoryModel> items) {
     categories.value = items;
   }
 
@@ -94,18 +104,26 @@ class TransactionService {
       await Future.wait([
         _repository.syncWithRemote(),
         _categoryRepository.syncWithRemote(),
+        _tagRepository.syncWithRemote(),
       ]);
     } finally {
       isSyncing.value = false;
     }
   }
 
+  /// Adds a new tag locally.
+  Future<Tag> addTag(Tag tag) async {
+    return _tagRepository.add(tag);
+  }
+
   /// Disposes resources.
   void dispose() {
     _transactionsSubscription?.cancel();
     _categoriesSubscription?.cancel();
+    _tagsSubscription?.cancel();
     transactions.dispose();
     categories.dispose();
+    tags.dispose();
     isLoading.dispose();
     isSyncing.dispose();
   }

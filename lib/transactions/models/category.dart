@@ -8,8 +8,8 @@ part 'category.mapper.dart';
 /// They DO NOT store money state. Category totals are computed via queries.
 /// Supports hierarchy via [parentId].
 @MappableClass()
-class Category with CategoryMappable {
-  const Category({
+class CategoryModel with CategoryModelMappable {
+  const CategoryModel({
     required this.id,
     required this.userId,
     required this.name,
@@ -60,6 +60,6 @@ class Category with CategoryMappable {
   final int lastSynced;
 
   /// Convenience getters for serialization.
-  static final fromMap = CategoryMapper.fromMap;
-  static final fromJson = CategoryMapper.fromJson;
+  static final fromMap = CategoryModelMapper.fromMap;
+  static final fromJson = CategoryModelMapper.fromJson;
 }

@@ -28,6 +28,7 @@ class KitColorsExtension extends ThemeExtension<KitColorsExtension> {
 
   // Border
   final Color borderDefault;
+  final Color borderLight;
   final Color borderSelected;
   final Color borderFocus;
 
@@ -58,6 +59,7 @@ class KitColorsExtension extends ThemeExtension<KitColorsExtension> {
     this.textOnPrimary = KitColors.textOnPrimary,
     this.textLink = KitColors.textLink,
     this.borderDefault = KitColors.borderDefault,
+    this.borderLight = KitColors.borderLight,
     this.borderSelected = KitColors.borderSelected,
     this.borderFocus = KitColors.borderFocus,
     this.chartLineColor = KitColors.chartLineColor,
@@ -86,6 +88,7 @@ class KitColorsExtension extends ThemeExtension<KitColorsExtension> {
     Color? textOnPrimary,
     Color? textLink,
     Color? borderDefault,
+    Color? borderLight,
     Color? borderSelected,
     Color? borderFocus,
     Color? chartLineColor,
@@ -112,6 +115,7 @@ class KitColorsExtension extends ThemeExtension<KitColorsExtension> {
       textOnPrimary: textOnPrimary ?? this.textOnPrimary,
       textLink: textLink ?? this.textLink,
       borderDefault: borderDefault ?? this.borderDefault,
+      borderLight: borderLight ?? this.borderLight,
       borderSelected: borderSelected ?? this.borderSelected,
       borderFocus: borderFocus ?? this.borderFocus,
       chartLineColor: chartLineColor ?? this.chartLineColor,
@@ -168,6 +172,7 @@ class KitColorsExtension extends ThemeExtension<KitColorsExtension> {
       textOnPrimary: Color.lerp(textOnPrimary, other.textOnPrimary, t)!,
       textLink: Color.lerp(textLink, other.textLink, t)!,
       borderDefault: Color.lerp(borderDefault, other.borderDefault, t)!,
+      borderLight: Color.lerp(borderLight, other.borderLight, t)!,
       borderSelected: Color.lerp(borderSelected, other.borderSelected, t)!,
       borderFocus: Color.lerp(borderFocus, other.borderFocus, t)!,
       chartLineColor: Color.lerp(chartLineColor, other.chartLineColor, t)!,
@@ -220,6 +225,9 @@ class KitColors {
 
   // Border
   static const borderDefault = Color(0xFFE5E7EB);
+  static const borderLight = Color(
+    0xFFF3F4F6,
+  ); // Very subtle, for cards/containers
   static const borderSelected = Color(0xFF22C55E);
   static const borderFocus = Color(0xFF22C55E);
 

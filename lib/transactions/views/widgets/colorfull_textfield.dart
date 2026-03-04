@@ -1,10 +1,8 @@
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class ColorfullTextField extends StatefulWidget {
-  const ColorfullTextField({
-    super.key,
-    required this.controller,
-  });
+  const ColorfullTextField({super.key, required this.controller});
   final TextEditingController controller;
 
   @override
@@ -14,6 +12,7 @@ class ColorfullTextField extends StatefulWidget {
 class _ColorfullTextFieldState extends State<ColorfullTextField> {
   @override
   Widget build(BuildContext context) {
+    final colors = context.kitColors;
     final Shader linearGradientShader = LinearGradient(
       colors: <Color>[
         Theme.of(context).colorScheme.primary,
@@ -38,22 +37,20 @@ class _ColorfullTextFieldState extends State<ColorfullTextField> {
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(20),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: colors.bgSurface,
           hintText: '0.00',
           prefix: InkWell(
             onTap: () {},
             child: Text(
               '\$',
               style: TextStyle(
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold,
-                  foreground: Paint()..shader = linearGradientShader),
+                fontSize: 28.0,
+                fontWeight: FontWeight.bold,
+                foreground: Paint()..shader = linearGradientShader,
+              ),
             ),
           ),
-          hintStyle: TextStyle(
-            color: Colors.grey[400],
-            fontSize: 28.0,
-          ),
+          hintStyle: TextStyle(color: colors.textPlaceholder, fontSize: 28.0),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(40),

@@ -8,7 +8,7 @@ class OnboardingPageThree extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness != Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final backgroundColor = isDark
         ? const Color(0xFF122017) // background-dark
         : const Color(0xFFF6F8F7); // background-light

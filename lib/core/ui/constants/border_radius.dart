@@ -8,6 +8,7 @@ class CustomBorderRadius extends ThemeExtension<CustomBorderRadius> {
   final BorderRadius md;
   final BorderRadius lg;
   final BorderRadius xl;
+  final BorderRadius xxl;
   final BorderRadius pill;
   final BorderRadius circle;
 
@@ -29,6 +30,7 @@ class CustomBorderRadius extends ThemeExtension<CustomBorderRadius> {
     this.md = const BorderRadius.all(Radius.circular(12.0)),
     this.lg = const BorderRadius.all(Radius.circular(16.0)),
     this.xl = const BorderRadius.all(Radius.circular(20.0)),
+    this.xxl = const BorderRadius.all(Radius.circular(28.0)),
     this.pill = const BorderRadius.all(Radius.circular(999.0)),
     // In Flutter, circle is often better achieved via Shape (CircleBorder) but we can provide a large radius
     this.circle = const BorderRadius.all(Radius.circular(9999.0)),

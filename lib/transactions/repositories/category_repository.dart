@@ -6,7 +6,7 @@ import 'package:expancetracker/transactions/models/category.dart';
 /// Offline-first repository for transaction categories.
 ///
 /// Implements local-first reads with background push-pull sync.
-class CategoryRepository implements OfflineFirstRepository<Category> {
+class CategoryRepository implements OfflineFirstRepository<CategoryModel> {
   CategoryRepository({
     required CategoriesLocalSource localSource,
     required CategoriesRemoteDataSource remoteSource,
@@ -17,7 +17,7 @@ class CategoryRepository implements OfflineFirstRepository<Category> {
   final CategoriesRemoteDataSource _remote;
 
   @override
-  Future<Category> add(Category item) async {
+  Future<CategoryModel> add(CategoryModel item) async {
     final newItem = item.copyWith(isDirty: true, version: 1);
     final saved = await _local.insert(newItem);
     _pushDirtyRecords();
@@ -31,36 +31,36 @@ class CategoryRepository implements OfflineFirstRepository<Category> {
   }
 
   @override
-  Future<List<Category>> getAll({bool forceRefresh = false}) async {
+  Future<List<CategoryModel>> getAll({bool forceRefresh = false}) async {
     if (forceRefresh) await syncWithRemote();
     return _local.getAll();
   }
 
   /// Alias for compatibility.
-  Future<List<Category>> getAllCategories() => getAll();
+  Future<List<CategoryModel>> getAllCategories() => getAll();
 
   /// Alias for compatibility.
-  Future<Category> addNewCategory(Category category) => add(category);
+  Future<CategoryModel> addNewCategory(CategoryModel category) => add(category);
 
   @override
-  Future<Category?> getById(String id) => _local.getById(id);
+  Future<CategoryModel?> getById(String id) => _local.getById(id);
 
   /// Alias for compatibility.
-  Future<Category> getCategoryById(String id) async {
+  Future<CategoryModel> getCategoryById(String id) async {
     final cat = await getById(id);
     if (cat == null) throw Exception('Category not found');
     return cat;
   }
 
   @override
-  Future<void> update(Category item) async {
+  Future<void> update(CategoryModel item) async {
     final updated = item.copyWith(isDirty: true, version: item.version + 1);
     await _local.update(updated);
     _pushDirtyRecords();
   }
 
   @override
-  Stream<List<Category>> watchAll() => _local.watchAll();
+  Stream<List<CategoryModel>> watchAll() => _local.watchAll();
 
   @override
   Future<void> syncWithRemote() async {

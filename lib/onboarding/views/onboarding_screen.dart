@@ -75,43 +75,71 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     );
                   },
                 ),
-                // Dot Indicators (Only visible on last page)
-                ValueListenableBuilder<int>(
-                  valueListenable: _viewModel.currentPageIndex,
-                  builder: (context, currentIndex, _) {
-                    return Visibility(
-                      maintainSize: true,
-                      maintainAnimation: true,
-                      maintainState: true,
-                      visible: currentIndex == _pageCount - 1,
-                      child: Indicator(
-                        count: _pageCount,
-                        controller: _pageController,
-                        dotHeight: 6.0,
-                      ),
-                    );
-                  },
-                ),
-                // Skip Button (hidden on last page)
-                ValueListenableBuilder<int>(
-                  valueListenable: _viewModel.currentPageIndex,
-                  builder: (context, currentIndex, _) {
-                    return Visibility(
-                      maintainSize: true,
-                      maintainAnimation: true,
-                      maintainState: true,
-                      visible: currentIndex < _pageCount - 1,
-                      child: TextButton(
-                        onPressed: _skipToLastPage,
-                        child: Text(
-                          'Skip',
-                          style: context.textStyles.bodyMD.copyWith(
-                            color: context.kitColors.textSecondary,
-                          ),
+                // Dot Indicators (Fades in on last page scroll)
+                AnimatedBuilder(
+                  animation: _pageController,
+                  builder: (context, child) {
+                    final page =
+                        _pageController.hasClients &&
+                            _pageController.position.haveDimensions
+                        ? (_pageController.page ?? 0.0)
+                        : 0.0;
+                    final progress = (page - 1.0).clamp(0.0, 1.0);
+
+                    return IgnorePointer(
+                      ignoring: progress < 0.5,
+                      child: Opacity(
+                        opacity: progress,
+                        child: Transform.translate(
+                          offset: Offset(
+                            0,
+                            -20 * (1.0 - progress),
+                          ), // Slides down into place
+                          child: child,
                         ),
                       ),
                     );
                   },
+                  child: Indicator(
+                    count: _pageCount,
+                    controller: _pageController,
+                    dotHeight: 6.0,
+                  ),
+                ),
+                // Skip Button (Fades out on last page scroll)
+                AnimatedBuilder(
+                  animation: _pageController,
+                  builder: (context, child) {
+                    final page =
+                        _pageController.hasClients &&
+                            _pageController.position.haveDimensions
+                        ? (_pageController.page ?? 0.0)
+                        : 0.0;
+                    final progress = (page - 1.0).clamp(0.0, 1.0);
+
+                    return IgnorePointer(
+                      ignoring: progress > 0.5,
+                      child: Opacity(
+                        opacity: 1.0 - progress,
+                        child: Transform.translate(
+                          offset: Offset(
+                            0,
+                            -20 * progress,
+                          ), // Slides up and away
+                          child: child,
+                        ),
+                      ),
+                    );
+                  },
+                  child: TextButton(
+                    onPressed: _skipToLastPage,
+                    child: Text(
+                      'Skip',
+                      style: context.textStyles.bodyMD.copyWith(
+                        color: context.kitColors.textSecondary,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -122,24 +150,57 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             bottom: kBottomNavigationBarHeight,
             left: 24,
             right: 24,
-            child: ValueListenableBuilder<int>(
-              valueListenable: _viewModel.currentPageIndex,
-              builder: (context, currentIndex, _) {
-                final isLastPage = currentIndex == _pageCount - 1;
+            child: AnimatedBuilder(
+              animation: _pageController,
+              builder: (context, _) {
+                final page =
+                    _pageController.hasClients &&
+                        _pageController.position.haveDimensions
+                    ? (_pageController.page ?? 0.0)
+                    : 0.0;
 
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
+                // Transition from page 1 to 2 (index 1 to 2)
+                final progress = (page - 1.0).clamp(0.0, 1.0);
+
+                return Stack(
+                  alignment: Alignment.bottomCenter,
                   children: [
-                    if (!isLastPage) ...[
-                      Indicator(
-                        count: _pageCount,
-                        controller: _pageController,
-                        dotHeight: 8.0,
+                    // Next Button & Indicators (Fades out and slides down)
+                    if (progress < 1.0)
+                      IgnorePointer(
+                        ignoring: progress > 0.5,
+                        child: Opacity(
+                          opacity: 1.0 - progress,
+                          child: Transform.translate(
+                            offset: Offset(0, 20 * progress),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Indicator(
+                                  count: _pageCount,
+                                  controller: _pageController,
+                                  dotHeight: 8.0,
+                                ),
+                                const SizedBox(height: 32),
+                                _buildNextButton(context),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 32),
-                      _buildNextButton(context),
-                    ] else
-                      _buildGetStartedSection(context),
+
+                    // Get Started Section (Fades in and slides up)
+                    if (progress > 0.0)
+                      IgnorePointer(
+                        ignoring: progress < 0.5,
+                        child: Opacity(
+                          opacity: progress,
+                          child: Transform.translate(
+                            offset: Offset(0, 20 * (1.0 - progress)),
+                            child: _buildGetStartedSection(context),
+                          ),
+                        ),
+                      ),
                   ],
                 );
               },
@@ -168,15 +229,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           Text(
             'Next',
             style: context.textStyles.cta.copyWith(
-              color: const Color(
-                0xFF0e1a13,
-              ), // Strict brand dark requirement from HTML
+              color: context.kitColors.textOnPrimary,
               fontWeight: FontWeight.w800,
               fontSize: 18,
             ),
           ),
           const SizedBox(width: 8),
-          const Icon(Icons.arrow_forward, color: Color(0xFF0e1a13), size: 24),
+          Icon(
+            Icons.arrow_forward,
+            color: context.kitColors.textOnPrimary,
+            size: 24,
+          ),
         ],
       ),
     );

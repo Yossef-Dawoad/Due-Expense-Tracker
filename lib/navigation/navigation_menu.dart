@@ -1,3 +1,4 @@
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/home/views/home_screen.dart';
 import 'package:expancetracker/navigation/viewmodels/navigation_view_model.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
           bottomNavigationBar: ClipRRect(
             child: Container(
               height: 90,
-              color: Colors.white,
+              color: context.kitColors.bgSurface,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -57,31 +58,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
                     currentIndex: currentIndex,
                     onTap: _viewModel.updatePageIndex,
                   ),
-                  GestureDetector(
+                  _AddTransactionFloatingButton(
                     onTap: () => _viewModel.goToAddTransaction(),
-                    child: Container(
-                      width: 120,
-                      height: 55,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF39E079),
-                        border: Border.all(color: Colors.white, width: 4),
-                        borderRadius: BorderRadius.circular(100),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.2),
-                            spreadRadius: 1,
-                            blurRadius: 6,
-                            offset: const Offset(2, 3),
-                          ),
-                        ],
-                      ),
-                      alignment: Alignment.center,
-                      child: const Icon(
-                        Icons.add,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
                   ),
                   NavItem(
                     index: 2,
@@ -129,8 +107,9 @@ class NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.kitColors;
     final isSelected = currentIndex == index;
-    final color = isSelected ? const Color(0xFF39E079) : Colors.grey;
+    final color = isSelected ? colors.brandPrimary : colors.textPlaceholder;
 
     return GestureDetector(
       onTap: () => onTap(index),
@@ -149,6 +128,39 @@ class NavItem extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AddTransactionFloatingButton extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const _AddTransactionFloatingButton({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.kitColors;
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 120,
+        height: 55,
+        decoration: BoxDecoration(
+          color: colors.brandPrimary,
+          border: Border.all(color: colors.bgSurface, width: 4),
+          borderRadius: BorderRadius.circular(100),
+          boxShadow: [
+            BoxShadow(
+              color: colors.brandPrimary.withValues(alpha: 0.3),
+              spreadRadius: 1,
+              blurRadius: 6,
+              offset: const Offset(2, 3),
+            ),
+          ],
+        ),
+        alignment: Alignment.center,
+        child: Icon(Icons.add, color: colors.textOnPrimary, size: 30),
       ),
     );
   }

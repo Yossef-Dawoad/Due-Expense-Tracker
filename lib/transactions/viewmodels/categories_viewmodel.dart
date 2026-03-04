@@ -1,57 +1,58 @@
+import 'dart:async';
+
 import 'package:expancetracker/transactions/models/category.dart';
 import 'package:expancetracker/transactions/repositories/category_repository.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
-class CategoriesViewModel extends ChangeNotifier {
-  final CategoryRepository _repository;
-
+class CategoriesViewModel {
   CategoriesViewModel({required CategoryRepository repository})
     : _repository = repository {
     _loadCategories();
   }
 
+  final CategoryRepository _repository;
+  StreamSubscription<List<CategoryModel>>? _categoriesSubscription;
+
   // State
-  List<Category> _categories = [];
-  List<Category> get categories => _categories;
-
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
-  String? _error;
-  String? get error => _error;
+  final ValueNotifier<List<CategoryModel>> categories = ValueNotifier([]);
+  final ValueNotifier<bool> isLoading = ValueNotifier(false);
+  final ValueNotifier<String?> error = ValueNotifier(null);
 
   // Load categories
-  Future<void> _loadCategories() async {
-    _setLoading(true);
+  void _loadCategories() {
+    isLoading.value = true;
     try {
-      final stream = _repository.watchAll();
-      stream.listen((data) {
-        _categories = data;
-        _setLoading(false);
-      });
+      _categoriesSubscription = _repository.watchAll().listen(
+        (data) {
+          categories.value = data;
+          isLoading.value = false;
+        },
+        onError: (Object e) {
+          error.value = e.toString();
+          isLoading.value = false;
+        },
+      );
     } catch (e) {
-      _error = e.toString();
-      _setLoading(false);
+      error.value = e.toString();
+      isLoading.value = false;
     }
   }
 
   // Add category
-  Future<void> addCategory(Category category) async {
+  Future<void> addCategory(CategoryModel category) async {
     try {
       await _repository.add(category);
     } catch (e) {
-      _error = e.toString();
-      notifyListeners();
+      error.value = e.toString();
     }
   }
 
   // Update category
-  Future<void> updateCategory(Category category) async {
+  Future<void> updateCategory(CategoryModel category) async {
     try {
       await _repository.update(category);
     } catch (e) {
-      _error = e.toString();
-      notifyListeners();
+      error.value = e.toString();
     }
   }
 
@@ -60,13 +61,14 @@ class CategoriesViewModel extends ChangeNotifier {
     try {
       await _repository.delete(id);
     } catch (e) {
-      _error = e.toString();
-      notifyListeners();
+      error.value = e.toString();
     }
   }
 
-  void _setLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
+  void dispose() {
+    _categoriesSubscription?.cancel();
+    categories.dispose();
+    isLoading.dispose();
+    error.dispose();
   }
 }

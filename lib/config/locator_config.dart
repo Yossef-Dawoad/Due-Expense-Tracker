@@ -19,13 +19,13 @@ import 'package:expancetracker/wallet/data/repositories/wallet_repository_impl.d
 import 'package:expancetracker/core/services/transaction_service.dart';
 import 'package:expancetracker/transactions/repositories/transaction_repository.dart';
 
-import '../core/abstractions/database_abstraction.dart';
-import '../core/utils/http/http_abstraction.dart';
-import '../core/utils/http/http_interceptor.dart';
-import '../core/utils/internal_notification/notify_service.dart';
-import '../core/utils/locator.dart';
-import '../core/utils/navigation/router_service.dart';
-import 'route_config.dart';
+import 'package:expancetracker/core/abstractions/database_abstraction.dart';
+import 'package:expancetracker/core/utils/http/http_abstraction.dart';
+import 'package:expancetracker/core/utils/http/http_interceptor.dart';
+import 'package:expancetracker/core/utils/internal_notification/notify_service.dart';
+import 'package:expancetracker/core/utils/locator.dart';
+import 'package:expancetracker/core/utils/navigation/router_service.dart';
+import 'package:expancetracker/config/route_config.dart';
 
 final modules = [
   Module<RouterService>(
@@ -53,7 +53,8 @@ final modules = [
 
   /// Register DataSources
   Module<CategoriesLocalSource>(
-    builder: () => CategoriesLocalSource(database: locator()),
+    builder: () =>
+        CategoriesLocalSource(database: locator<OfflineDatabaseAbstraction>()),
     lazy: true,
   ),
   Module<CategoriesRemoteDataSource>(
@@ -63,14 +64,16 @@ final modules = [
 
   // Wallet Data Sources
   Module<WalletLocalSource>(
-    builder: () => WalletLocalSource(database: locator()),
+    builder: () =>
+        WalletLocalSource(database: locator<OfflineDatabaseAbstraction>()),
     lazy: true,
   ),
   Module<WalletRemoteSource>(builder: () => WalletRemoteSource(), lazy: true),
 
   // Transaction Data Sources
   Module<TransactionLocalSource>(
-    builder: () => TransactionLocalSource(database: locator()),
+    builder: () =>
+        TransactionLocalSource(database: locator<OfflineDatabaseAbstraction>()),
     lazy: true,
   ),
   Module<TransactionRemoteSource>(
@@ -106,13 +109,15 @@ final modules = [
     builder: () => TransactionService(
       repository: locator(),
       categoryRepository: locator(),
+      tagRepository: locator(),
     ),
     lazy: true,
   ),
 
   // Tag Data Sources
   Module<TagLocalSource>(
-    builder: () => TagLocalSource(database: locator()),
+    builder: () =>
+        TagLocalSource(database: locator<OfflineDatabaseAbstraction>()),
     lazy: true,
   ),
   Module<TagRemoteSource>(builder: () => TagRemoteSource(), lazy: true),

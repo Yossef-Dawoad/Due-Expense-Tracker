@@ -8,8 +8,9 @@ class OnboardingPageOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
-      color: Colors.white,
+      color: isDark ? context.kitColors.bgBase : Colors.white,
       child: Stack(
         children: [
           _buildAmbientShadow(
@@ -153,11 +154,11 @@ class _FloatingCardScene extends StatelessWidget {
               scale: 0.95,
               child: Opacity(
                 opacity: 0.5,
-                child: _buildGlassContainer(size: size),
+                child: _buildGlassContainer(context, size: size),
               ),
             ),
           ),
-          _buildGlassContainer(size: size),
+          _buildGlassContainer(context, size: size),
           HoverDanceAnimation(
             duration: const Duration(milliseconds: 3000),
             verticalOffset: -8,
@@ -217,14 +218,20 @@ class _FloatingCardScene extends StatelessWidget {
     );
   }
 
-  Widget _buildGlassContainer({required double size}) {
+  Widget _buildGlassContainer(BuildContext context, {required double size}) {
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.4),
+        color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white.withValues(alpha: 0.08)
+            : Colors.white.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(48),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+        border: Border.all(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white.withValues(alpha: 0.15)
+              : Colors.white.withValues(alpha: 0.3),
+        ),
         boxShadow: const [
           BoxShadow(
             color: Color(0x121F2687), // 0 8px 32px 0 rgba(31, 38, 135, 0.07)

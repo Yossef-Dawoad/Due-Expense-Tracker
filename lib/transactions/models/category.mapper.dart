@@ -8,65 +8,68 @@
 
 part of 'category.dart';
 
-class CategoryMapper extends ClassMapperBase<Category> {
-  CategoryMapper._();
+class CategoryModelMapper extends ClassMapperBase<CategoryModel> {
+  CategoryModelMapper._();
 
-  static CategoryMapper? _instance;
-  static CategoryMapper ensureInitialized() {
+  static CategoryModelMapper? _instance;
+  static CategoryModelMapper ensureInitialized() {
     if (_instance == null) {
-      MapperContainer.globals.use(_instance = CategoryMapper._());
+      MapperContainer.globals.use(_instance = CategoryModelMapper._());
     }
     return _instance!;
   }
 
   @override
-  final String id = 'Category';
+  final String id = 'CategoryModel';
 
-  static String _$id(Category v) => v.id;
-  static const Field<Category, String> _f$id = Field('id', _$id);
-  static String _$userId(Category v) => v.userId;
-  static const Field<Category, String> _f$userId = Field('userId', _$userId);
-  static String _$name(Category v) => v.name;
-  static const Field<Category, String> _f$name = Field('name', _$name);
-  static String _$icon(Category v) => v.icon;
-  static const Field<Category, String> _f$icon = Field('icon', _$icon);
-  static String _$color(Category v) => v.color;
-  static const Field<Category, String> _f$color = Field('color', _$color);
-  static String? _$parentId(Category v) => v.parentId;
-  static const Field<Category, String> _f$parentId = Field(
+  static String _$id(CategoryModel v) => v.id;
+  static const Field<CategoryModel, String> _f$id = Field('id', _$id);
+  static String _$userId(CategoryModel v) => v.userId;
+  static const Field<CategoryModel, String> _f$userId = Field(
+    'userId',
+    _$userId,
+  );
+  static String _$name(CategoryModel v) => v.name;
+  static const Field<CategoryModel, String> _f$name = Field('name', _$name);
+  static String _$icon(CategoryModel v) => v.icon;
+  static const Field<CategoryModel, String> _f$icon = Field('icon', _$icon);
+  static String _$color(CategoryModel v) => v.color;
+  static const Field<CategoryModel, String> _f$color = Field('color', _$color);
+  static String? _$parentId(CategoryModel v) => v.parentId;
+  static const Field<CategoryModel, String> _f$parentId = Field(
     'parentId',
     _$parentId,
     opt: true,
   );
-  static String? _$remoteId(Category v) => v.remoteId;
-  static const Field<Category, String> _f$remoteId = Field(
+  static String? _$remoteId(CategoryModel v) => v.remoteId;
+  static const Field<CategoryModel, String> _f$remoteId = Field(
     'remoteId',
     _$remoteId,
     opt: true,
   );
-  static bool _$isDirty(Category v) => v.isDirty;
-  static const Field<Category, bool> _f$isDirty = Field(
+  static bool _$isDirty(CategoryModel v) => v.isDirty;
+  static const Field<CategoryModel, bool> _f$isDirty = Field(
     'isDirty',
     _$isDirty,
     opt: true,
     def: false,
   );
-  static bool _$isDeleted(Category v) => v.isDeleted;
-  static const Field<Category, bool> _f$isDeleted = Field(
+  static bool _$isDeleted(CategoryModel v) => v.isDeleted;
+  static const Field<CategoryModel, bool> _f$isDeleted = Field(
     'isDeleted',
     _$isDeleted,
     opt: true,
     def: false,
   );
-  static int _$version(Category v) => v.version;
-  static const Field<Category, int> _f$version = Field(
+  static int _$version(CategoryModel v) => v.version;
+  static const Field<CategoryModel, int> _f$version = Field(
     'version',
     _$version,
     opt: true,
     def: 0,
   );
-  static int _$lastSynced(Category v) => v.lastSynced;
-  static const Field<Category, int> _f$lastSynced = Field(
+  static int _$lastSynced(CategoryModel v) => v.lastSynced;
+  static const Field<CategoryModel, int> _f$lastSynced = Field(
     'lastSynced',
     _$lastSynced,
     opt: true,
@@ -74,7 +77,7 @@ class CategoryMapper extends ClassMapperBase<Category> {
   );
 
   @override
-  final MappableFields<Category> fields = const {
+  final MappableFields<CategoryModel> fields = const {
     #id: _f$id,
     #userId: _f$userId,
     #name: _f$name,
@@ -88,8 +91,8 @@ class CategoryMapper extends ClassMapperBase<Category> {
     #lastSynced: _f$lastSynced,
   };
 
-  static Category _instantiate(DecodingData data) {
-    return Category(
+  static CategoryModel _instantiate(DecodingData data) {
+    return CategoryModel(
       id: data.dec(_f$id),
       userId: data.dec(_f$userId),
       name: data.dec(_f$name),
@@ -107,59 +110,64 @@ class CategoryMapper extends ClassMapperBase<Category> {
   @override
   final Function instantiate = _instantiate;
 
-  static Category fromMap(Map<String, dynamic> map) {
-    return ensureInitialized().decodeMap<Category>(map);
+  static CategoryModel fromMap(Map<String, dynamic> map) {
+    return ensureInitialized().decodeMap<CategoryModel>(map);
   }
 
-  static Category fromJson(String json) {
-    return ensureInitialized().decodeJson<Category>(json);
+  static CategoryModel fromJson(String json) {
+    return ensureInitialized().decodeJson<CategoryModel>(json);
   }
 }
 
-mixin CategoryMappable {
+mixin CategoryModelMappable {
   String toJson() {
-    return CategoryMapper.ensureInitialized().encodeJson<Category>(
-      this as Category,
+    return CategoryModelMapper.ensureInitialized().encodeJson<CategoryModel>(
+      this as CategoryModel,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return CategoryMapper.ensureInitialized().encodeMap<Category>(
-      this as Category,
+    return CategoryModelMapper.ensureInitialized().encodeMap<CategoryModel>(
+      this as CategoryModel,
     );
   }
 
-  CategoryCopyWith<Category, Category, Category> get copyWith =>
-      _CategoryCopyWithImpl<Category, Category>(
-        this as Category,
-        $identity,
-        $identity,
-      );
+  CategoryModelCopyWith<CategoryModel, CategoryModel, CategoryModel>
+  get copyWith => _CategoryModelCopyWithImpl<CategoryModel, CategoryModel>(
+    this as CategoryModel,
+    $identity,
+    $identity,
+  );
   @override
   String toString() {
-    return CategoryMapper.ensureInitialized().stringifyValue(this as Category);
+    return CategoryModelMapper.ensureInitialized().stringifyValue(
+      this as CategoryModel,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return CategoryMapper.ensureInitialized().equalsValue(
-      this as Category,
+    return CategoryModelMapper.ensureInitialized().equalsValue(
+      this as CategoryModel,
       other,
     );
   }
 
   @override
   int get hashCode {
-    return CategoryMapper.ensureInitialized().hashValue(this as Category);
+    return CategoryModelMapper.ensureInitialized().hashValue(
+      this as CategoryModel,
+    );
   }
 }
 
-extension CategoryValueCopy<$R, $Out> on ObjectCopyWith<$R, Category, $Out> {
-  CategoryCopyWith<$R, Category, $Out> get $asCategory =>
-      $base.as((v, t, t2) => _CategoryCopyWithImpl<$R, $Out>(v, t, t2));
+extension CategoryModelValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, CategoryModel, $Out> {
+  CategoryModelCopyWith<$R, CategoryModel, $Out> get $asCategoryModel =>
+      $base.as((v, t, t2) => _CategoryModelCopyWithImpl<$R, $Out>(v, t, t2));
 }
 
-abstract class CategoryCopyWith<$R, $In extends Category, $Out>
+abstract class CategoryModelCopyWith<$R, $In extends CategoryModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   $R call({
     String? id,
@@ -174,17 +182,17 @@ abstract class CategoryCopyWith<$R, $In extends Category, $Out>
     int? version,
     int? lastSynced,
   });
-  CategoryCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
+  CategoryModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
-class _CategoryCopyWithImpl<$R, $Out>
-    extends ClassCopyWithBase<$R, Category, $Out>
-    implements CategoryCopyWith<$R, Category, $Out> {
-  _CategoryCopyWithImpl(super.value, super.then, super.then2);
+class _CategoryModelCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, CategoryModel, $Out>
+    implements CategoryModelCopyWith<$R, CategoryModel, $Out> {
+  _CategoryModelCopyWithImpl(super.value, super.then, super.then2);
 
   @override
-  late final ClassMapperBase<Category> $mapper =
-      CategoryMapper.ensureInitialized();
+  late final ClassMapperBase<CategoryModel> $mapper =
+      CategoryModelMapper.ensureInitialized();
   @override
   $R call({
     String? id,
@@ -214,7 +222,7 @@ class _CategoryCopyWithImpl<$R, $Out>
     }),
   );
   @override
-  Category $make(CopyWithData data) => Category(
+  CategoryModel $make(CopyWithData data) => CategoryModel(
     id: data.get(#id, or: $value.id),
     userId: data.get(#userId, or: $value.userId),
     name: data.get(#name, or: $value.name),
@@ -229,8 +237,8 @@ class _CategoryCopyWithImpl<$R, $Out>
   );
 
   @override
-  CategoryCopyWith<$R2, Category, $Out2> $chain<$R2, $Out2>(
+  CategoryModelCopyWith<$R2, CategoryModel, $Out2> $chain<$R2, $Out2>(
     Then<$Out2, $R2> t,
-  ) => _CategoryCopyWithImpl<$R2, $Out2>($value, $cast, t);
+  ) => _CategoryModelCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
 

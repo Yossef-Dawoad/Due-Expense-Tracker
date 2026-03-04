@@ -9,10 +9,10 @@ class OnboardingPageTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = !isDark
+    final backgroundColor = isDark
         ? const Color(0xFF122017) // #122017 background-dark
         : const Color(0xFFF6F8F7); // #f6f8f7 background-light
-    final textColor = !isDark
+    final textColor = isDark
         ? Colors.white
         : context.kitColors.textPrimary; // #0e1a13
 

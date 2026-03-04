@@ -26,7 +26,7 @@ class HomeViewModel {
       _transactionService.transactions;
 
   // Categories (needed for UI resolution)
-  ValueNotifier<List<Category>> get categories =>
+  ValueNotifier<List<CategoryModel>> get categories =>
       _transactionService.categories;
 
   void dispose() {

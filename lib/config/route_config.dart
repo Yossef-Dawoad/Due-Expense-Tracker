@@ -36,8 +36,32 @@ final routes = [
   ),
   GoRoute(
     path: Routes.addTransaction,
-    pageBuilder: (context, state) =>
-        _buildPage(const AddTransactionScreen(), state),
+    pageBuilder: (context, state) => CustomTransitionPage(
+      key: state.pageKey,
+      child: const AddTransactionScreen(),
+      transitionDuration: const Duration(milliseconds: 350),
+      reverseTransitionDuration: const Duration(milliseconds: 300),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        // Slide up on entry, slide down on exit — modal sheet feel
+        final slideAnimation =
+            Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(
+              CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeOutCubic,
+                reverseCurve: Curves.easeInCubic,
+              ),
+            );
+        // Gentle fade accompanies the slide
+        final fadeAnimation = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOut,
+        );
+        return SlideTransition(
+          position: slideAnimation,
+          child: FadeTransition(opacity: fadeAnimation, child: child),
+        );
+      },
+    ),
   ),
   GoRoute(
     path: Routes.notFound,

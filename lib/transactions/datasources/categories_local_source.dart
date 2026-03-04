@@ -5,20 +5,20 @@ import 'package:expancetracker/core/abstractions/database_abstraction.dart';
 import '../models/category.dart';
 
 /// Local data source for categories using Drift (SQLite).
-class CategoriesLocalSource implements LocalDataSource<Category> {
+class CategoriesLocalSource implements LocalDataSource<CategoryModel> {
   CategoriesLocalSource({OfflineDatabaseAbstraction? database})
     : _db = database?.getClient<AppDatabase>() ?? AppDatabase.instance;
 
   final AppDatabase _db;
 
   @override
-  Future<Category> insert(Category item) async {
+  Future<CategoryModel> insert(CategoryModel item) async {
     await _db.into(_db.categoriesTable).insert(_toCompanion(item));
     return item;
   }
 
   @override
-  Future<Category> insertOrReplace(Category item) async {
+  Future<CategoryModel> insertOrReplace(CategoryModel item) async {
     await _db
         .into(_db.categoriesTable)
         .insertOnConflictUpdate(_toCompanion(item));
@@ -26,39 +26,39 @@ class CategoriesLocalSource implements LocalDataSource<Category> {
   }
 
   @override
-  Future<Category?> getById(String id) async {
+  Future<CategoryModel?> getById(String id) async {
     final query = _db.select(_db.categoriesTable)
       ..where((t) => t.id.equals(id));
     final row = await query.getSingleOrNull();
-    return row != null ? _toCategory(row) : null;
+    return row != null ? _toCategoryModel(row) : null;
   }
 
   @override
-  Future<List<Category>> getAll() async {
+  Future<List<CategoryModel>> getAll() async {
     final query = _db.select(_db.categoriesTable)
       ..where((t) => t.isDeleted.equals(false));
     final rows = await query.get();
-    return rows.map(_toCategory).toList();
+    return rows.map(_toCategoryModel).toList();
   }
 
   @override
-  Future<List<Category>> getDirtyRecords() async {
+  Future<List<CategoryModel>> getDirtyRecords() async {
     final query = _db.select(_db.categoriesTable)
       ..where((t) => t.isDirty.equals(true));
     final rows = await query.get();
-    return rows.map(_toCategory).toList();
+    return rows.map(_toCategoryModel).toList();
   }
 
   @override
-  Future<List<Category>> getDeletedRecords() async {
+  Future<List<CategoryModel>> getDeletedRecords() async {
     final query = _db.select(_db.categoriesTable)
       ..where((t) => t.isDeleted.equals(true));
     final rows = await query.get();
-    return rows.map(_toCategory).toList();
+    return rows.map(_toCategoryModel).toList();
   }
 
   @override
-  Future<void> update(Category item) async {
+  Future<void> update(CategoryModel item) async {
     await (_db.update(
       _db.categoriesTable,
     )..where((t) => t.id.equals(item.id))).write(_toCompanion(item));
@@ -82,15 +82,15 @@ class CategoriesLocalSource implements LocalDataSource<Category> {
   }
 
   @override
-  Stream<List<Category>> watchAll() {
+  Stream<List<CategoryModel>> watchAll() {
     final query = _db.select(_db.categoriesTable)
       ..where((t) => t.isDeleted.equals(false));
-    return query.watch().map((rows) => rows.map(_toCategory).toList());
+    return query.watch().map((rows) => rows.map(_toCategoryModel).toList());
   }
 
   /// Converts a Drift row to domain model.
-  Category _toCategory(CategoriesTableData row) {
-    return Category(
+  CategoryModel _toCategoryModel(CategoriesTableData row) {
+    return CategoryModel(
       id: row.id,
       userId: row.userId,
       name: row.name,
@@ -106,7 +106,7 @@ class CategoriesLocalSource implements LocalDataSource<Category> {
   }
 
   /// Converts domain model to Drift companion.
-  CategoriesTableCompanion _toCompanion(Category item) {
+  CategoriesTableCompanion _toCompanion(CategoryModel item) {
     return CategoriesTableCompanion(
       id: Value(item.id),
       userId: Value(item.userId),

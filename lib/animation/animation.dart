@@ -13,6 +13,7 @@ export 'mixins.dart';
 // Widgets
 export 'widgets/breathing.dart';
 export 'widgets/counter.dart';
+export 'widgets/odometer_text.dart';
 export 'widgets/dashboard_card.dart';
 export 'widgets/fade_in.dart';
 export 'widgets/feedback.dart';
