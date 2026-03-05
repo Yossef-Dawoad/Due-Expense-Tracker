@@ -26,7 +26,6 @@ class BudgetOverviewCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20), // HTML: p-5
       decoration: BoxDecoration(
-        color: colors.bgSurface,
         borderRadius: context.borderRadius.xl,
         border: Border.all(color: colors.borderLight),
       ),

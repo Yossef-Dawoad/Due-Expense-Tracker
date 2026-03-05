@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -18,46 +20,54 @@ class DailyInsightCard extends StatelessWidget {
     final colors = context.kitColors;
     final textStyles = context.textStyles;
 
-    return Container(
-      padding: const EdgeInsets.all(16), // HTML: p-4
-      decoration: BoxDecoration(
-        color: colors.bgSurfaceSecondary,
-        borderRadius: context.borderRadius.xxl,
-        border: Border.all(color: colors.borderLight),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Lightbulb icon container
-          _InsightIconContainer(iconColor: colors.brandPrimary),
-          const SizedBox(width: 12), // HTML: gap-3
-          // Text content
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // HTML: text-[13px] font-bold
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: colors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 2), // HTML: mt-0.5
-                // HTML: text-[12px] leading-relaxed text-text-muted
-                Text(
-                  message,
-                  style: textStyles.caption.copyWith(
-                    color: colors.textTertiary,
-                    height: 1.625, // leading-relaxed
-                  ),
-                ),
-              ],
+    return ClipRRect(
+      borderRadius: context.borderRadius.xxl,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          padding: const EdgeInsets.all(16), // HTML: p-4
+          decoration: BoxDecoration(
+            color: colors.bgSurfaceSecondary.withValues(alpha: 0.6),
+            borderRadius: context.borderRadius.xxl,
+            border: Border.all(
+              color: colors.borderLight.withValues(alpha: 0.5),
             ),
           ),
-        ],
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Lightbulb icon container
+              _InsightIconContainer(iconColor: colors.brandPrimary),
+              const SizedBox(width: 12), // HTML: gap-3
+              // Text content
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // HTML: text-[13px] font-bold
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: colors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 2), // HTML: mt-0.5
+                    // HTML: text-[12px] leading-relaxed text-text-muted
+                    Text(
+                      message,
+                      style: textStyles.caption.copyWith(
+                        color: colors.textTertiary,
+                        height: 1.625, // leading-relaxed
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

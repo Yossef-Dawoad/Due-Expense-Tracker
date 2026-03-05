@@ -85,10 +85,10 @@ packages:
     dependency: "direct dev"
     description:
       name: build_runner
-      sha256: "1fa74a0583670c736d90bd398dbd45555c1c95f1f34ee5f3d1f16b593205071d"
+      sha256: "7981eb922842c77033026eb4341d5af651562008cdb116bdfa31fc46516b6462"
       url: "https://pub.dev"
     source: hosted
-    version: "2.12.0"
+    version: "2.12.2"
   built_collection:
     dependency: transitive
     description:
@@ -228,18 +228,19 @@ packages:
   dart_mappable:
     dependency: "direct main"
     description:
-      name: dart_mappable
-      sha256: "0e219930c9f7b9e0f14ae7c1de931c401875110fd5c67975b6b9492a6d3a531b"
-      url: "https://pub.dev"
-    source: hosted
+      path: "packages/dart_mappable"
+      ref: "10263c0e17b30f7391aee1855246a87217fdbf99"
+      resolved-ref: "10263c0e17b30f7391aee1855246a87217fdbf99"
+      url: "https://github.com/Yossef-Dawoad/dart_mappable.git"
+    source: git
     version: "4.6.1"
   dart_mappable_builder:
     dependency: "direct dev"
     description:
       path: "packages/dart_mappable_builder"
-      ref: "167bf5c1770c1c86398b100cfae82a4f03ceb95b"
-      resolved-ref: "167bf5c1770c1c86398b100cfae82a4f03ceb95b"
-      url: "https://github.com/simolus3/dart_mappable.git"
+      ref: "10263c0e17b30f7391aee1855246a87217fdbf99"
+      resolved-ref: "10263c0e17b30f7391aee1855246a87217fdbf99"
+      url: "https://github.com/Yossef-Dawoad/dart_mappable.git"
     source: git
     version: "4.6.5"
   dart_style:
