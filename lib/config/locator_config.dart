@@ -5,7 +5,7 @@ import 'package:expancetracker/transactions/datasources/categories_remote_dataso
 import 'package:expancetracker/transactions/repositories/category_repository.dart';
 import 'package:expancetracker/transactions/datasources/transaction_local_source.dart';
 import 'package:expancetracker/transactions/datasources/transaction_remote_source.dart';
-import 'package:expancetracker/transactions/repositories/transaction_repository_impl.dart';
+import 'package:expancetracker/transactions/repositories/transaction_repository.dart';
 import 'package:expancetracker/transactions/datasources/tag_local_source.dart';
 import 'package:expancetracker/transactions/datasources/tag_remote_source.dart';
 import 'package:expancetracker/transactions/repositories/tag_repository.dart';
@@ -17,7 +17,6 @@ import 'package:expancetracker/wallet/data/datasources/wallet_remote_source.dart
 import 'package:expancetracker/wallet/data/repositories/wallet_repository.dart';
 import 'package:expancetracker/wallet/data/repositories/wallet_repository_impl.dart';
 import 'package:expancetracker/core/services/transaction_service.dart';
-import 'package:expancetracker/transactions/repositories/transaction_repository.dart';
 
 import 'package:expancetracker/core/abstractions/database_abstraction.dart';
 import 'package:expancetracker/core/services/connectivity_service.dart';
@@ -95,10 +94,8 @@ final modules = [
     lazy: true,
   ),
   Module<TransactionRepository>(
-    builder: () => TransactionRepositoryImpl(
-      localSource: locator(),
-      remoteSource: locator(),
-    ),
+    builder: () =>
+        TransactionRepository(localSource: locator(), remoteSource: locator()),
     lazy: true,
   ),
 
