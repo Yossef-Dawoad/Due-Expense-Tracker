@@ -5,31 +5,201 @@ import 'package:expancetracker/transactions/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-/// Recent activity section displayed as a flat list of transaction items,
-/// each with an icon container, category name, time/source, and amount.
-/// Wraps items in a StaggeredListAnimation for cascading entrance.
-class RecentActivitySection extends StatelessWidget {
+/// Recent activity section displayed as individually bordered cards.
+/// Supports multi-select via long-press, with a premium bottom-sheet
+/// confirmation for bulk deletion.
+class RecentActivitySection extends StatefulWidget {
   const RecentActivitySection({
     super.key,
     required this.transactions,
     required this.categories,
+    required this.onDeleteTransactions,
     this.animationDelay = Duration.zero,
   });
 
   final List<Transaction> transactions;
   final List<CategoryModel> categories;
 
+  /// Callback invoked with one or more transaction IDs after user confirms.
+  final Future<void> Function(List<String> transactionIds) onDeleteTransactions;
+
   /// Delay before starting the staggered entrance animation.
   final Duration animationDelay;
 
   @override
+  State<RecentActivitySection> createState() => _RecentActivitySectionState();
+}
+
+class _RecentActivitySectionState extends State<RecentActivitySection> {
+  final Set<String> _selectedIds = {};
+
+  bool get _isSelectionMode => _selectedIds.isNotEmpty;
+
+  void _toggleSelection(String id) {
+    setState(() {
+      if (_selectedIds.contains(id)) {
+        _selectedIds.remove(id);
+      } else {
+        _selectedIds.add(id);
+      }
+    });
+  }
+
+  void _enterSelectionMode(String id) {
+    setState(() {
+      _selectedIds.add(id);
+    });
+  }
+
+  void _clearSelection() {
+    setState(() {
+      _selectedIds.clear();
+    });
+  }
+
+  void _selectAll() {
+    setState(() {
+      _selectedIds.addAll(widget.transactions.map((tx) => tx.id));
+    });
+  }
+
+  Future<void> _confirmAndDelete() async {
+    if (_selectedIds.isEmpty) return;
+
+    final confirmed = await _showDeleteBottomSheet(
+      context,
+      _selectedIds.length,
+    );
+    if (confirmed == true) {
+      await widget.onDeleteTransactions(_selectedIds.toList());
+      _clearSelection();
+    }
+  }
+
+  Future<bool?> _showDeleteBottomSheet(BuildContext context, int count) {
+    final colors = context.kitColors;
+    final radii = context.borderRadius;
+
+    return showModalBottomSheet<bool>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (sheetContext) {
+        return Container(
+          margin: const EdgeInsets.fromLTRB(16, 0, 16, 32),
+          decoration: BoxDecoration(
+            color: colors.bgSurface,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // ── Warning icon ──
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: colors.semanticNegative.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.delete_outline_rounded,
+                    color: colors.semanticNegative,
+                    size: 28,
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // ── Title ──
+                Text(
+                  count == 1
+                      ? 'Delete Transaction?'
+                      : 'Delete $count Transactions?',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: colors.textPrimary,
+                    letterSpacing: -0.3,
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                // ── Description ──
+                Text(
+                  count == 1
+                      ? 'This transaction will be permanently removed and cannot be recovered.'
+                      : 'These transactions will be permanently removed and cannot be recovered.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    height: 1.5,
+                    color: colors.textTertiary,
+                  ),
+                ),
+                const SizedBox(height: 28),
+
+                // ── Delete button ──
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.of(sheetContext).pop(true),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: colors.semanticNegative,
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(borderRadius: radii.card),
+                    ),
+                    child: Text(
+                      count == 1 ? 'Delete' : 'Delete All ($count)',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                // ── Cancel button ──
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.of(sheetContext).pop(false),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: colors.textPrimary,
+                      side: BorderSide(color: colors.borderLight),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(borderRadius: radii.card),
+                    ),
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (transactions.isEmpty) {
+    if (widget.transactions.isEmpty) {
       return const SizedBox.shrink();
     }
 
-    final items = transactions.map((tx) {
-      final category = categories.firstWhere(
+    final items = widget.transactions.map((tx) {
+      final category = widget.categories.firstWhere(
         (c) => c.id == tx.categoryId,
         orElse: () => CategoryModel(
           id: 'unknown',
@@ -39,112 +209,312 @@ class RecentActivitySection extends StatelessWidget {
           userId: '',
         ),
       );
-      return _RecentActivityItem(transaction: tx, category: category);
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: _RecentActivityItem(
+          transaction: tx,
+          category: category,
+          isSelected: _selectedIds.contains(tx.id),
+          isSelectionMode: _isSelectionMode,
+          onTap: () {
+            if (_isSelectionMode) {
+              _toggleSelection(tx.id);
+            }
+          },
+          onLongPress: () {
+            if (!_isSelectionMode) {
+              _enterSelectionMode(tx.id);
+            }
+          },
+        ),
+      );
     }).toList();
 
-    return StaggeredListAnimation(
-      delay: animationDelay,
-      staggerDuration: const Duration(milliseconds: 50),
-      itemDuration: AnimationDurations.medium,
-      children: items,
+    return Column(
+      children: [
+        // ── Selection action bar ──
+        _SelectionActionBar(
+          isVisible: _isSelectionMode,
+          selectedCount: _selectedIds.length,
+          totalCount: widget.transactions.length,
+          onSelectAll: _selectAll,
+          onClearSelection: _clearSelection,
+          onDelete: _confirmAndDelete,
+        ),
+        // ── Transaction list ──
+        StaggeredListAnimation(
+          delay: widget.animationDelay,
+          staggerDuration: const Duration(milliseconds: 50),
+          itemDuration: AnimationDurations.medium,
+          children: items,
+        ),
+      ],
     );
   }
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Selection Action Bar
+// ─────────────────────────────────────────────────────────────────────────────
+
+class _SelectionActionBar extends StatelessWidget {
+  const _SelectionActionBar({
+    required this.isVisible,
+    required this.selectedCount,
+    required this.totalCount,
+    required this.onSelectAll,
+    required this.onClearSelection,
+    required this.onDelete,
+  });
+
+  final bool isVisible;
+  final int selectedCount;
+  final int totalCount;
+  final VoidCallback onSelectAll;
+  final VoidCallback onClearSelection;
+  final VoidCallback onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.kitColors;
+
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeInOut,
+      child: isVisible
+          ? Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Row(
+                children: [
+                  // Selected count
+                  Text(
+                    '$selectedCount selected',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: colors.textPrimary,
+                    ),
+                  ),
+                  const Spacer(),
+
+                  // Select all / Deselect all
+                  GestureDetector(
+                    onTap: selectedCount == totalCount
+                        ? onClearSelection
+                        : onSelectAll,
+                    child: Text(
+                      selectedCount == totalCount
+                          ? 'Deselect All'
+                          : 'Select All',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: colors.brandPrimary,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+
+                  // Delete button
+                  GestureDetector(
+                    onTap: onDelete,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: colors.semanticNegative,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.delete_outline_rounded,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Delete',
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : const SizedBox.shrink(),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Single Activity Item
+// ─────────────────────────────────────────────────────────────────────────────
 
 class _RecentActivityItem extends StatelessWidget {
   const _RecentActivityItem({
     required this.transaction,
     required this.category,
+    required this.isSelected,
+    required this.isSelectionMode,
+    required this.onTap,
+    required this.onLongPress,
   });
 
   final Transaction transaction;
   final CategoryModel category;
+  final bool isSelected;
+  final bool isSelectionMode;
+  final VoidCallback onTap;
+  final VoidCallback onLongPress;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.kitColors;
+    final radii = context.borderRadius;
     final isExpense = transaction.type == TransactionType.expense;
     final formattedTime = DateFormat('h:mm a').format(transaction.date);
-    final displayName = (transaction.note?.isNotEmpty ?? false)
-        ? transaction.note!
-        : category.name;
+    final displayName = category.name;
 
-    // HTML: flex items-center justify-between py-3
-    return ScaleFeedback(
-      onTap: () {},
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12), // HTML: py-3
-        child: Row(
-          children: [
-            // Icon container
-            _CategoryIconContainer(category: category),
-            const SizedBox(width: 16), // HTML: gap-4
-            // Text content
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // HTML: text-[15px] font-bold
-                  Text(
-                    displayName,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                      color: colors.textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  // HTML: text-[12px] font-medium text-text-muted
-                  Text(
-                    '$formattedTime • ${category.name}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: colors.textTertiary,
-                    ),
-                  ),
-                ],
+    return GestureDetector(
+      onTap: onTap,
+      onLongPress: onLongPress,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+        decoration: BoxDecoration(
+          borderRadius: radii.card,
+          border: Border.all(
+            color: isSelected ? colors.semanticNegative : colors.borderLight,
+            width: isSelected ? 1.5 : 1.0,
+          ),
+          color: isSelected
+              ? colors.semanticNegative.withValues(alpha: 0.04)
+              : Colors.transparent,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: Row(
+            children: [
+              // ── Selection indicator / Category icon ──
+              _AnimatedSelectionIcon(
+                isSelected: isSelected,
+                isSelectionMode: isSelectionMode,
+                category: category,
               ),
-            ),
+              const SizedBox(width: 16),
+              // ── Text content ──
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      displayName,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: colors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      transaction.note?.isNotEmpty == true
+                          ? '$formattedTime • ${transaction.note}'
+                          : formattedTime,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: colors.textTertiary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
-            // Amount — HTML: text-[15px] font-bold
-            Text(
-              '${isExpense ? "-" : "+"}\$${transaction.amount.toStringAsFixed(2)}',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                color: colors.textPrimary,
+              // ── Amount ──
+              Text(
+                '${isExpense ? "-" : "+"}'
+                r'$'
+                '${transaction.amount.toStringAsFixed(2)}',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: colors.textPrimary,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class _CategoryIconContainer extends StatelessWidget {
-  const _CategoryIconContainer({required this.category});
+// ─────────────────────────────────────────────────────────────────────────────
+// Animated Selection Icon — crossfades between category icon & checkmark
+// ─────────────────────────────────────────────────────────────────────────────
 
+class _AnimatedSelectionIcon extends StatelessWidget {
+  const _AnimatedSelectionIcon({
+    required this.isSelected,
+    required this.isSelectionMode,
+    required this.category,
+  });
+
+  final bool isSelected;
+  final bool isSelectionMode;
   final CategoryModel category;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.kitColors;
 
-    // HTML: size-11 rounded-xl border-border-light bg-white shadow-soft
-    // size-11 = 44px, rounded-xl = 1.5rem = 24px
-    return Container(
-      width: 44,
-      height: 44,
-      decoration: BoxDecoration(
-        color: colors.bgSurface,
-        borderRadius: context.borderRadius.iconContainer,
-        border: Border.all(color: colors.borderLight),
-      ),
-      child: Center(
-        child: Text(category.icon, style: const TextStyle(fontSize: 22)),
-      ),
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 250),
+      switchInCurve: Curves.easeOutBack,
+      switchOutCurve: Curves.easeIn,
+      child: isSelected
+          ? Container(
+              key: const ValueKey('selected'),
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: colors.semanticNegative,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.check_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+            )
+          : Container(
+              key: const ValueKey('unselected'),
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: colors.borderLight),
+              ),
+              child: Center(child: _buildIconWidget(category.icon)),
+            ),
     );
+  }
+
+  Widget _buildIconWidget(String iconValue) {
+    final codePoint = int.tryParse(iconValue);
+    if (codePoint != null) {
+      return Icon(IconData(codePoint, fontFamily: 'MaterialIcons'), size: 22);
+    }
+    return Text(iconValue, style: const TextStyle(fontSize: 22));
   }
 }

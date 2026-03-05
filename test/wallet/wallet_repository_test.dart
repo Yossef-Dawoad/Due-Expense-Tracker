@@ -207,13 +207,53 @@ void main() {
         verify(() => mockLocalSource.update(any())).called(1);
       });
 
-      test('should handle offline gracefully', () async {
+      test('should propagate errors for orchestrator retry', () async {
         when(
           () => mockLocalSource.getDirtyRecords(),
         ).thenThrow(Exception('Network error'));
 
-        // Should not throw
-        await expectLater(repository.syncWithRemote(), completes);
+        // Errors now propagate — the SyncOrchestrationService handles retry.
+        await expectLater(
+          repository.syncWithRemote(),
+          throwsA(isA<Exception>()),
+        );
+      });
+
+      test('should continue syncing remaining items when one fails', () async {
+        final dirtyAccount1 = createTestAccount(
+          id: 'dirty-1',
+          isDirty: true,
+          name: 'Account 1',
+        );
+        final dirtyAccount2 = createTestAccount(
+          id: 'dirty-2',
+          isDirty: true,
+          name: 'Account 2',
+        );
+        when(
+          () => mockLocalSource.getDirtyRecords(),
+        ).thenAnswer((_) async => [dirtyAccount1, dirtyAccount2]);
+        when(
+          () => mockLocalSource.getDeletedRecords(),
+        ).thenAnswer((_) async => []);
+        // First item fails, second succeeds.
+        var callCount = 0;
+        when(() => mockRemoteSource.addNewItem(any())).thenAnswer((_) async {
+          callCount++;
+          if (callCount == 1) {
+            throw Exception('Server error');
+          }
+          return dirtyAccount2;
+        });
+        when(() => mockLocalSource.update(any())).thenAnswer((_) async {});
+        when(() => mockRemoteSource.getAllItems()).thenAnswer((_) async => []);
+
+        await repository.syncWithRemote();
+
+        // Both items were attempted.
+        verify(() => mockRemoteSource.addNewItem(any())).called(2);
+        // Only the second (successful) item was updated locally.
+        verify(() => mockLocalSource.update(any())).called(1);
       });
     });
   });

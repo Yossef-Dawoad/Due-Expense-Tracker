@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../viewmodels/add_transaction_viewmodel.dart';
+import 'package:expancetracker/core/utils/internal_notification/notify_service.dart';
 import 'widgets/add_transaction_app_bar.dart';
 import 'widgets/transaction_type_switch.dart';
 import 'widgets/transaction_amount_input.dart';
@@ -32,6 +33,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       walletService: locator<WalletService>(),
       transactionService: locator<TransactionService>(),
       routerService: locator<RouterService>(),
+      notifyService: locator<NotifyService>(),
     );
   }
 
@@ -105,7 +107,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                           const SizedBox(height: 16),
                           TransactionCategoryGrid(
                             selectedCategory: _viewModel.selectedCategory,
-                            onCategorySelected: _viewModel.setCategory,
+                            persistedCategories: _viewModel.categories,
+                            onPresetSelected:
+                                _viewModel.selectOrInsertPresetCategory,
                           ),
                         ],
                       ),
@@ -122,6 +126,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                       onDateChanged: _viewModel.setDate,
                       notesController: _viewModel.notesController,
                       pendingTagNames: _viewModel.pendingTagNames,
+                      allTags: _viewModel.allTags,
                       onAddTag: _viewModel.addTagName,
                       onRemoveTag: _viewModel.removeTagName,
                     ),

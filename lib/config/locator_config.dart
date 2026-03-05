@@ -20,6 +20,8 @@ import 'package:expancetracker/core/services/transaction_service.dart';
 import 'package:expancetracker/transactions/repositories/transaction_repository.dart';
 
 import 'package:expancetracker/core/abstractions/database_abstraction.dart';
+import 'package:expancetracker/core/services/connectivity_service.dart';
+import 'package:expancetracker/core/services/sync_orchestration_service.dart';
 import 'package:expancetracker/core/utils/http/http_abstraction.dart';
 import 'package:expancetracker/core/utils/http/http_interceptor.dart';
 import 'package:expancetracker/core/utils/internal_notification/notify_service.dart';
@@ -100,20 +102,6 @@ final modules = [
     lazy: true,
   ),
 
-  /// Register Services
-  Module<WalletService>(
-    builder: () => WalletService(repository: locator()),
-    lazy: true,
-  ),
-  Module<TransactionService>(
-    builder: () => TransactionService(
-      repository: locator(),
-      categoryRepository: locator(),
-      tagRepository: locator(),
-    ),
-    lazy: true,
-  ),
-
   // Tag Data Sources
   Module<TagLocalSource>(
     builder: () =>
@@ -125,6 +113,41 @@ final modules = [
   Module<TagRepository>(
     builder: () =>
         TagRepository(localSource: locator(), remoteSource: locator()),
+    lazy: true,
+  ),
+
+  /// Register Services
+  Module<WalletService>(
+    builder: () => WalletService(
+      repository: locator(),
+      syncOrchestrationService: locator(),
+    ),
+    lazy: true,
+  ),
+  Module<ConnectivityService>(
+    builder: () => ConnectivityService(),
+    lazy: false,
+  ),
+  Module<SyncOrchestrationService>(
+    builder: () => SyncOrchestrationService(
+      repositories: [
+        locator<TransactionRepository>(),
+        locator<WalletRepository>(),
+        locator<CategoryRepository>(),
+        locator<TagRepository>(),
+      ],
+      connectivityService: locator(),
+      notifyService: locator(),
+    ),
+    lazy: false,
+  ),
+  Module<TransactionService>(
+    builder: () => TransactionService(
+      repository: locator(),
+      categoryRepository: locator(),
+      tagRepository: locator(),
+      syncOrchestrationService: locator(),
+    ),
     lazy: true,
   ),
 ];

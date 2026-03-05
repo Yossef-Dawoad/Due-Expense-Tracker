@@ -29,6 +29,18 @@ class HomeViewModel {
   ValueNotifier<List<CategoryModel>> get categories =>
       _transactionService.categories;
 
+  /// Deletes a transaction by its ID.
+  Future<void> deleteTransaction(String id) async {
+    await _transactionService.deleteTransaction(id);
+  }
+
+  /// Deletes multiple transactions by their IDs.
+  Future<void> deleteTransactions(List<String> ids) async {
+    for (final id in ids) {
+      await _transactionService.deleteTransaction(id);
+    }
+  }
+
   void dispose() {
     // No local state to dispose, services are singletons or disposed elsewhere if needed
     // But ViewModels should usually not dispose singleton services.

@@ -74,4 +74,7 @@ abstract interface class OfflineFirstRepository<T> {
   /// 2. PUSH: Send soft-deleted records for remote deletion
   /// 3. PULL: Fetch remote records and merge with version comparison
   Future<void> syncWithRemote();
+
+  /// Returns the count of records pending sync (dirty + soft-deleted).
+  Future<int> getDirtyCount();
 }

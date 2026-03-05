@@ -1,4 +1,5 @@
 import 'package:expancetracker/core/ui/app_theme.dart';
+import 'package:expancetracker/transactions/models/tag.dart';
 import 'package:expancetracker/transactions/views/widgets/transaction_tag_selector.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class TransactionDetailsSection extends StatelessWidget {
     required this.onDateChanged,
     required this.notesController,
     required this.pendingTagNames,
+    required this.allTags,
     required this.onAddTag,
     required this.onRemoveTag,
   });
@@ -24,6 +26,7 @@ class TransactionDetailsSection extends StatelessWidget {
   final ValueChanged<DateTime> onDateChanged;
   final TextEditingController notesController;
   final ValueListenable<List<String>> pendingTagNames;
+  final ValueListenable<List<Tag>> allTags;
   final ValueChanged<String> onAddTag;
   final ValueChanged<String> onRemoveTag;
 
@@ -53,6 +56,7 @@ class TransactionDetailsSection extends StatelessWidget {
           // ── Tags ─────────────────────────────────────────────────────
           TransactionTagSelector(
             pendingTagNames: pendingTagNames,
+            allTags: allTags,
             onAddTag: onAddTag,
             onRemoveTag: onRemoveTag,
           ),

@@ -2,7 +2,11 @@ import 'package:expancetracker/core/utils/navigation/routes.dart';
 import 'package:expancetracker/core/services/transaction_service.dart';
 import 'package:expancetracker/core/services/wallet_service.dart';
 import 'package:expancetracker/core/utils/navigation/router_service.dart';
+import 'package:expancetracker/core/utils/internal_notification/notify_service.dart';
+import 'package:expancetracker/core/utils/internal_notification/toast/toast_event.dart';
 import 'package:expancetracker/transactions/models/category.dart';
+import 'package:expancetracker/transactions/models/preset_categories.dart';
+import 'package:expancetracker/transactions/models/tag.dart';
 import 'package:expancetracker/transactions/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -12,6 +16,7 @@ class AddTransactionViewModel {
   final WalletService _walletService;
   final TransactionService _transactionService;
   final RouterService _routerService;
+  final NotifyService _notifyService;
 
   // State
   final ValueNotifier<TransactionType> transactionType = ValueNotifier(
@@ -30,6 +35,8 @@ class AddTransactionViewModel {
   ValueNotifier<List<CategoryModel>> get categories =>
       _transactionService.categories;
 
+  ValueNotifier<List<Tag>> get allTags => _transactionService.tags;
+
   // Controllers
   final TextEditingController notesController = TextEditingController();
 
@@ -37,9 +44,11 @@ class AddTransactionViewModel {
     required WalletService walletService,
     required TransactionService transactionService,
     required RouterService routerService,
+    required NotifyService notifyService,
   }) : _walletService = walletService,
        _transactionService = transactionService,
-       _routerService = routerService {
+       _routerService = routerService,
+       _notifyService = notifyService {
     notesController.addListener(() {
       notes.value = notesController.text;
     });
@@ -61,6 +70,40 @@ class AddTransactionViewModel {
 
   void setCategory(CategoryModel category) {
     selectedCategory.value = category;
+  }
+
+  /// Selects a preset category — inserting it into the database if it does not
+  /// already exist. This prevents duplicate categories from accumulating.
+  Future<void> selectOrInsertPresetCategory(PresetCategory preset) async {
+    // Check if this preset already exists in the DB (by name, case-insensitive).
+    final existing = categories.value.firstWhere(
+      (c) => c.name.toLowerCase() == preset.name.toLowerCase(),
+      orElse: () =>
+          CategoryModel(id: '', name: '', icon: '', color: '', userId: ''),
+    );
+
+    if (existing.id.isNotEmpty) {
+      // Already in the DB — just select it.
+      selectedCategory.value = existing;
+      return;
+    }
+
+    // Not in the DB yet — insert it then select it.
+    final newCategory = CategoryModel(
+      id: const Uuid().v4(),
+      userId: '',
+      name: preset.name,
+      icon: preset.icon.codePoint.toString(),
+      color: preset.color.toARGB32().toRadixString(16).padLeft(8, '0'),
+      isDirty: true,
+    );
+
+    try {
+      final saved = await _transactionService.addCategory(newCategory);
+      selectedCategory.value = saved;
+    } catch (e) {
+      debugPrint('Error inserting preset category: $e');
+    }
   }
 
   void setDate(DateTime newDate) {
@@ -121,9 +164,15 @@ class AddTransactionViewModel {
       );
 
       await _transactionService.addTransaction(transaction);
+      _notifyService.setToastEvent(
+        ToastEventSuccess(message: 'Transaction saved successfully'),
+      );
       return true;
     } catch (e) {
       debugPrint('Error saving transaction: $e');
+      _notifyService.setToastEvent(
+        ToastEventError(message: 'Failed to save transaction: $e'),
+      );
       return false;
     } finally {
       isSaving.value = false;

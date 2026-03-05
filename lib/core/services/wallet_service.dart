@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:expancetracker/core/services/sync_orchestration_service.dart';
 import 'package:expancetracker/wallet/data/models/account.dart';
 import 'package:expancetracker/wallet/data/repositories/wallet_repository.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,16 @@ import 'package:flutter/material.dart';
 /// Consumes the [WalletRepository] for offline-first data access
 /// and exposes reactive [ValueNotifier]s for UI binding.
 class WalletService {
-  WalletService({required WalletRepository repository})
-    : _repository = repository {
+  WalletService({
+    required WalletRepository repository,
+    required SyncOrchestrationService syncOrchestrationService,
+  }) : _repository = repository,
+       _syncOrchestrationService = syncOrchestrationService {
     _initialize();
   }
 
   final WalletRepository _repository;
+  final SyncOrchestrationService _syncOrchestrationService;
   StreamSubscription<List<Account>>? _accountsSubscription;
 
   // Shared State
@@ -23,7 +28,9 @@ class WalletService {
   final ValueNotifier<double> monthlyExpenses = ValueNotifier(0.0);
   final ValueNotifier<List<Account>> linkedAccounts = ValueNotifier([]);
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
-  final ValueNotifier<bool> isSyncing = ValueNotifier(false);
+
+  /// Sync state from the orchestrator for UI binding.
+  ValueNotifier<SyncState> get syncState => _syncOrchestrationService.syncState;
 
   /// Initializes the service by subscribing to account changes.
   void _initialize() {
@@ -60,14 +67,9 @@ class WalletService {
     await _repository.delete(id);
   }
 
-  /// Refreshes data from remote server.
+  /// Refreshes data by delegating to the sync orchestration service.
   Future<void> refresh() async {
-    isSyncing.value = true;
-    try {
-      await _repository.syncWithRemote();
-    } finally {
-      isSyncing.value = false;
-    }
+    await _syncOrchestrationService.syncAll();
   }
 
   /// Disposes resources.
@@ -78,6 +80,5 @@ class WalletService {
     monthlyExpenses.dispose();
     linkedAccounts.dispose();
     isLoading.dispose();
-    isSyncing.dispose();
   }
 }

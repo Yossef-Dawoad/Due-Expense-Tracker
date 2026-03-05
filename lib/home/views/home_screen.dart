@@ -193,6 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return RecentActivitySection(
                         transactions: _viewModel.recentTransactions.value,
                         categories: _viewModel.categories.value,
+                        onDeleteTransactions: _viewModel.deleteTransactions,
                         animationDelay: const Duration(milliseconds: 500),
                       );
                     },

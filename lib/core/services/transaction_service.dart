@@ -6,6 +6,7 @@ import 'package:expancetracker/transactions/models/transaction.dart';
 import 'package:expancetracker/transactions/repositories/category_repository.dart';
 import 'package:expancetracker/transactions/repositories/tag_repository.dart';
 import 'package:expancetracker/transactions/repositories/transaction_repository.dart';
+import 'package:expancetracker/core/services/sync_orchestration_service.dart';
 import 'package:flutter/material.dart';
 
 /// Service for managing transaction state shared across the app.
@@ -17,15 +18,18 @@ class TransactionService {
     required TransactionRepository repository,
     required CategoryRepository categoryRepository,
     required TagRepository tagRepository,
+    required SyncOrchestrationService syncOrchestrationService,
   }) : _repository = repository,
        _categoryRepository = categoryRepository,
-       _tagRepository = tagRepository {
+       _tagRepository = tagRepository,
+       _syncOrchestrationService = syncOrchestrationService {
     _initialize();
   }
 
   final TransactionRepository _repository;
   final CategoryRepository _categoryRepository;
   final TagRepository _tagRepository;
+  final SyncOrchestrationService _syncOrchestrationService;
   StreamSubscription<List<Transaction>>? _transactionsSubscription;
   StreamSubscription<List<CategoryModel>>? _categoriesSubscription;
   StreamSubscription<List<Tag>>? _tagsSubscription;
@@ -37,7 +41,9 @@ class TransactionService {
   final ValueNotifier<double> monthlyIncome = ValueNotifier(0.0);
   final ValueNotifier<double> monthlyExpenses = ValueNotifier(0.0);
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
-  final ValueNotifier<bool> isSyncing = ValueNotifier(false);
+
+  /// Sync state from the orchestrator for UI binding.
+  ValueNotifier<SyncState> get syncState => _syncOrchestrationService.syncState;
 
   /// Initializes the service by subscribing to transaction and category changes.
   void _initialize() {
@@ -87,6 +93,11 @@ class TransactionService {
     return _repository.add(transaction);
   }
 
+  /// Adds a new category to the local database.
+  Future<CategoryModel> addCategory(CategoryModel category) async {
+    return _categoryRepository.add(category);
+  }
+
   /// Updates an existing transaction.
   Future<void> updateTransaction(Transaction transaction) async {
     await _repository.update(transaction);
@@ -97,18 +108,9 @@ class TransactionService {
     await _repository.delete(id);
   }
 
-  /// Refreshes data from remote server.
+  /// Refreshes data by delegating to the sync orchestration service.
   Future<void> refresh() async {
-    isSyncing.value = true;
-    try {
-      await Future.wait([
-        _repository.syncWithRemote(),
-        _categoryRepository.syncWithRemote(),
-        _tagRepository.syncWithRemote(),
-      ]);
-    } finally {
-      isSyncing.value = false;
-    }
+    await _syncOrchestrationService.syncAll();
   }
 
   /// Adds a new tag locally.
@@ -125,6 +127,5 @@ class TransactionService {
     categories.dispose();
     tags.dispose();
     isLoading.dispose();
-    isSyncing.dispose();
   }
 }
