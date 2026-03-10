@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:expancetracker/core/common/intrefaces/datasource_interfaces.dart';
 import 'package:expancetracker/core/database/app_database.dart';
 import 'package:expancetracker/core/abstractions/database_abstraction.dart';
-import '../models/category.dart';
+import '../../models/category.dart';
 
 /// Local data source for categories using Drift (SQLite).
 class CategoriesLocalSource implements LocalDataSource<CategoryModel> {

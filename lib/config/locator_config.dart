@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:expancetracker/transactions/datasources/categories_local_source.dart';
-import 'package:expancetracker/transactions/datasources/categories_remote_datasource.dart';
+import 'package:expancetracker/transactions/datasources/local/categories_local_source.dart';
+import 'package:expancetracker/transactions/datasources/remote/categories_remote_datasource.dart';
 import 'package:expancetracker/transactions/repositories/category_repository.dart';
-import 'package:expancetracker/transactions/datasources/transaction_local_source.dart';
-import 'package:expancetracker/transactions/datasources/transaction_remote_source.dart';
+import 'package:expancetracker/transactions/datasources/local/transaction_local_source.dart';
+import 'package:expancetracker/transactions/datasources/remote/transaction_remote_source.dart';
 import 'package:expancetracker/transactions/repositories/transaction_repository.dart';
-import 'package:expancetracker/transactions/datasources/tag_local_source.dart';
-import 'package:expancetracker/transactions/datasources/tag_remote_source.dart';
+import 'package:expancetracker/transactions/datasources/local/tag_local_source.dart';
+import 'package:expancetracker/transactions/datasources/remote/tag_remote_source.dart';
 import 'package:expancetracker/transactions/repositories/tag_repository.dart';
 
 import 'package:expancetracker/core/database/app_database.dart';

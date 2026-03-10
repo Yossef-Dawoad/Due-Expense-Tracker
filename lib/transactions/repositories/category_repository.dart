@@ -1,8 +1,8 @@
 import 'package:logging/logging.dart';
 
 import 'package:expancetracker/core/common/intrefaces/datasource_interfaces.dart';
-import 'package:expancetracker/transactions/datasources/categories_local_source.dart';
-import 'package:expancetracker/transactions/datasources/categories_remote_datasource.dart';
+import 'package:expancetracker/transactions/datasources/local/categories_local_source.dart';
+import 'package:expancetracker/transactions/datasources/remote/categories_remote_datasource.dart';
 import 'package:expancetracker/transactions/models/category.dart';
 
 /// Offline-first repository for transaction categories.
@@ -41,21 +41,8 @@ class CategoryRepository implements OfflineFirstRepository<CategoryModel> {
     return _local.getAll();
   }
 
-  /// Alias for compatibility.
-  Future<List<CategoryModel>> getAllCategories() => getAll();
-
-  /// Alias for compatibility.
-  Future<CategoryModel> addNewCategory(CategoryModel category) => add(category);
-
   @override
   Future<CategoryModel?> getById(String id) => _local.getById(id);
-
-  /// Alias for compatibility.
-  Future<CategoryModel> getCategoryById(String id) async {
-    final cat = await getById(id);
-    if (cat == null) throw Exception('Category not found');
-    return cat;
-  }
 
   @override
   Future<void> update(CategoryModel item) async {

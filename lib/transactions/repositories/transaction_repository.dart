@@ -4,8 +4,8 @@ import 'package:logging/logging.dart';
 
 import '../../core/common/intrefaces/datasource_interfaces.dart';
 import '../models/transaction.dart';
-import '../datasources/transaction_local_source.dart';
-import '../datasources/transaction_remote_source.dart';
+import '../datasources/local/transaction_local_source.dart';
+import '../datasources/remote/transaction_remote_source.dart';
 
 /// Offline-first repository implementation for transactions.
 ///

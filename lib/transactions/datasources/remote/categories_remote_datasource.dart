@@ -1,5 +1,5 @@
 import 'package:expancetracker/core/common/intrefaces/remote_base.dart';
-import '../models/category.dart';
+import '../../models/category.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 /// Remote data source for categories using PocketBase.

@@ -1,8 +1,8 @@
 import 'package:logging/logging.dart';
 
 import 'package:expancetracker/core/common/intrefaces/datasource_interfaces.dart';
-import 'package:expancetracker/transactions/datasources/tag_local_source.dart';
-import 'package:expancetracker/transactions/datasources/tag_remote_source.dart';
+import 'package:expancetracker/transactions/datasources/local/tag_local_source.dart';
+import 'package:expancetracker/transactions/datasources/remote/tag_remote_source.dart';
 import 'package:expancetracker/transactions/models/tag.dart';
 
 /// Offline-first repository for transaction tags.
