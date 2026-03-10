@@ -110,6 +110,13 @@ class SyncOrchestrationService {
     _isSyncing = true;
     syncState.value = syncState.value.copyWith(status: SyncStatus.syncing);
 
+    var pendingBeforeSync = 0;
+    for (final repo in _repositories) {
+      try {
+        pendingBeforeSync += await repo.getDirtyCount();
+      } catch (_) {}
+    }
+
     var allSucceeded = true;
     String? lastErrorMessage;
 
@@ -142,11 +149,12 @@ class SyncOrchestrationService {
         pendingCount: totalPending,
       );
 
-      // If we previously had failures and now succeeded, notify user.
-      if (_hadPendingFailures) {
+      final clearedPendingChanges = pendingBeforeSync > 0 && totalPending == 0;
+
+      if (_hadPendingFailures || clearedPendingChanges) {
         _hadPendingFailures = false;
         _notifyService.setToastEvent(
-          ToastEventSuccess(message: 'All changes synced successfully'),
+          ToastEventSuccess(message: 'All your data is synced now'),
         );
         _log.info('Sync recovered — all changes synced');
       }

@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:expancetracker/core/common/sync/repository_sync_executor.dart';
 import 'package:logging/logging.dart';
+
+import 'package:expancetracker/core/services/connectivity_service.dart';
 
 import '../models/account.dart';
 import 'wallet_repository.dart';
@@ -13,13 +18,20 @@ class WalletRepositoryImpl implements WalletRepository {
   WalletRepositoryImpl({
     required WalletLocalSource localSource,
     required WalletRemoteSource remoteSource,
+    required ConnectivityService connectivityService,
   }) : _local = localSource,
-       _remote = remoteSource;
+       _remote = remoteSource,
+       _syncExecutor = RepositorySyncExecutor(
+         connectivityService: connectivityService,
+         logger: _log,
+         repositoryName: 'WalletRepositoryImpl',
+       );
 
   static final _log = Logger('WalletRepositoryImpl');
 
   final WalletLocalSource _local;
   final WalletRemoteSource _remote;
+  final RepositorySyncExecutor _syncExecutor;
 
   @override
   Future<List<Account>> getAll({bool forceRefresh = false}) async {
@@ -37,7 +49,7 @@ class WalletRepositoryImpl implements WalletRepository {
   Future<Account> add(Account item) async {
     final newItem = item.copyWith(isDirty: true, version: 1);
     final saved = await _local.insert(newItem);
-    _pushDirtyRecords().catchError((_) {});
+    unawaited(_syncExecutor.executeBackgroundSync(syncWithRemote));
     return saved;
   }
 
@@ -45,20 +57,22 @@ class WalletRepositoryImpl implements WalletRepository {
   Future<void> update(Account item) async {
     final updated = item.copyWith(isDirty: true, version: item.version + 1);
     await _local.update(updated);
-    _pushDirtyRecords().catchError((_) {});
+    unawaited(_syncExecutor.executeBackgroundSync(syncWithRemote));
   }
 
   @override
   Future<void> delete(String id) async {
     await _local.softDelete(id);
-    _pushDirtyRecords().catchError((_) {});
+    unawaited(_syncExecutor.executeBackgroundSync(syncWithRemote));
   }
 
   @override
   Future<void> syncWithRemote() async {
-    await _pushDirtyRecords();
-    await _pushDeletedRecords();
-    await _pullRemoteRecords();
+    await _syncExecutor.executeSync(
+      pushDirtyRecords: _pushDirtyRecords,
+      pushDeletedRecords: _pushDeletedRecords,
+      pullRemoteRecords: _pullRemoteRecords,
+    );
   }
 
   @override
@@ -69,63 +83,48 @@ class WalletRepositoryImpl implements WalletRepository {
   }
 
   /// PUSH: Upload all dirty local records.
-  Future<void> _pushDirtyRecords() async {
-    final dirtyItems = await _local.getDirtyRecords();
-    for (final item in dirtyItems) {
-      try {
-        if (item.remoteId != null) {
-          final synced = await _remote.updateItem(item);
-          await _local.update(
-            synced.copyWith(
-              isDirty: false,
-              lastSynced: DateTime.now().millisecondsSinceEpoch,
-            ),
-          );
-        } else {
-          final synced = await _remote.addNewItem(item);
-          await _local.update(
-            synced.copyWith(
-              isDirty: false,
-              lastSynced: DateTime.now().millisecondsSinceEpoch,
-            ),
-          );
-        }
-      } catch (e) {
-        _log.warning('Failed to push account ${item.id}', e);
-      }
-    }
+  Future<void> _pushDirtyRecords(List<String> failures) async {
+    await _syncExecutor.pushDirtyItems<Account>(
+      failures: failures,
+      getDirtyRecords: _local.getDirtyRecords,
+      isDeleted: (item) => item.isDeleted,
+      itemId: (item) => item.id,
+      remoteId: (item) => item.remoteId,
+      addRemoteItem: _remote.addNewItem,
+      updateRemoteItem: _remote.updateItem,
+      markAsSynced: (item, syncedAt) =>
+          item.copyWith(isDirty: false, lastSynced: syncedAt),
+      updateLocalItem: _local.update,
+      entityName: 'account',
+    );
   }
 
   /// PUSH: Send soft-deleted records for remote deletion.
-  Future<void> _pushDeletedRecords() async {
-    final deleted = await _local.getDeletedRecords();
-    for (final item in deleted) {
-      try {
-        if (item.remoteId != null) {
-          await _remote.deleteItem(item);
-        }
-        await _local.delete(item.id);
-      } catch (e) {
-        _log.warning('Failed to push deleted account ${item.id}', e);
-      }
-    }
+  Future<void> _pushDeletedRecords(List<String> failures) async {
+    await _syncExecutor.pushDeletedItems<Account>(
+      failures: failures,
+      getDeletedRecords: _local.getDeletedRecords,
+      itemId: (item) => item.id,
+      remoteId: (item) => item.remoteId,
+      deleteRemoteItem: _remote.deleteItem,
+      deleteLocalItem: _local.delete,
+      entityName: 'account',
+    );
   }
 
   /// PULL: Fetch remote records and merge with version comparison.
-  Future<void> _pullRemoteRecords() async {
-    final remoteItems = await _remote.getAllItems();
-    for (final remote in remoteItems) {
-      final local = await _local.getById(remote.id);
-      if (local == null) {
-        await _local.insertOrReplace(remote);
-      } else if (!local.isDirty) {
-        await _local.insertOrReplace(
-          remote.copyWith(
-            id: local.id,
-            lastSynced: DateTime.now().millisecondsSinceEpoch,
-          ),
-        );
-      }
-    }
+  Future<void> _pullRemoteRecords(List<String> failures) async {
+    await _syncExecutor.pullRemoteItems<Account>(
+      failures: failures,
+      getAllRemoteItems: _remote.getAllItems,
+      itemId: (item) => item.id,
+      getLocalById: _local.getById,
+      isDirty: (item) => item.isDirty,
+      mergeRemoteForLocal:
+          ({required remote, required local, required syncedAt}) =>
+              remote.copyWith(id: local.id, lastSynced: syncedAt),
+      upsertLocalItem: _local.insertOrReplace,
+      entityName: 'accounts',
+    );
   }
 }

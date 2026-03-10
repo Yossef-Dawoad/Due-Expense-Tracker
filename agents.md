@@ -1,334 +1,149 @@
-# Flutter Kit - Project Guidelines
-
-## Architecture Overview
-
-- Follow MVVM (Model-View-ViewModel)
-- Use ValueNotifier for state management, always created within a ViewModel
-- ViewModels handle page-specific state and logic
-- Views should only contain UI code and functionality related to BuildContext
-
-### When to create a Service vs keeping state in a ViewModel
-
-- **Default to ViewModel.** If state belongs to a single screen, keep it in the ViewModel.
-- **Create a Service only when** multiple ViewModels need to read or write the same state (e.g., auth status, user preferences, a shared cart). If only one ViewModel uses it, it's not a service.
-- Services are registered in the locator (`config/locator_config.dart`) and injected into ViewModels via constructor.
-
-## Architecture Rules
-
-1. Views should never use services directly, only through ViewModels.
-2. Views should contain no logic where possible — defer to the ViewModel.
-3. ViewModels should never use other ViewModels. Move shared functionality into a service.
-4. ViewModels should not have access to BuildContext. Defer to the View.
-5. Dependencies should always be injected through the constructor.
-6. ViewModels are responsible for cleaning up their own resources. Views call the ViewModel's dispose method.
-7. ValueNotifiers and other resources should be disposed in the ViewModel's dispose method, not in the View.
-
-## State Management
-
-- For single values, use `ValueNotifier<T>` directly
-- For multiple related values, create a state class and use `ValueNotifier<StateClass>`
-- This avoids having multiple ValueNotifiers and ensures atomic updates
-
-Example with state class:
-
-```dart
-class DogState {
-  final String name;
-  final int age;
-  final bool isHungry;
-
-  const DogState({
-    required this.name,
-    required this.age,
-    required this.isHungry,
-  });
-
-  DogState copyWith({
-    String? name,
-    int? age,
-    bool? isHungry,
-  }) {
-    return DogState(
-      name: name ?? this.name,
-      age: age ?? this.age,
-      isHungry: isHungry ?? this.isHungry,
-    );
-  }
-}
-
-class HomeViewModel {
-  const HomeViewModel({required NotifyService notifyService})
-    : _notifyService = notifyService;
-
-  final NotifyService _notifyService;
-
-  final ValueNotifier<DogState> _dogState = ValueNotifier(
-    const DogState(name: 'Rex', age: 3, isHungry: false),
-  );
-
-  ValueListenable<DogState> get dogState => _dogState;
-
-  void feedDog() {
-    _dogState.value = _dogState.value.copyWith(isHungry: false);
-    _notifyService.setToastEvent(ToastEventSuccess(message: 'Dog is fed'));
-  }
-
-  void dispose() {
-    _dogState.dispose();
-  }
-}
-```
-
-Example of a View using a ViewModel:
-
-```dart
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
-
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
-  late final HomeViewModel _viewModel = HomeViewModel(
-    notifyService: locator<NotifyService>(),
-  );
-
-  @override
-  void dispose() {
-    _viewModel.dispose();
-    super.dispose();
-  }
-
-  // build method
-}
-```
-
-## Directory Structure
-
-- `lib/`
-  - `config/`: Configure routes and services
-  - `core/`: Core application infrastructure
-    - `abstractions/`: Wrapping external dependencies
-    - `ui/`: Plain widgets and design system components
-      - `constants/`: Design tokens (colors, spacing, text styles, etc.)
-    - `utils/`: Shared utilities and core services
-      - `http/`: HTTP client abstractions and implementations
-      - `internal_notification/`: App-wide notification system
-      - `l10n/`: Internationalization and localization
-      - `navigation/`: Routing and navigation utilities
-      - `locator.dart`: Service locator setup
-  - `feature_name/`: Feature-specific code
-    - For simple features (<=5 files):
-      Place files directly in feature folder (e.g., `home/`, `startup/`, `not_found/`)
-    - For complex features:
-      - `models/`: Feature-specific models
-      - `services/`: Feature-specific services
-      - `viewmodels/`: Feature-specific ViewModels
-      - `views/`: Feature UI components
-      - `repositories/`: (Optional) Feature-specific data layer
-
-## Service Locator and Dependency Injection
-
-The app uses a custom service locator defined in `core/utils/locator.dart`.
-
-### Registering Services
-
-Services are registered in `config/locator_config.dart`:
-
-```dart
-final modules = [
-  Module<RouterService>(
-    builder: () => RouterService(routes: routes),
-    lazy: false, // Created immediately at app startup
-  ),
-  Module<NotifyService>(
-    builder: () => NotifyService(),
-    lazy: false,
-  ),
-  Module<HttpAbstraction>(
-    builder: () => HttpAbstraction(interceptors: [...]),
-    lazy: true, // Created when first requested
-  ),
-];
-```
-
-### Using Services in ViewModels
-
-ViewModels inject services through constructor parameters:
-
-```dart
-class HomeViewModel {
-  const HomeViewModel({
-    required NotifyService notifyService,
-    required RouterService routerService,
-  }) : _notifyService = notifyService,
-       _routerService = routerService;
-
-  final NotifyService _notifyService;
-  final RouterService _routerService;
-}
-```
-
-### Accessing Services in Views
-
-Views inject services when creating ViewModels:
-
-```dart
-class _HomeViewState extends State<HomeView> {
-  late final HomeViewModel _viewModel = HomeViewModel(
-    notifyService: locator<NotifyService>(),
-    routerService: locator<RouterService>(),
-  );
-}
-```
-
-### Lazy vs Non-Lazy Services
-
-- **`lazy: false`** - Created immediately at app startup (e.g., RouterService, NotifyService)
-- **`lazy: true`** - Created when first requested (e.g., HttpAbstraction)
-
-## Routing and Navigation
-
-The app uses `go_router` with a thin `RouterService` wrapper for context-free navigation in ViewModels.
-
-### Route Paths
-
-Route paths are defined as typed constants in `config/route_config.dart`:
-
-```dart
-abstract final class RoutePaths {
-  static const home = '/';
-  static const notFound = '/404';
-}
-```
-
-Always use `RoutePaths` constants instead of hardcoded path strings.
-
-### Creating New Routes
-
-Define routes in `config/route_config.dart`. **Use nested routes** to define parent-child relationships. go_router uses the hierarchy to build the navigation stack — child routes automatically get back navigation to their parent on mobile, while the URL updates on web.
-
-```dart
-final routes = [
-  GoRoute(
-    path: RoutePaths.home,
-    pageBuilder: (context, state) => _buildPage(const HomeView(), state),
-    routes: [
-      // Child of home — navigating here builds stack: home → profile
-      GoRoute(
-        path: 'profile/:userId', // no leading / for child routes
-        pageBuilder: (context, state) {
-          final userId = state.pathParameters['userId'] ?? '';
-          return _buildPage(ProfileView(userId: userId), state);
-        },
-      ),
-    ],
-  ),
-];
-```
-
-When adding a new route:
-1. Add a constant to `RoutePaths`
-2. Nest it under its logical parent route
-3. Use a relative path (no leading `/`) for child routes — go_router builds the full path from the hierarchy
-
-### go vs push
-
-- **Always default to `go`** for page navigation. It updates the URL on web, and go_router builds the correct back stack from the route hierarchy on mobile.
-- **Only use `push`** for temporary overlays that shouldn't have their own URL — bottom sheets, dialogs, multi-step flows.
-
-### Navigation in ViewModels
-
-ViewModels inject `RouterService` and use it for navigation:
-
-```dart
-class ProfileViewModel {
-  final RouterService _routerService;
-
-  ProfileViewModel({required RouterService routerService})
-    : _routerService = routerService;
-
-  void navigateToHome() {
-    _routerService.go(RoutePaths.home);
-  }
-}
-```
-
-### RouterService API
-
-- `go(location)` - Navigate to a route. Updates the URL. Builds back stack from route hierarchy. **Use this by default.**
-- `push(location)` - Push onto the stack without updating the URL. Only for modals/dialogs/flows.
-- `replace(location)` - Replace the current route
-- `pop()` - Go back (safe, checks `canPop()`)
-- `canPop()` - Check if back navigation is possible
-
-### Unknown Routes
-
-Unknown routes are automatically redirected to the 404 page via `onException` in `RouterService`.
-
-## Coding Conventions
-
-- Use PascalCase for class names (e.g., `TodoService`, `HomeViewModel`)
-- Use camelCase for variables and methods
-- Use comments sparingly — prefer self-documenting code through descriptive naming
-- All state in Services and ViewModels should use `ValueNotifier`
-- ViewModels must receive Services through constructor injection and forward their state with a getter
-- Views must use `ValueListenableBuilder` for state updates
-
-### File Naming
-
-Simple feature (flat structure):
-- `{feature_name}/{name}_model.dart`
-- `{feature_name}/{name}_service.dart`
-- `{feature_name}/{name}_view_model.dart`
-- `{feature_name}/{name}_view.dart`
-
-Complex feature (with subdirectories):
-- `{feature_name}/models/{name}.dart`
-- `{feature_name}/services/{name}_service.dart`
-- `{feature_name}/viewmodels/{name}_view_model.dart`
-- `{feature_name}/views/{name}_view.dart`
-
-## Testing
-
-Tests should mirror the source file location in the `test/` folder.
-
-- **Unit tests**: input <-> output
-- **Widget tests**: action <-> result
-
-### Testing Requirements
-
-- Unit tests should focus on methods with clear input/output transformations
-- Widget tests required for Views
-- Follow Arrange-Act-Assert pattern
-- Mock dependencies using Fake classes
-- Widget tests should test the View with its real ViewModel (no mocking)
-- Simple ViewModels with functionality covered by widget tests may not need separate unit tests
-- Tests should verify behavior, not implementation details
-
-### Widget Test Example
-
-```dart
-void main() {
-  testWidgets('CounterView increments counter when button is pressed', (tester) async {
-    await tester.pumpWidget(MaterialApp(home: CounterView()));
-
-    expect(find.text('Counter: 0'), findsOneWidget);
-
-    await tester.tap(find.byType(ElevatedButton));
-    await tester.pump();
-
-    expect(find.text('Counter: 1'), findsOneWidget);
-  });
-}
-```
-
-## Skills
-
-Context-specific patterns loaded automatically via `.claude/skills/`:
-
-| Skill | When Loaded |
-|-------|------------|
-| `create-feature` | Scaffolding a new feature (View, ViewModel, route) |
-| `create-service` | Creating an app-wide service for shared state between ViewModels |
+# AGENTS.md
+Operating guide for agentic coding tools in `Due-Expense-Tracker`.
+
+## Project Overview
+- App: Flutter expense tracker (`expancetracker`)
+- Dart SDK: `>=3.10.1 <4.0.0`
+- Flutter SDK: `3.41.3`
+- Architecture: MVVM + Service Locator + offline-first repositories
+- Local DB: Drift (`AppDatabase`)
+- Remote backend: PocketBase
+- Navigation: `go_router` via `RouterService`
+- State: `ValueNotifier` + `ValueListenableBuilder`
+- Codegen: `build_runner`, `drift_dev`, `dart_mappable`, `envied`
+
+## Rule Sources Checked
+- `.cursor/rules/`: not found
+- `.cursorrules`: not found
+- `.github/copilot-instructions.md`: not found
+- Existing root `AGENTS.md`: not found before creating this file
+
+If Cursor/Copilot rule files are added later, treat them as higher-priority and
+merge their guidance into this document.
+
+## Core Commands
+- Run from repo root: `C:\Users\joedev\dev\Due-Expense-Tracker`
+- Install dependencies: `flutter pub get`
+- Generate code (Drift/mappable/env changes): `dart run build_runner build --delete-conflicting-outputs`
+- Clean + regenerate codegen: `dart run build_runner clean` then `dart run build_runner build --delete-conflicting-outputs`
+- Format: `dart format .`
+- Analyze/lint: `flutter analyze`
+- Run all tests: `flutter test`
+- Run one test file: `flutter test test/wallet/wallet_repository_test.dart`
+- Run one test by name: `flutter test test/wallet/wallet_repository_test.dart --plain-name "should return accounts from local source"`
+- Build APK (CI-aligned): `flutter clean` then `flutter build apk --release --no-tree-shake-icons`
+- `--plain-name` supports substring matching; use a unique phrase.
+
+## CI Reference
+Workflow: `.github/workflows/android_build.yml`
+
+Pipeline currently runs:
+1. `dart run build_runner clean`
+2. `dart run build_runner build --delete-conflicting-outputs`
+3. `flutter clean`
+4. `flutter build apk --release --no-tree-shake-icons`
+
+Recommended pre-PR checks:
+1. `dart run build_runner build --delete-conflicting-outputs` (if relevant)
+2. `dart format .`
+3. `flutter analyze`
+4. `flutter test`
+
+## Practical Execution Order
+Use this order unless a task explicitly asks otherwise:
+1. Read nearby files to match existing patterns.
+2. Implement minimal, scoped code changes.
+3. Run targeted test file(s) first.
+4. Run `flutter analyze` for touched areas/full project.
+5. Run `flutter test` for broad confidence.
+6. If schema/annotations changed, run codegen before analyze/tests.
+
+Fast path examples:
+- ViewModel/UI-only tweak: `dart format .` -> single test file -> `flutter analyze`
+- Repository/data-source change: codegen if needed -> focused tests -> `flutter test`
+- Route changes: run navigation-related tests + smoke test app startup
+
+Definition of done for agent changes:
+- Code compiles and follows lint/type rules.
+- New behavior covered by at least one relevant test when feasible.
+- No manual edits to generated files.
+- Commands used are documented in task notes when non-obvious.
+
+## Architecture And Layering Rules
+- Follow MVVM.
+- Views: UI + `BuildContext`-dependent behavior only.
+- ViewModels: presentation logic/state; do not depend on `BuildContext`.
+- Services: shared cross-screen state and coordination.
+- Keep screen-local state in the owning ViewModel.
+- Avoid ViewModel-to-ViewModel dependencies.
+- Prefer constructor injection with explicit `required` params.
+- Register app-wide modules in `lib/config/locator_config.dart`.
+- Dispose owned notifiers/controllers/subscriptions in the owning layer.
+
+## State Management Conventions
+- Use `ValueNotifier<T>` for single value state.
+- For related fields, use one state model + one notifier when practical.
+- Update collection values immutably (`value = [...value, item]`).
+- Bind UI with `ValueListenableBuilder`.
+- Expose notifier-backed read access via getters where it improves ergonomics.
+
+## Navigation Conventions
+- Keep route constants in `lib/core/utils/navigation/routes.dart`.
+- Do not hardcode route literals in feature code.
+- Use `RouterService.go(...)` for primary navigation.
+- Use `push(...)` for temporary/modal flows.
+- Unknown routes should end at `Routes.notFound`.
+
+## Import And File Organization
+- Prefer package imports for app code:
+  - `import 'package:expancetracker/...';`
+- Relative imports exist; avoid adding new deep relative imports when package
+  imports are clear.
+- Keep import groups stable:
+  1. Dart SDK
+  2. Flutter/package
+  3. App imports
+- Avoid analyzer violations like `implementation_imports`.
+- Keep files within feature folders (`home/`, `transactions/`, `wallet/`, etc.).
+
+## Types, Naming, And API Shape
+- Classes/enums/typedefs: PascalCase.
+- Variables/methods/params: camelCase.
+- File names: `snake_case.dart`.
+- Route constants currently use `lowerCamelCase` static const names.
+- Prefer explicit types when inference is not obvious.
+- Do not introduce implicit `dynamic` or implicit casts.
+
+## Formatting And Lint Expectations
+- Use `dart format .` for all touched files.
+- Project includes `package:flutter_lints/flutter.yaml`.
+- Strong mode is strict (`implicit-casts: false`, `implicit-dynamic: false`).
+- Keep code warning-free under `flutter analyze` where possible.
+
+## Error Handling And Logging
+- Add `try/catch` at I/O boundaries (datasources/repositories/services).
+- In offline-first sync loops, log per-item failures and continue when safe.
+- Propagate critical sync failures to orchestration/retry layers.
+- Avoid silent failure unless intentionally delegated and documented.
+- Surface user-facing errors via `NotifyService`/toast events.
+
+## Generated Files Policy
+- Do not hand-edit generated files:
+  - `*.g.dart`
+  - `*.mapper.dart`
+- Regenerate after changing source annotations/schema.
+- Keep generated artifacts in sync before commit.
+
+## Testing Guidance
+- Mirror feature structure from `lib/` into `test/`.
+- Use Arrange-Act-Assert style.
+- Use `mocktail` for boundary mocking.
+- Keep unit tests deterministic (no real network/filesystem).
+- For Drift tests, prefer in-memory DB (`NativeDatabase.memory()`).
+
+## Agent Workflow Tips
+- Read nearby files first to match local conventions.
+- Keep diffs focused; avoid unrelated refactors.
+- Run targeted tests first, then broader checks.
+- If codegen is affected, run generation before analyze/test.
+- Package name typo `expancetracker` is intentional; do not “fix” globally.

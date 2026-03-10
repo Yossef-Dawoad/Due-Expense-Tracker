@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:logging/logging.dart';
 
 import '../../core/common/intrefaces/datasource_interfaces.dart';
+import '../../core/common/sync/repository_sync_executor.dart';
+import '../../core/services/connectivity_service.dart';
 import '../models/transaction.dart';
 import '../datasources/local/transaction_local_source.dart';
 import '../datasources/remote/transaction_remote_source.dart';
@@ -16,13 +18,20 @@ class TransactionRepository implements OfflineFirstRepository<Transaction> {
   TransactionRepository({
     required TransactionLocalSource localSource,
     required TransactionRemoteSource remoteSource,
+    required ConnectivityService connectivityService,
   }) : _local = localSource,
-       _remote = remoteSource;
+       _remote = remoteSource,
+       _syncExecutor = RepositorySyncExecutor(
+         connectivityService: connectivityService,
+         logger: _log,
+         repositoryName: 'TransactionRepository',
+       );
 
   static final _log = Logger('TransactionRepositoryImpl');
 
   final TransactionLocalSource _local;
   final TransactionRemoteSource _remote;
+  final RepositorySyncExecutor _syncExecutor;
 
   @override
   Future<List<Transaction>> getAll({bool forceRefresh = false}) async {
@@ -40,8 +49,7 @@ class TransactionRepository implements OfflineFirstRepository<Transaction> {
   Future<Transaction> add(Transaction item) async {
     final newItem = item.copyWith(isDirty: true, version: 1);
     final saved = await _local.insert(newItem);
-    // Optimistic push — errors are handled by the sync orchestrator.
-    _pushDirtyRecords().catchError((_) {});
+    unawaited(_syncExecutor.executeBackgroundSync(syncWithRemote));
     return saved;
   }
 
@@ -49,20 +57,22 @@ class TransactionRepository implements OfflineFirstRepository<Transaction> {
   Future<void> update(Transaction item) async {
     final updated = item.copyWith(isDirty: true, version: item.version + 1);
     await _local.update(updated);
-    _pushDirtyRecords().catchError((_) {});
+    unawaited(_syncExecutor.executeBackgroundSync(syncWithRemote));
   }
 
   @override
   Future<void> delete(String id) async {
     await _local.softDelete(id);
-    _pushDirtyRecords().catchError((_) {});
+    unawaited(_syncExecutor.executeBackgroundSync(syncWithRemote));
   }
 
   @override
   Future<void> syncWithRemote() async {
-    await _pushDirtyRecords();
-    await _pushDeletedRecords();
-    await _pullRemoteRecords();
+    await _syncExecutor.executeSync(
+      pushDirtyRecords: _pushDirtyRecords,
+      pushDeletedRecords: _pushDeletedRecords,
+      pullRemoteRecords: _pullRemoteRecords,
+    );
   }
 
   @override
@@ -73,64 +83,48 @@ class TransactionRepository implements OfflineFirstRepository<Transaction> {
   }
 
   /// PUSH dirty records to remote.
-  Future<void> _pushDirtyRecords() async {
-    final dirtyItems = await _local.getDirtyRecords();
-    for (final item in dirtyItems) {
-      try {
-        if (item.remoteId != null) {
-          final synced = await _remote.updateItem(item);
-          await _local.update(
-            synced.copyWith(
-              isDirty: false,
-              lastSynced: DateTime.now().millisecondsSinceEpoch,
-            ),
-          );
-        } else {
-          final synced = await _remote.addNewItem(item);
-          await _local.update(
-            synced.copyWith(
-              isDirty: false,
-              lastSynced: DateTime.now().millisecondsSinceEpoch,
-            ),
-          );
-        }
-      } catch (e) {
-        _log.warning('Failed to push transaction ${item.id}', e);
-        // Continue with remaining items — the record stays dirty for retry.
-      }
-    }
+  Future<void> _pushDirtyRecords(List<String> failures) async {
+    await _syncExecutor.pushDirtyItems<Transaction>(
+      failures: failures,
+      getDirtyRecords: _local.getDirtyRecords,
+      isDeleted: (item) => item.isDeleted,
+      itemId: (item) => item.id,
+      remoteId: (item) => item.remoteId,
+      addRemoteItem: _remote.addNewItem,
+      updateRemoteItem: _remote.updateItem,
+      markAsSynced: (item, syncedAt) =>
+          item.copyWith(isDirty: false, lastSynced: syncedAt),
+      updateLocalItem: _local.update,
+      entityName: 'transaction',
+    );
   }
 
   /// PUSH soft-deleted records for remote deletion.
-  Future<void> _pushDeletedRecords() async {
-    final deleted = await _local.getDeletedRecords();
-    for (final item in deleted) {
-      try {
-        if (item.remoteId != null) {
-          await _remote.deleteItem(item);
-        }
-        await _local.delete(item.id);
-      } catch (e) {
-        _log.warning('Failed to push deleted transaction ${item.id}', e);
-      }
-    }
+  Future<void> _pushDeletedRecords(List<String> failures) async {
+    await _syncExecutor.pushDeletedItems<Transaction>(
+      failures: failures,
+      getDeletedRecords: _local.getDeletedRecords,
+      itemId: (item) => item.id,
+      remoteId: (item) => item.remoteId,
+      deleteRemoteItem: _remote.deleteItem,
+      deleteLocalItem: _local.delete,
+      entityName: 'transaction',
+    );
   }
 
   /// PULL remote records and merge.
-  Future<void> _pullRemoteRecords() async {
-    final remoteItems = await _remote.getAllItems();
-    for (final remote in remoteItems) {
-      final local = await _local.getById(remote.id);
-      if (local == null) {
-        await _local.insertOrReplace(remote);
-      } else if (!local.isDirty) {
-        await _local.insertOrReplace(
-          remote.copyWith(
-            id: local.id,
-            lastSynced: DateTime.now().millisecondsSinceEpoch,
-          ),
-        );
-      }
-    }
+  Future<void> _pullRemoteRecords(List<String> failures) async {
+    await _syncExecutor.pullRemoteItems<Transaction>(
+      failures: failures,
+      getAllRemoteItems: _remote.getAllItems,
+      itemId: (item) => item.id,
+      getLocalById: _local.getById,
+      isDirty: (item) => item.isDirty,
+      mergeRemoteForLocal:
+          ({required remote, required local, required syncedAt}) =>
+              remote.copyWith(id: local.id, lastSynced: syncedAt),
+      upsertLocalItem: _local.insertOrReplace,
+      entityName: 'transactions',
+    );
   }
 }

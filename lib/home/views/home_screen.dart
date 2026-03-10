@@ -4,6 +4,7 @@ import 'package:expancetracker/home/viewmodel/home_viewmodel.dart';
 import 'package:expancetracker/home/views/widgets/budget_overview_card.dart';
 import 'package:expancetracker/home/views/widgets/daily_insight_card.dart';
 import 'package:expancetracker/home/views/widgets/home_app_bar.dart';
+import 'package:expancetracker/home/views/widgets/home_sync_status_card.dart';
 import 'package:expancetracker/home/views/widgets/income_expense_summary_row.dart';
 import 'package:expancetracker/home/views/widgets/recent_activity_section.dart';
 import 'package:expancetracker/home/views/widgets/today_spending_hero_section.dart';
@@ -18,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late final HomeViewModel _viewModel;
+  bool _showSyncDetails = false;
 
   @override
   void initState() {
@@ -52,7 +54,56 @@ class _HomeScreenState extends State<HomeScreen> {
                   // ── App Bar ── HTML: pt-6 pb-2
                   FadeInAnimation(
                     duration: AnimationDurations.short,
-                    child: const HomeAppBar(),
+                    child: ListenableBuilder(
+                      listenable: Listenable.merge([
+                        _viewModel.isConnected,
+                        _viewModel.syncState,
+                      ]),
+                      builder: (context, _) {
+                        return HomeAppBar(
+                          isConnected: _viewModel.isConnected.value,
+                          syncState: _viewModel.syncState.value,
+                          onSyncPressed: () {
+                            setState(() {
+                              _showSyncDetails = !_showSyncDetails;
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  ),
+
+                  AnimatedSwitcher(
+                    duration: context.durations.duration200,
+                    transitionBuilder: (child, animation) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: SizeTransition(
+                          sizeFactor: animation,
+                          axisAlignment: -1,
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: !_showSyncDetails
+                        ? const SizedBox.shrink()
+                        : Padding(
+                            key: const ValueKey('sync-details-card'),
+                            padding: EdgeInsets.only(top: spacing.s4),
+                            child: ListenableBuilder(
+                              listenable: Listenable.merge([
+                                _viewModel.isConnected,
+                                _viewModel.syncState,
+                              ]),
+                              builder: (context, _) {
+                                return HomeSyncStatusCard(
+                                  isConnected: _viewModel.isConnected.value,
+                                  syncState: _viewModel.syncState.value,
+                                  onRefresh: _viewModel.refreshSync,
+                                );
+                              },
+                            ),
+                          ),
                   ),
 
                   // ── Hero Spending Section ──

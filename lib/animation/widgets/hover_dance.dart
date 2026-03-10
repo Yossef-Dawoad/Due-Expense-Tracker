@@ -82,10 +82,7 @@ class _HoverDanceAnimationState extends State<HoverDanceAnimation>
 
         return Transform.translate(
           offset: Offset(0, dy),
-          child: Transform.rotate(
-            angle: rotation,
-            child: child,
-          ),
+          child: Transform.rotate(angle: rotation, child: child),
         );
       },
       child: widget.child,

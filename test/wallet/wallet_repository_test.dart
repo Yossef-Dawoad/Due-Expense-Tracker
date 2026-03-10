@@ -1,8 +1,10 @@
+import 'package:expancetracker/core/services/connectivity_service.dart';
 import 'package:expancetracker/wallet/data/datasources/wallet_local_source.dart';
 import 'package:expancetracker/wallet/data/datasources/wallet_remote_source.dart';
 import 'package:expancetracker/wallet/data/repositories/wallet_repository_impl.dart';
 import 'package:expancetracker/wallet/data/models/account.dart';
 import 'package:expancetracker/wallet/data/repositories/wallet_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -10,11 +12,15 @@ class MockWalletLocalSource extends Mock implements WalletLocalSource {}
 
 class MockWalletRemoteSource extends Mock implements WalletRemoteSource {}
 
+class MockConnectivityService extends Mock implements ConnectivityService {}
+
 class FakeAccount extends Fake implements Account {}
 
 void main() {
   late MockWalletLocalSource mockLocalSource;
   late MockWalletRemoteSource mockRemoteSource;
+  late MockConnectivityService mockConnectivityService;
+  late ValueNotifier<bool> isConnected;
   late WalletRepository repository;
 
   setUpAll(() {
@@ -24,10 +30,21 @@ void main() {
   setUp(() {
     mockLocalSource = MockWalletLocalSource();
     mockRemoteSource = MockWalletRemoteSource();
+    mockConnectivityService = MockConnectivityService();
+    isConnected = ValueNotifier(true);
+    when(() => mockConnectivityService.isConnected).thenReturn(isConnected);
+    when(
+      () => mockConnectivityService.checkConnectivity(),
+    ).thenAnswer((_) async => isConnected.value);
     repository = WalletRepositoryImpl(
       localSource: mockLocalSource,
       remoteSource: mockRemoteSource,
+      connectivityService: mockConnectivityService,
     );
+  });
+
+  tearDown(() {
+    isConnected.dispose();
   });
 
   Account createTestAccount({
@@ -248,12 +265,42 @@ void main() {
         when(() => mockLocalSource.update(any())).thenAnswer((_) async {});
         when(() => mockRemoteSource.getAllItems()).thenAnswer((_) async => []);
 
-        await repository.syncWithRemote();
+        await expectLater(
+          repository.syncWithRemote(),
+          throwsA(isA<Exception>()),
+        );
 
         // Both items were attempted.
         verify(() => mockRemoteSource.addNewItem(any())).called(2);
         // Only the second (successful) item was updated locally.
         verify(() => mockLocalSource.update(any())).called(1);
+      });
+
+      test('should skip sync when offline', () async {
+        isConnected.value = false;
+
+        await repository.syncWithRemote();
+
+        verifyNever(() => mockRemoteSource.getAllItems());
+        verifyNever(() => mockLocalSource.getDirtyRecords());
+      });
+    });
+
+    group('connectivity-aware background sync', () {
+      test('should not call remote sync when adding while offline', () async {
+        isConnected.value = false;
+        final account = createTestAccount();
+        when(() => mockLocalSource.insert(any())).thenAnswer((
+          invocation,
+        ) async {
+          return invocation.positionalArguments[0] as Account;
+        });
+
+        await repository.add(account);
+        await Future<void>.delayed(const Duration(milliseconds: 10));
+
+        verifyNever(() => mockRemoteSource.addNewItem(any()));
+        verifyNever(() => mockRemoteSource.updateItem(any()));
       });
     });
   });

@@ -1,4 +1,5 @@
 import 'package:drift/native.dart';
+import 'package:expancetracker/core/services/connectivity_service.dart';
 import 'package:expancetracker/core/database/app_database.dart';
 import 'package:expancetracker/core/abstractions/database_abstraction.dart';
 import 'package:expancetracker/wallet/data/datasources/wallet_local_source.dart';
@@ -6,6 +7,7 @@ import 'package:expancetracker/wallet/data/datasources/wallet_remote_source.dart
 import 'package:expancetracker/wallet/data/repositories/wallet_repository_impl.dart';
 import 'package:expancetracker/wallet/data/models/account.dart';
 import 'package:expancetracker/wallet/data/repositories/wallet_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:pocketbase/pocketbase.dart';
@@ -15,6 +17,8 @@ class MockPocketBase extends Mock implements PocketBase {}
 class MockRecordService extends Mock implements RecordService {}
 
 class MockRecordModel extends Mock implements RecordModel {}
+
+class MockConnectivityService extends Mock implements ConnectivityService {}
 
 class FakeAccount extends Fake implements Account {}
 
@@ -27,6 +31,8 @@ void main() {
   late WalletLocalSource localSource;
   late MockPocketBase mockPocketBase;
   late MockRecordService mockRecordService;
+  late MockConnectivityService mockConnectivityService;
+  late ValueNotifier<bool> isConnected;
   late WalletRemoteSource remoteSource;
   late WalletRepository repository;
 
@@ -42,6 +48,12 @@ void main() {
     // Create mocked remote source
     mockPocketBase = MockPocketBase();
     mockRecordService = MockRecordService();
+    mockConnectivityService = MockConnectivityService();
+    isConnected = ValueNotifier(true);
+    when(() => mockConnectivityService.isConnected).thenReturn(isConnected);
+    when(
+      () => mockConnectivityService.checkConnectivity(),
+    ).thenAnswer((_) async => isConnected.value);
     when(
       () => mockPocketBase.collection('accounts'),
     ).thenReturn(mockRecordService);
@@ -51,10 +63,12 @@ void main() {
     repository = WalletRepositoryImpl(
       localSource: localSource,
       remoteSource: remoteSource,
+      connectivityService: mockConnectivityService,
     );
   });
 
   tearDown(() async {
+    isConnected.dispose();
     await database.close();
   });
 

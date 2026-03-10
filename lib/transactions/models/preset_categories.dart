@@ -61,3 +61,15 @@ const List<PresetCategory> kPresetCategories = [
     color: Color(0xFFB0B0B0),
   ),
 ];
+
+/// Icons available for custom category creation in the Select Category screen.
+const List<IconData> kCustomCategoryIcons = [
+  Icons.circle,
+  Icons.square_rounded,
+  Icons.change_history,
+  Icons.pentagon,
+  Icons.star,
+  Icons.favorite,
+  Icons.token,
+  Icons.category,
+];

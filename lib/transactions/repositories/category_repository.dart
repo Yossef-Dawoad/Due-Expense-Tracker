@@ -1,6 +1,10 @@
+import 'dart:async';
+
+import 'package:expancetracker/core/common/sync/repository_sync_executor.dart';
 import 'package:logging/logging.dart';
 
 import 'package:expancetracker/core/common/intrefaces/datasource_interfaces.dart';
+import 'package:expancetracker/core/services/connectivity_service.dart';
 import 'package:expancetracker/transactions/datasources/local/categories_local_source.dart';
 import 'package:expancetracker/transactions/datasources/remote/categories_remote_datasource.dart';
 import 'package:expancetracker/transactions/models/category.dart';
@@ -13,26 +17,33 @@ class CategoryRepository implements OfflineFirstRepository<CategoryModel> {
   CategoryRepository({
     required CategoriesLocalSource localSource,
     required CategoriesRemoteDataSource remoteSource,
+    required ConnectivityService connectivityService,
   }) : _local = localSource,
-       _remote = remoteSource;
+       _remote = remoteSource,
+       _syncExecutor = RepositorySyncExecutor(
+         connectivityService: connectivityService,
+         logger: _log,
+         repositoryName: 'CategoryRepository',
+       );
 
   static final _log = Logger('CategoryRepository');
 
   final CategoriesLocalSource _local;
   final CategoriesRemoteDataSource _remote;
+  final RepositorySyncExecutor _syncExecutor;
 
   @override
   Future<CategoryModel> add(CategoryModel item) async {
     final newItem = item.copyWith(isDirty: true, version: 1);
     final saved = await _local.insert(newItem);
-    _pushDirtyRecords().catchError((_) {});
+    unawaited(_syncExecutor.executeBackgroundSync(syncWithRemote));
     return saved;
   }
 
   @override
   Future<void> delete(String id) async {
     await _local.softDelete(id);
-    _pushDirtyRecords().catchError((_) {});
+    unawaited(_syncExecutor.executeBackgroundSync(syncWithRemote));
   }
 
   @override
@@ -48,7 +59,7 @@ class CategoryRepository implements OfflineFirstRepository<CategoryModel> {
   Future<void> update(CategoryModel item) async {
     final updated = item.copyWith(isDirty: true, version: item.version + 1);
     await _local.update(updated);
-    _pushDirtyRecords().catchError((_) {});
+    unawaited(_syncExecutor.executeBackgroundSync(syncWithRemote));
   }
 
   @override
@@ -56,9 +67,11 @@ class CategoryRepository implements OfflineFirstRepository<CategoryModel> {
 
   @override
   Future<void> syncWithRemote() async {
-    await _pushDirtyRecords();
-    await _pushDeletedRecords();
-    await _pullRemoteRecords();
+    await _syncExecutor.executeSync(
+      pushDirtyRecords: _pushDirtyRecords,
+      pushDeletedRecords: _pushDeletedRecords,
+      pullRemoteRecords: _pullRemoteRecords,
+    );
   }
 
   @override
@@ -69,63 +82,48 @@ class CategoryRepository implements OfflineFirstRepository<CategoryModel> {
   }
 
   /// PUSH dirty records to remote.
-  Future<void> _pushDirtyRecords() async {
-    final dirtyItems = await _local.getDirtyRecords();
-    for (final item in dirtyItems) {
-      try {
-        if (item.remoteId != null) {
-          final synced = await _remote.updateItem(item);
-          await _local.update(
-            synced.copyWith(
-              isDirty: false,
-              lastSynced: DateTime.now().millisecondsSinceEpoch,
-            ),
-          );
-        } else {
-          final synced = await _remote.addNewItem(item);
-          await _local.update(
-            synced.copyWith(
-              isDirty: false,
-              lastSynced: DateTime.now().millisecondsSinceEpoch,
-            ),
-          );
-        }
-      } catch (e) {
-        _log.warning('Failed to push category ${item.id}', e);
-      }
-    }
+  Future<void> _pushDirtyRecords(List<String> failures) async {
+    await _syncExecutor.pushDirtyItems<CategoryModel>(
+      failures: failures,
+      getDirtyRecords: _local.getDirtyRecords,
+      isDeleted: (item) => item.isDeleted,
+      itemId: (item) => item.id,
+      remoteId: (item) => item.remoteId,
+      addRemoteItem: _remote.addNewItem,
+      updateRemoteItem: _remote.updateItem,
+      markAsSynced: (item, syncedAt) =>
+          item.copyWith(isDirty: false, lastSynced: syncedAt),
+      updateLocalItem: _local.update,
+      entityName: 'category',
+    );
   }
 
   /// PUSH soft-deleted records for remote deletion.
-  Future<void> _pushDeletedRecords() async {
-    final deleted = await _local.getDeletedRecords();
-    for (final item in deleted) {
-      try {
-        if (item.remoteId != null) {
-          await _remote.deleteItem(item);
-        }
-        await _local.delete(item.id);
-      } catch (e) {
-        _log.warning('Failed to push deleted category ${item.id}', e);
-      }
-    }
+  Future<void> _pushDeletedRecords(List<String> failures) async {
+    await _syncExecutor.pushDeletedItems<CategoryModel>(
+      failures: failures,
+      getDeletedRecords: _local.getDeletedRecords,
+      itemId: (item) => item.id,
+      remoteId: (item) => item.remoteId,
+      deleteRemoteItem: _remote.deleteItem,
+      deleteLocalItem: _local.delete,
+      entityName: 'category',
+    );
   }
 
   /// PULL remote records and merge.
-  Future<void> _pullRemoteRecords() async {
-    final remoteItems = await _remote.getAllItems();
-    for (final remote in remoteItems) {
-      final local = await _local.getById(remote.id);
-      if (local == null) {
-        await _local.insertOrReplace(remote);
-      } else if (!local.isDirty) {
-        await _local.insertOrReplace(
-          remote.copyWith(
-            id: local.id,
-            lastSynced: DateTime.now().millisecondsSinceEpoch,
-          ),
-        );
-      }
-    }
+  Future<void> _pullRemoteRecords(List<String> failures) async {
+    await _syncExecutor.pullRemoteItems<CategoryModel>(
+      failures: failures,
+      getAllRemoteItems: _remote.getAllItems,
+      itemId: (item) => item.id,
+      getLocalById: _local.getById,
+      isDirty: (item) => item.isDirty,
+      mergeRemoteForLocal:
+          ({required remote, required local, required syncedAt}) =>
+              remote.copyWith(id: local.id, lastSynced: syncedAt),
+      upsertLocalItem: _local.insertOrReplace,
+      entityName: 'categories',
+    );
   }
 }

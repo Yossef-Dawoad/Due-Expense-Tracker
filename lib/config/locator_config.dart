@@ -84,18 +84,27 @@ final modules = [
 
   /// Register Repos
   Module<CategoryRepository>(
-    builder: () =>
-        CategoryRepository(localSource: locator(), remoteSource: locator()),
+    builder: () => CategoryRepository(
+      localSource: locator(),
+      remoteSource: locator(),
+      connectivityService: locator(),
+    ),
     lazy: true,
   ),
   Module<WalletRepository>(
-    builder: () =>
-        WalletRepositoryImpl(localSource: locator(), remoteSource: locator()),
+    builder: () => WalletRepositoryImpl(
+      localSource: locator(),
+      remoteSource: locator(),
+      connectivityService: locator(),
+    ),
     lazy: true,
   ),
   Module<TransactionRepository>(
-    builder: () =>
-        TransactionRepository(localSource: locator(), remoteSource: locator()),
+    builder: () => TransactionRepository(
+      localSource: locator(),
+      remoteSource: locator(),
+      connectivityService: locator(),
+    ),
     lazy: true,
   ),
 
@@ -108,8 +117,11 @@ final modules = [
   Module<TagRemoteSource>(builder: () => TagRemoteSource(), lazy: true),
 
   Module<TagRepository>(
-    builder: () =>
-        TagRepository(localSource: locator(), remoteSource: locator()),
+    builder: () => TagRepository(
+      localSource: locator(),
+      remoteSource: locator(),
+      connectivityService: locator(),
+    ),
     lazy: true,
   ),
 
