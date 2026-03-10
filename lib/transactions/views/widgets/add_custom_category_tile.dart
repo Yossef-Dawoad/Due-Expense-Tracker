@@ -44,25 +44,20 @@ class AddCustomCategoryTile extends StatelessWidget {
 
 /// Paints a dashed rounded-rect border for the "Add Custom" tile.
 class _DashedBorderPainter extends CustomPainter {
-  _DashedBorderPainter({
-    required this.color,
-    this.strokeWidth = 2,
-    this.dashWidth = 6,
-    this.dashSpace = 4,
-    this.borderRadius = 16,
-  });
+  _DashedBorderPainter({required this.color, required this.borderRadius});
 
   final Color color;
-  final double strokeWidth;
-  final double dashWidth;
-  final double dashSpace;
   final double borderRadius;
+
+  static const double _strokeWidth = 2;
+  static const double _dashWidth = 6;
+  static const double _dashSpace = 4;
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = color
-      ..strokeWidth = strokeWidth
+      ..strokeWidth = _strokeWidth
       ..style = PaintingStyle.stroke;
 
     final rrect = RRect.fromRectAndRadius(
@@ -75,12 +70,9 @@ class _DashedBorderPainter extends CustomPainter {
     for (final metric in path.computeMetrics()) {
       double distance = 0;
       while (distance < metric.length) {
-        final end = (distance + dashWidth).clamp(0.0, metric.length);
-        dashedPath.addPath(
-          metric.extractPath(distance, end),
-          Offset.zero,
-        );
-        distance = end + dashSpace;
+        final end = (distance + _dashWidth).clamp(0.0, metric.length);
+        dashedPath.addPath(metric.extractPath(distance, end), Offset.zero);
+        distance = end + _dashSpace;
       }
     }
     canvas.drawPath(dashedPath, paint);

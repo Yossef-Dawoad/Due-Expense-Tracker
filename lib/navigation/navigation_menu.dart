@@ -1,10 +1,10 @@
+import 'package:expancetracker/budgeting/views/budgeting_screen.dart';
 import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/home/views/home_screen.dart';
 import 'package:expancetracker/navigation/viewmodels/navigation_view_model.dart';
+import 'package:expancetracker/wallet/wallet_details/views/wallet_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-
-import 'package:expancetracker/wallet/wallet_details/views/wallet_details_screen.dart';
 
 import '../core/utils/locator.dart';
 import '../core/utils/navigation/router_service.dart';
@@ -20,7 +20,11 @@ class _NavigationMenuState extends State<NavigationMenu> {
   late final NavigationViewModel _viewModel = NavigationViewModel(
     routerService: locator<RouterService>(),
   );
-  final screens = [const HomeScreen(), const WalletDetailsScreen()];
+  final screens = [
+    const HomeScreen(),
+    const BudgetingScreen(),
+    const WalletDetailsScreen(),
+  ];
 
   @override
   void dispose() {
@@ -34,7 +38,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
       valueListenable: _viewModel.currentPageIndex,
       builder: (context, currentIndex, _) {
         return Scaffold(
-          body: screens[currentIndex],
+          body: screens[currentIndex.clamp(0, screens.length - 1)],
           bottomNavigationBar: ClipRRect(
             child: Container(
               height: 90,
@@ -52,9 +56,9 @@ class _NavigationMenuState extends State<NavigationMenu> {
                   ),
                   NavItem(
                     index: 1,
-                    icon: Icons.bar_chart,
-                    selectedIcon: Iconsax.element_equal5,
-                    label: 'STATS',
+                    icon: Icons.pie_chart_outline_rounded,
+                    selectedIcon: Icons.pie_chart_rounded,
+                    label: 'BUDGETS',
                     currentIndex: currentIndex,
                     onTap: _viewModel.updatePageIndex,
                   ),
@@ -63,17 +67,17 @@ class _NavigationMenuState extends State<NavigationMenu> {
                   ),
                   NavItem(
                     index: 2,
-                    icon: Iconsax.status_up,
+                    icon: Iconsax.wallet,
                     selectedIcon: Iconsax.wallet,
-                    label: 'Wallet',
+                    label: 'WALLET',
                     currentIndex: currentIndex,
                     onTap: _viewModel.updatePageIndex,
                   ),
                   NavItem(
                     index: 3,
-                    icon: Iconsax.status_up,
-                    selectedIcon: Icons.person,
-                    label: 'Profile',
+                    icon: Icons.person_outline_rounded,
+                    selectedIcon: Icons.person_rounded,
+                    label: 'PROFILE',
                     currentIndex: currentIndex,
                     onTap: _viewModel.updatePageIndex,
                   ),

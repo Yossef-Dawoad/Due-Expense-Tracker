@@ -14,16 +14,15 @@ class SelectCategoryViewModel {
 
   // ── State ──────────────────────────────────────────────────────────────
   final ValueNotifier<String> searchQuery = ValueNotifier('');
-  final ValueNotifier<PresetCategory?> selectedPreset = ValueNotifier(null);
+  final ValueNotifier<CategoryModel?> selectedCategory = ValueNotifier(null);
   final ValueNotifier<int> selectedIconIndex = ValueNotifier(0);
 
   // ── Controllers ────────────────────────────────────────────────────────
   final TextEditingController searchController = TextEditingController();
   final TextEditingController categoryNameController = TextEditingController();
 
-  SelectCategoryViewModel({
-    required TransactionService transactionService,
-  }) : _transactionService = transactionService {
+  SelectCategoryViewModel({required TransactionService transactionService})
+    : _transactionService = transactionService {
     searchController.addListener(() {
       searchQuery.value = searchController.text;
     });
@@ -32,28 +31,64 @@ class SelectCategoryViewModel {
 
   // ── Computed ────────────────────────────────────────────────────────────
 
-  /// Available presets (excluding "Other" which triggers this screen).
-  List<PresetCategory> get availablePresets =>
-      kPresetCategories.where((p) => p.name != 'Other').toList();
+  /// DB categories stream.
+  ValueNotifier<List<CategoryModel>> get allDbCategories =>
+      _transactionService.categories;
 
-  /// Presets filtered by the current search query.
-  List<PresetCategory> get filteredPresets {
+  /// Combined list of default presets AND custom database categories.
+  List<CategoryModel> get displayCategories {
+    final dbCategories = allDbCategories.value;
+    final merged = <CategoryModel>[];
+
+    // Add default presets as CategoryModels
+    for (final p in kPresetCategories.where((p) => p.name != 'Other')) {
+      final inDb = dbCategories
+          .where((c) => c.name.toLowerCase() == p.name.toLowerCase())
+          .firstOrNull;
+      if (inDb != null) {
+        merged.add(inDb);
+      } else {
+        merged.add(
+          CategoryModel(
+            id: const Uuid().v4(),
+            userId: '',
+            name: p.name,
+            icon: p.icon.codePoint.toString(),
+            color: p.color.toARGB32().toRadixString(16).padLeft(8, '0'),
+            isDirty: true,
+          ),
+        );
+      }
+    }
+
+    // Append any DB categories that are pure customs
+    for (final c in dbCategories) {
+      if (!merged.any((m) => m.name.toLowerCase() == c.name.toLowerCase())) {
+        merged.add(c);
+      }
+    }
+
+    return merged;
+  }
+
+  /// Categories filtered by the current search query.
+  List<CategoryModel> get filteredCategories {
     final query = searchQuery.value.toLowerCase().trim();
-    if (query.isEmpty) return availablePresets;
-    return availablePresets
-        .where((p) => p.name.toLowerCase().contains(query))
+    if (query.isEmpty) return displayCategories;
+    return displayCategories
+        .where((c) => c.name.toLowerCase().contains(query))
         .toList();
   }
 
   /// Whether a valid selection exists (preset chosen or custom name filled).
   bool get hasValidSelection =>
-      selectedPreset.value != null ||
+      selectedCategory.value != null ||
       categoryNameController.text.trim().isNotEmpty;
 
   // ── Actions ─────────────────────────────────────────────────────────────
 
-  void selectPreset(PresetCategory preset) {
-    selectedPreset.value = preset;
+  void selectCategory(CategoryModel category) {
+    selectedCategory.value = category;
     categoryNameController.clear();
   }
 
@@ -63,75 +98,36 @@ class SelectCategoryViewModel {
 
   void _onCustomNameChanged() {
     if (categoryNameController.text.isNotEmpty) {
-      selectedPreset.value = null;
+      selectedCategory.value = null;
     }
   }
 
-  /// Persists the chosen/created category and returns it, or null on failure.
+  /// Returns the chosen CategoryModel (delayed saving).
   Future<CategoryModel?> confirmSelection() async {
-    final preset = selectedPreset.value;
-    if (preset != null) return _persistPreset(preset);
+    final category = selectedCategory.value;
+    if (category != null) return category;
 
     final customName = categoryNameController.text.trim();
-    if (customName.isNotEmpty) return _createCustom(customName);
-
+    if (customName.isNotEmpty) {
+      final icon = kCustomCategoryIcons[selectedIconIndex.value];
+      return CategoryModel(
+        id: const Uuid().v4(),
+        userId: '',
+        name: customName,
+        icon: icon.codePoint.toString(),
+        color: KitColors.brandPrimary
+            .toARGB32()
+            .toRadixString(16)
+            .padLeft(8, '0'),
+        isDirty: true,
+      );
+    }
     return null;
-  }
-
-  // ── Private helpers ─────────────────────────────────────────────────────
-
-  Future<CategoryModel?> _persistPreset(PresetCategory preset) async {
-    final categories = _transactionService.categories.value;
-    final existing = categories.firstWhere(
-      (c) => c.name.toLowerCase() == preset.name.toLowerCase(),
-      orElse: () =>
-          CategoryModel(id: '', name: '', icon: '', color: '', userId: ''),
-    );
-
-    if (existing.id.isNotEmpty) return existing;
-
-    final newCategory = CategoryModel(
-      id: const Uuid().v4(),
-      userId: '',
-      name: preset.name,
-      icon: preset.icon.codePoint.toString(),
-      color: preset.color.toARGB32().toRadixString(16).padLeft(8, '0'),
-      isDirty: true,
-    );
-
-    try {
-      return await _transactionService.addCategory(newCategory);
-    } catch (e) {
-      debugPrint('Error inserting preset category: $e');
-      return null;
-    }
-  }
-
-  Future<CategoryModel?> _createCustom(String name) async {
-    final icon = kCustomCategoryIcons[selectedIconIndex.value];
-    final newCategory = CategoryModel(
-      id: const Uuid().v4(),
-      userId: '',
-      name: name,
-      icon: icon.codePoint.toString(),
-      color: KitColors.brandPrimary.toARGB32().toRadixString(16).padLeft(
-        8,
-        '0',
-      ),
-      isDirty: true,
-    );
-
-    try {
-      return await _transactionService.addCategory(newCategory);
-    } catch (e) {
-      debugPrint('Error creating custom category: $e');
-      return null;
-    }
   }
 
   void dispose() {
     searchQuery.dispose();
-    selectedPreset.dispose();
+    selectedCategory.dispose();
     selectedIconIndex.dispose();
     searchController.dispose();
     categoryNameController.dispose();

@@ -1,5 +1,5 @@
 import 'package:expancetracker/core/ui/app_theme.dart';
-import 'package:expancetracker/transactions/models/preset_categories.dart';
+import 'package:expancetracker/transactions/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,12 +9,12 @@ import 'package:google_fonts/google_fonts.dart';
 class CategoryGridTile extends StatelessWidget {
   const CategoryGridTile({
     super.key,
-    required this.preset,
+    required this.category,
     required this.isSelected,
     required this.onTap,
   });
 
-  final PresetCategory preset;
+  final CategoryModel category;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -39,13 +39,16 @@ class CategoryGridTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              preset.icon,
+              IconData(
+                int.tryParse(category.icon) ?? Icons.category.codePoint,
+                fontFamily: 'MaterialIcons',
+              ),
               size: 32,
               color: isSelected ? colors.brandPrimary : colors.textSecondary,
             ),
             SizedBox(height: spacing.s2),
             Text(
-              preset.name,
+              category.name,
               style: GoogleFonts.manrope(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,

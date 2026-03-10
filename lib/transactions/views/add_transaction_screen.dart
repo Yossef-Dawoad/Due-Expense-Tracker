@@ -4,7 +4,10 @@ import 'package:expancetracker/core/services/transaction_service.dart';
 import 'package:expancetracker/core/services/wallet_service.dart';
 import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/core/utils/navigation/router_service.dart';
+import 'package:expancetracker/core/utils/navigation/routes.dart';
+import 'package:expancetracker/transactions/models/category.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../viewmodels/add_transaction_viewmodel.dart';
@@ -110,6 +113,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                             persistedCategories: _viewModel.categories,
                             onPresetSelected:
                                 _viewModel.selectOrInsertPresetCategory,
+                            onOtherSelected: () async {
+                              final result = await context.push<CategoryModel>(
+                                Routes.addCategory,
+                              );
+                              if (result != null) {
+                                _viewModel.setCategory(result);
+                              }
+                            },
                           ),
                         ],
                       ),

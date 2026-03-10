@@ -88,7 +88,7 @@ class AddTransactionViewModel {
       return;
     }
 
-    // Not in the DB yet — insert it then select it.
+    // Not in the DB yet — prepare it, but delay saving until transaction is saved.
     final newCategory = CategoryModel(
       id: const Uuid().v4(),
       userId: '',
@@ -98,12 +98,7 @@ class AddTransactionViewModel {
       isDirty: true,
     );
 
-    try {
-      final saved = await _transactionService.addCategory(newCategory);
-      selectedCategory.value = saved;
-    } catch (e) {
-      debugPrint('Error inserting preset category: $e');
-    }
+    selectedCategory.value = newCategory;
   }
 
   void setDate(DateTime newDate) {
@@ -147,6 +142,25 @@ class AddTransactionViewModel {
 
     isSaving.value = true;
     try {
+      final selectedCat = selectedCategory.value!;
+      String finalCategoryId = selectedCat.id;
+
+      // Check if the category needs to be saved to the database.
+      final existingCat =
+          categories.value.where((c) => c.id == selectedCat.id).firstOrNull ??
+          categories.value
+              .where(
+                (c) => c.name.toLowerCase() == selectedCat.name.toLowerCase(),
+              )
+              .firstOrNull;
+
+      if (existingCat == null) {
+        final savedCat = await _transactionService.addCategory(selectedCat);
+        finalCategoryId = savedCat.id;
+      } else {
+        finalCategoryId = existingCat.id;
+      }
+
       // Use the first linked account as default, or empty string
       final accounts = _walletService.linkedAccounts.value;
       final accountId = accounts.isNotEmpty ? accounts.first.id : '';
@@ -158,7 +172,7 @@ class AddTransactionViewModel {
         amount: amount.value,
         type: transactionType.value,
         date: date.value,
-        categoryId: selectedCategory.value!.id,
+        categoryId: finalCategoryId,
         note: notes.value.isEmpty ? null : notes.value,
         isDirty: true,
       );

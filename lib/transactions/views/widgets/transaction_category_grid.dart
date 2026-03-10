@@ -18,6 +18,7 @@ class TransactionCategoryGrid extends StatelessWidget {
     required this.selectedCategory,
     required this.persistedCategories,
     required this.onPresetSelected,
+    this.onOtherSelected,
   });
 
   /// The currently active selection (may come from the DB after lazy insert).
@@ -30,6 +31,10 @@ class TransactionCategoryGrid extends StatelessWidget {
   /// Called when the user taps a preset tile; should upsert it into the DB
   /// and update [selectedCategory].
   final ValueChanged<PresetCategory> onPresetSelected;
+
+  /// Called when the user taps the "Other" preset tile.
+  /// If null, "Other" behaves like any other preset.
+  final VoidCallback? onOtherSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +58,32 @@ class TransactionCategoryGrid extends StatelessWidget {
               ),
               itemCount: kPresetCategories.length,
               itemBuilder: (context, index) {
-                final preset = kPresetCategories[index];
+                PresetCategory preset = kPresetCategories[index];
+                final isOtherTile = index == kPresetCategories.length - 1;
+
+                if (isOtherTile) {
+                  final isSelectedInFirst7 =
+                      selected != null &&
+                      kPresetCategories
+                          .sublist(0, 7)
+                          .any(
+                            (p) =>
+                                p.name.toLowerCase() ==
+                                selected.name.toLowerCase(),
+                          );
+
+                  if (selected != null && !isSelectedInFirst7) {
+                    final iconCode =
+                        int.tryParse(selected.icon) ?? Icons.category.codePoint;
+                    final colorVal =
+                        int.tryParse(selected.color, radix: 16) ?? 0xFFB0B0B0;
+                    preset = PresetCategory(
+                      name: selected.name,
+                      icon: IconData(iconCode, fontFamily: 'MaterialIcons'),
+                      color: Color(colorVal),
+                    );
+                  }
+                }
 
                 // Determine if this preset is the currently selected item.
                 final isSelected =
@@ -70,7 +100,13 @@ class TransactionCategoryGrid extends StatelessWidget {
                     child: _PresetCategoryItem(
                       preset: preset,
                       isSelected: isSelected,
-                      onTap: () => onPresetSelected(preset),
+                      onTap: () {
+                        if (isOtherTile && onOtherSelected != null) {
+                          onOtherSelected!();
+                        } else {
+                          onPresetSelected(preset);
+                        }
+                      },
                     ),
                   ),
                 );

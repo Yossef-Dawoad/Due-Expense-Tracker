@@ -58,6 +58,8 @@ class _TransactionTagSelectorState extends State<TransactionTagSelector> {
     if (name.isNotEmpty) {
       widget.onAddTag(name);
       _controller.clear();
+    } else {
+      _focusNode.requestFocus();
     }
   }
 
