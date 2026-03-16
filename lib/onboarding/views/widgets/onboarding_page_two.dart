@@ -41,13 +41,10 @@ class OnboardingPageTwo extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 32),
-              const FadeInAnimation(
+              const SlideInAnimation(
+                beginOffset: Offset(0, 0.1),
                 delay: Duration(milliseconds: 100),
-                child: SlideInAnimation(
-                  beginOffset: Offset(0, 0.1),
-                  delay: Duration(milliseconds: 100),
-                  child: _GlowingChartScene(),
-                ),
+                child: _GlowingChartScene(),
               ),
               const SizedBox(height: 48),
               FadeInAnimation(

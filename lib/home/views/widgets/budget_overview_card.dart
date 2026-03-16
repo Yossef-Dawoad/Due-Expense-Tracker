@@ -1,131 +1,155 @@
-import 'package:expancetracker/animation/animation.dart';
+import 'package:expancetracker/budgeting/views/widgets/budget_category_progress_bar.dart';
 import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 
-/// A card showing budget remaining vs limit with an animated progress bar.
-/// HTML ref: bg-white border-border-light rounded-2xl p-5 shadow-card
+/// A card displaying a budget overview, including remaining balance, limit, and a progress bar.
+/// HTML ref: px-6 mb-5 wrapper, inside: bg-white border border-border-light rounded-[20px] p-5 shadow-sm
 class BudgetOverviewCard extends StatelessWidget {
   const BudgetOverviewCard({
     super.key,
-    required this.remaining,
     required this.limit,
-    required this.percentUsed,
-    required this.daysLeft,
+    required this.remaining,
+    required this.month,
   });
 
-  final double remaining;
   final double limit;
-  final double percentUsed;
-  final int daysLeft;
+  final double remaining;
+  final String month;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.kitColors;
-    final textStyles = context.textStyles;
+
+    final spent = limit - remaining;
+    final percentageUsed = (limit > 0) ? (spent / limit).clamp(0.0, 1.0) : 0.0;
+    final percentageInt = (percentageUsed * 100).toInt();
 
     return Container(
-      padding: const EdgeInsets.all(20), // HTML: p-5
+      padding: const EdgeInsets.all(16), // More compact padding
       decoration: BoxDecoration(
-        borderRadius: context.borderRadius.xl,
+        color: colors.bgSurface,
+        borderRadius: BorderRadius.circular(20), // rounded-[20px]
         border: Border.all(color: colors.borderLight),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 1), // shadow-sm approx
+          ),
+        ],
       ),
       child: Column(
         children: [
-          // Remaining vs Limit row — HTML: flex justify-between items-end mb-3
+          // Header
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Remaining
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // HTML: text-[15px] font-black
+                    Text(
+                      '$month Budget',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w900, // black
+                        color: colors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 2), // HTML: mt-0.5
+                    // HTML: text-[12px] font-bold text-text-muted
+                    Text(
+                      '12 days left', // Note: could be dynamic, but static in mock
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700, // bold
+                        color: colors.textTertiary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Icon container - HTML: size-10 rounded-full bg-primary/10
+              Container(
+                width: 40, // size-10
+                height: 40,
+                decoration: BoxDecoration(
+                  color: colors.brandPrimary.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.account_balance_wallet_outlined,
+                  color: colors.brandPrimary,
+                  size: 20, // text-[20px] (default icon size approx)
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16), // HTML: mb-4 from flex container
+          // Details
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // HTML: text-[11px] font-bold uppercase tracking-wider mb-0.5
+                  // HTML: text-[11px] font-extrabold text-text-muted uppercase tracking-wider mb-0.5
                   Text(
                     'REMAINING',
                     style: TextStyle(
                       fontSize: 11,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w800, // extrabold
                       color: colors.textTertiary,
-                      letterSpacing: 0.55, // tracking-wider ≈ 0.05em × 11px
+                      letterSpacing: 0.55, // tracking-wider
                     ),
                   ),
-                  const SizedBox(height: 2), // mb-0.5
-                  // HTML: text-[20px] font-black
-                  OdometerText(
-                    value: remaining,
-                    prefix: '\$',
-                    decimalPlaces: 2,
+                  const SizedBox(height: 2), // HTML: mb-0.5
+                  // HTML: text-[24px] font-black leading-none text-text-main
+                  Text(
+                    '\$${remaining.toStringAsFixed(2).replaceAll(RegExp(r'\.00$'), '')}',
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w900, // black
                       color: colors.textPrimary,
+                      height: 1.0, // leading-none
                     ),
-                    duration: const Duration(milliseconds: 800),
                   ),
                 ],
               ),
-              // Limit
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  // HTML: text-[11px] font-bold uppercase tracking-wider mb-0.5
+                  // HTML: text-[12px] font-bold text-text-muted mb-1
                   Text(
-                    'LIMIT',
+                    'of \$${limit.toStringAsFixed(0)}',
                     style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700, // bold
                       color: colors.textTertiary,
-                      letterSpacing: 0.55,
                     ),
                   ),
-                  const SizedBox(height: 2),
-                  // HTML: text-[13px] font-bold
-                  OdometerText(
-                    value: limit,
-                    prefix: '\$',
-                    decimalPlaces: 2,
+                  const SizedBox(height: 4), // HTML: mb-1
+                  // HTML: text-[12px] font-extrabold text-primary
+                  Text(
+                    '$percentageInt% used',
                     style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: colors.textPrimary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800, // extrabold
+                      color: colors.brandPrimary,
                     ),
-                    duration: const Duration(milliseconds: 800),
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 12), // HTML: mb-3
-          // Progress bar — HTML: h-1.5 = 6px
-          AnimatedProgressBar(
-            progress: (percentUsed / 100).clamp(0.0, 1.0),
-            progressColor: colors.chartProgressBar,
-            backgroundColor: colors.chartProgressTrack,
-            height: 6.0,
-            duration: const Duration(milliseconds: 800),
-            curve: Curves.easeOutCubic,
-          ),
-          const SizedBox(height: 10), // HTML: mt-2.5
-          // Footer labels — HTML: text-[11px] font-medium
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${percentUsed.toStringAsFixed(0)}% used',
-                style: textStyles.labelSM.copyWith(
-                  color: colors.textTertiary,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                '$daysLeft days left',
-                style: textStyles.labelSM.copyWith(
-                  color: colors.textTertiary,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
+          const SizedBox(height: 16), // HTML: mt-3
+          BudgetCategoryProgressBar(
+            spentFraction: percentageUsed,
+            remainingLabel: 'REMAINING',
+            spentLabel: 'SPENT',
           ),
         ],
       ),

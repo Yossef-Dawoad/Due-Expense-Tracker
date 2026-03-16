@@ -18,13 +18,11 @@ class StartupView extends StatefulWidget {
 
 class _StartupViewState extends State<StartupView> {
   late final StartupViewModel _viewModel = StartupViewModel();
-  late final RouterService _routerService;
 
   @override
   void initState() {
     super.initState();
     _viewModel.initializeApp();
-    _routerService = locator<RouterService>();
   }
 
   @override
@@ -38,26 +36,59 @@ class _StartupViewState extends State<StartupView> {
     return ValueListenableBuilder<AppState>(
       valueListenable: _viewModel.appStateNotifier,
       builder: (context, state, _) {
-        return MaterialApp.router(
-          title: 'Due',
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.buildTheme(Brightness.light),
-          darkTheme: AppTheme.buildTheme(Brightness.dark),
-          themeMode: ThemeMode.system,
-          routerConfig: _routerService.goRouter,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          builder: (context, child) {
-            Translate.init(context);
-            return switch (state) {
-              InitializingApp() => _SplashView(),
-              AppInitialized() => InternalNotificationListener(child: child!),
-              AppInitializationError() => _StartupErrorView(
-                onRetry: _viewModel.retryInitialization,
-              ),
-            };
-          },
-        );
+        return switch (state) {
+          InitializingApp() => _StartupShell(child: _SplashView()),
+          AppInitialized() => _InitializedAppShell(),
+          AppInitializationError() => _StartupShell(
+            child: _StartupErrorView(onRetry: _viewModel.retryInitialization),
+          ),
+        };
+      },
+    );
+  }
+}
+
+class _StartupShell extends StatelessWidget {
+  const _StartupShell({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Due',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.buildTheme(Brightness.light),
+      darkTheme: AppTheme.buildTheme(Brightness.dark),
+      themeMode: ThemeMode.system,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      builder: (context, _) {
+        Translate.init(context);
+        return child;
+      },
+      home: child,
+    );
+  }
+}
+
+class _InitializedAppShell extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final routerService = locator<RouterService>();
+
+    return MaterialApp.router(
+      title: 'Due',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.buildTheme(Brightness.light),
+      darkTheme: AppTheme.buildTheme(Brightness.dark),
+      themeMode: ThemeMode.system,
+      routerConfig: routerService.goRouter,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      builder: (context, child) {
+        Translate.init(context);
+        return InternalNotificationListener(child: child!);
       },
     );
   }

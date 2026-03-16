@@ -5,6 +5,7 @@ class Routes {
 
   static const String addExpense = '/addExpense';
   static const String addTransaction = '/addTransaction';
+  static const String createBudget = '/createBudget';
   static const String addCategory = '/addCategory';
   static const String editCategory = '/editCategory';
   static const String editExpense = '/editExpense';

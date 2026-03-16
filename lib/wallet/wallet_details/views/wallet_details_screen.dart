@@ -1,3 +1,4 @@
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/wallet/wallet_details/viewmodels/stats_viewmodel.dart';
 import 'package:expancetracker/wallet/wallet_details/views/widgets/balance_header.dart';
 import 'package:expancetracker/wallet/wallet_details/views/widgets/chart_section.dart';
@@ -29,43 +30,38 @@ class _WalletDetailsScreenState extends State<WalletDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Ensuring Navigation Bar Glitch fix is unrelated here,
-    // but assuming this screen is pushed or part of a tab view.
+    final colors = context.kitColors;
+    final spacing = context.spacing;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: colors.bgBase,
       appBar: AppBar(
         forceMaterialTransparency: true,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
+          icon: Icon(Icons.arrow_back, color: colors.textPrimary),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
         title: Text(
           'Wallet Details',
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: context.textStyles.headingLG.copyWith(
+            color: colors.textPrimary,
+            fontWeight: FontWeight.w800,
+          ),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(
-              Icons.more_horiz,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
+            icon: Icon(Icons.more_horiz, color: colors.textPrimary),
             onPressed: () {},
           ),
         ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(spacing.s6),
           child: Column(
             children: [
-              // Balance Header
               ListenableBuilder(
                 listenable: Listenable.merge([
                   _viewModel.totalBalance,
@@ -78,9 +74,8 @@ class _WalletDetailsScreenState extends State<WalletDetailsScreen> {
                   );
                 },
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: spacing.s8),
 
-              // Chart Section
               ListenableBuilder(
                 listenable: Listenable.merge([
                   _viewModel.selectedPeriod,
@@ -94,9 +89,8 @@ class _WalletDetailsScreenState extends State<WalletDetailsScreen> {
                   );
                 },
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: spacing.s8),
 
-              // Available Balance & Liabilities
               ListenableBuilder(
                 listenable: Listenable.merge([
                   _viewModel.availableBalance,
@@ -109,9 +103,8 @@ class _WalletDetailsScreenState extends State<WalletDetailsScreen> {
                   );
                 },
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: spacing.s8),
 
-              // Linked Accounts
               ListenableBuilder(
                 listenable: _viewModel.linkedAccounts,
                 builder: (context, _) {
@@ -120,16 +113,11 @@ class _WalletDetailsScreenState extends State<WalletDetailsScreen> {
                   );
                 },
               ),
-              const SizedBox(height: 80), // Bottom padding for FAB or Nav
+              const SizedBox(height: 80),
             ],
           ),
         ),
       ),
-      // Floating Action Button for "Add" if needed, as per design bottom bar
-      // But assuming bottom bar is global navigation.
-      // The design shows a specific FAB like button in the bottom nav.
-      // If this screen is standalone, we might default to no FAB or add one if requested.
-      // Keeping it clean for now.
     );
   }
 }

@@ -1,7 +1,10 @@
+import 'package:expancetracker/core/common/widgets/app_section_header.dart';
+import 'package:expancetracker/core/common/widgets/app_surface_card.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/wallet/wallet_details/viewmodels/stats_viewmodel.dart';
+import 'package:expancetracker/wallet/wallet_details/views/widgets/time_selector.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:expancetracker/wallet/wallet_details/views/widgets/time_selector.dart';
 
 class ChartSection extends StatelessWidget {
   final ChartPeriod selectedPeriod;
@@ -17,20 +20,42 @@ class ChartSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TimeSelector(
-          selectedPeriod: selectedPeriod,
-          onPeriodChanged: onPeriodChanged,
-        ),
-        // const SizedBox(height: 24),
-        Container(
-          height: 200,
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 0),
-          child: LineChart(mainData(context)),
-        ),
-      ],
+    final spacing = context.spacing;
+    final colors = context.kitColors;
+
+    return AppSurfaceCard(
+      padding: EdgeInsets.all(spacing.cardPadding),
+      borderRadius: context.borderRadius.xxl,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppSectionHeader(
+            title: 'Balance trend',
+            subtitle:
+                'Track how your wallet moves across each selected window.',
+            trailing: SizedBox(
+              width: 190,
+              child: TimeSelector(
+                selectedPeriod: selectedPeriod,
+                onPeriodChanged: onPeriodChanged,
+              ),
+            ),
+          ),
+          SizedBox(height: spacing.s5),
+          SizedBox(
+            height: 200,
+            width: double.infinity,
+            child: LineChart(mainData(context)),
+          ),
+          SizedBox(height: spacing.s2),
+          Text(
+            'Interactive points reveal the estimated balance snapshot for each period.',
+            style: context.textStyles.caption.copyWith(
+              color: colors.textTertiary,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

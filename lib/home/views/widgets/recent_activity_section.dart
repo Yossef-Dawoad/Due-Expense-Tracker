@@ -380,11 +380,15 @@ class _RecentActivityItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.kitColors;
-    final radii = context.borderRadius;
     final isExpense = transaction.type == TransactionType.expense;
     final formattedTime = DateFormat('h:mm a').format(transaction.date);
-    final displayName = category.name;
 
+    // Fallback if note is empty, use category name, but mock specifies note for title
+    final title = (transaction.note?.isNotEmpty == true)
+        ? transaction.note!
+        : category.name;
+
+    // HTML: p-4 border-b border-white/50 active:bg-black/5
     return GestureDetector(
       onTap: onTap,
       onLongPress: onLongPress,
@@ -392,47 +396,56 @@ class _RecentActivityItem extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
-          borderRadius: radii.card,
-          border: Border.all(
-            color: isSelected ? colors.semanticNegative : colors.borderLight,
-            width: isSelected ? 1.5 : 1.0,
-          ),
           color: isSelected
               ? colors.semanticNegative.withValues(alpha: 0.04)
-              : Colors.transparent,
+              : Colors.transparent, // Solid background
+          borderRadius: context.borderRadius.xxl, // Card-like rounding
+          border: Border.all(
+            color: isSelected
+                ? colors.semanticNegative
+                : colors.borderDefault, // Thin line border
+            width: 1.0,
+          ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          padding: const EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: 18,
+          ), // p-4
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // ── Selection indicator / Category icon ──
               _AnimatedSelectionIcon(
                 isSelected: isSelected,
                 isSelectionMode: isSelectionMode,
                 category: category,
+                isExpense: isExpense, // Pass expense to color the icon
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 12), // gap-3
               // ── Text content ──
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // HTML: text-[15px] font-black text-text-main mb-0.5
                     Text(
-                      displayName,
+                      title,
                       style: TextStyle(
                         fontSize: 15,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w900, // black
                         color: colors.textPrimary,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 2), // mb-0.5
+                    // HTML: text-[12px] font-bold text-text-muted
                     Text(
-                      transaction.note?.isNotEmpty == true
-                          ? '$formattedTime • ${transaction.note}'
-                          : formattedTime,
+                      formattedTime,
                       style: TextStyle(
                         fontSize: 12,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700, // bold
                         color: colors.textTertiary,
                       ),
                     ),
@@ -440,16 +453,46 @@ class _RecentActivityItem extends StatelessWidget {
                 ),
               ),
 
-              // ── Amount ──
-              Text(
-                '${isExpense ? "-" : "+"}'
-                r'$'
-                '${transaction.amount.toStringAsFixed(2)}',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  color: colors.textPrimary,
-                ),
+              // ── Right side: Amount and Category badge ──
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  // HTML: text-[15px] font-black text-rose-600 mb-0.5
+                  Text(
+                    '${isExpense ? "-" : "+"}'
+                    r'$'
+                    '${transaction.amount.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w900, // black
+                      color: isExpense
+                          ? const Color(0xFFE11D48)
+                          : const Color(
+                              0xFF059669,
+                            ), // text-rose-600 or text-emerald-600 for income
+                    ),
+                  ),
+                  const SizedBox(height: 4), // mb-0.5 approx visual height
+                  // HTML: bg-surface px-2 py-0.5 rounded text-[10px] font-extrabold text-text-muted inline-block
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: colors.bgSurface,
+                      borderRadius: BorderRadius.circular(4), // rounded
+                    ),
+                    child: Text(
+                      category.name,
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800, // extrabold
+                        color: colors.textTertiary,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -468,11 +511,13 @@ class _AnimatedSelectionIcon extends StatelessWidget {
     required this.isSelected,
     required this.isSelectionMode,
     required this.category,
+    required this.isExpense,
   });
 
   final bool isSelected;
   final bool isSelectionMode;
   final CategoryModel category;
+  final bool isExpense;
 
   @override
   Widget build(BuildContext context) {
@@ -485,7 +530,7 @@ class _AnimatedSelectionIcon extends StatelessWidget {
       child: isSelected
           ? Container(
               key: const ValueKey('selected'),
-              width: 48,
+              width: 48, // size-11
               height: 48,
               decoration: BoxDecoration(
                 color: colors.semanticNegative,
@@ -499,22 +544,43 @@ class _AnimatedSelectionIcon extends StatelessWidget {
             )
           : Container(
               key: const ValueKey('unselected'),
+              // HTML: size-11 rounded-full bg-surface border border-border-light shadow-soft flex items-center justify-center text-rose-600
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: colors.borderLight),
+                // color: colors.bgSurface,
+                shape: BoxShape.circle, // rounded-full
+                border: Border.all(color: colors.borderDefault),
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: Colors.black.withValues(alpha: 0.05), // shadow-soft
+                //     blurRadius: 4,
+                //     offset: const Offset(0, 1),
+                //   ),
+                // ],
               ),
-              child: Center(child: _buildIconWidget(category.icon)),
+              child: Center(
+                child: _buildIconWidget(
+                  category.icon,
+                  isExpense ? const Color(0xFFE11D48) : const Color(0xFF059669),
+                ),
+              ),
             ),
     );
   }
 
-  Widget _buildIconWidget(String iconValue) {
+  Widget _buildIconWidget(String iconValue, Color? color) {
     final codePoint = int.tryParse(iconValue);
     if (codePoint != null) {
-      return Icon(IconData(codePoint, fontFamily: 'MaterialIcons'), size: 22);
+      return Icon(
+        IconData(codePoint, fontFamily: 'MaterialIcons'),
+        size: 22,
+        color: color,
+      ); // text-[22px]
     }
-    return Text(iconValue, style: const TextStyle(fontSize: 22));
+    return Text(
+      iconValue,
+      style: const TextStyle(fontSize: 22),
+    ); // Handle emoji
   }
 }

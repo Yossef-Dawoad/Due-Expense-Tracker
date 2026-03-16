@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'fade_in.dart';
 import 'slide_in.dart';
 
 /// A widget that animates a list of children with a staggered timing effect.
@@ -19,7 +18,7 @@ import 'slide_in.dart';
 /// ```dart
 /// StaggeredListAnimation(
 ///   children: [Item1(), Item2(), Item3()],
-///   staggerDuration: Duration(milliseconds: 50),
+///   staggerDuration: Duration(milliseconds: 80),
 /// )
 /// ```
 class StaggeredListAnimation extends StatefulWidget {
@@ -51,8 +50,8 @@ class StaggeredListAnimation extends StatefulWidget {
     required this.children,
     this.itemDuration = const Duration(milliseconds: 350),
     this.delay = const Duration(milliseconds: 100),
-    this.staggerDuration = const Duration(milliseconds: 50),
-    this.curve = Curves.easeOutCubic,
+    this.staggerDuration = const Duration(milliseconds: 80),
+    this.curve = Curves.easeOutBack,
     this.direction = Axis.vertical,
     this.crossAxisAlignment = CrossAxisAlignment.start,
   });
@@ -76,15 +75,16 @@ class _StaggeredListAnimationState extends State<StaggeredListAnimation> {
 
     final staggeredChildren = List.generate(widget.children.length, (index) {
       final itemDelay = widget.delay + (widget.staggerDuration * index);
-      return FadeInAnimation(
-        delay: itemDelay,
-        duration: widget.itemDuration,
-        curve: widget.curve,
-        child: SlideInAnimation(
+      // Use RepaintBoundary to prevent list items from triggering unnecessary repaints
+      return RepaintBoundary(
+        child: ClassicSlideWithFadeInAnimation(
           delay: itemDelay,
           duration: widget.itemDuration,
           curve: widget.curve,
-          beginOffset: const Offset(0, 0.1),
+          // Support horizontal staggered lists by checking axis
+          beginOffset: widget.direction == Axis.vertical
+              ? const Offset(0, 0.1)
+              : const Offset(0.1, 0),
           child: widget.children[index],
         ),
       );

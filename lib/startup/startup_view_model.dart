@@ -5,8 +5,15 @@ import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 
 import '../config/locator_config.dart';
+import '../core/abstractions/database_abstraction.dart';
 import '../core/abstractions/logging_abstraction.dart';
+import '../core/services/connectivity_service.dart';
+import '../core/services/sync_orchestration_service.dart';
+import '../core/services/transaction_service.dart';
+import '../core/services/wallet_service.dart';
 import '../core/utils/locator.dart';
+import '../core/utils/internal_notification/notify_service.dart';
+import '../core/utils/navigation/router_service.dart';
 
 /// Represents different states of app initialization
 sealed class AppState {
@@ -35,26 +42,41 @@ class StartupViewModel {
   final appStateNotifier = ValueNotifier<AppState>(const InitializingApp());
 
   final LoggingAbstraction _loggingAbstraction;
-  late StreamSubscription<LogRecord> loggingSubscription;
+  StreamSubscription<LogRecord>? loggingSubscription;
 
   Future<void> initializeApp() async {
     appStateNotifier.value = const InitializingApp();
     try {
-      locator.registerMany(modules);
-      loggingSubscription = _loggingAbstraction.initializeLogging();
+      if (!locator.isRegistered<RouterService>()) {
+        locator.registerMany(modules);
+      }
+      _warmCriticalModules();
+      loggingSubscription ??= _loggingAbstraction.initializeLogging();
       appStateNotifier.value = const AppInitialized();
     } catch (e, st) {
       appStateNotifier.value = AppInitializationError(e, st);
     }
   }
 
+  void _warmCriticalModules() {
+    locator<RouterService>();
+    locator<NotifyService>();
+    locator<OfflineDatabaseAbstraction>();
+    locator<ConnectivityService>();
+    locator<SyncOrchestrationService>();
+    locator<WalletService>();
+    locator<TransactionService>();
+  }
+
   Future<void> retryInitialization() async {
+    await loggingSubscription?.cancel();
+    loggingSubscription = null;
     locator.reset();
     await initializeApp();
   }
 
   void dispose() {
     appStateNotifier.dispose();
-    loggingSubscription.cancel();
+    unawaited(loggingSubscription?.cancel());
   }
 }

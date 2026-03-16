@@ -48,8 +48,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
                 children: [
                   NavItem(
                     index: 0,
-                    icon: Iconsax.home,
-                    selectedIcon: Iconsax.element_equal5,
+                    icon: Iconsax.home_1,
+                    selectedIcon: Iconsax.home5,
                     label: 'HOME',
                     currentIndex: currentIndex,
                     onTap: _viewModel.updatePageIndex,

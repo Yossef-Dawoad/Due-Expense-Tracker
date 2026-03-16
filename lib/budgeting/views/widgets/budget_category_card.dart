@@ -1,272 +1,165 @@
-import 'package:flutter/material.dart';
-import 'package:expancetracker/core/ui/app_theme.dart';
-import 'package:expancetracker/core/ui/constants/kit_colors.dart';
+import 'package:expancetracker/animation/animation.dart';
 import 'package:expancetracker/budgeting/models/budget_category_model.dart';
-import 'package:expancetracker/budgeting/views/widgets/budget_category_icon_badge.dart';
-import 'package:expancetracker/budgeting/views/widgets/budget_category_progress_bar.dart';
+import 'package:expancetracker/core/common/widgets/animated_limit_progress_bar.dart';
+import 'package:expancetracker/core/common/widgets/colored_feature_icon.dart';
+import 'package:expancetracker/core/common/widgets/semantic_status_badge.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
+import 'package:flutter/material.dart';
 
-/// Molecule: A full budget category card with icon, name, limit, and progress bar.
-/// Matches the HTML `p-4 rounded-xl border border-primary/10 bg-white ios-shadow` cards.
 class BudgetCategoryCard extends StatelessWidget {
-  const BudgetCategoryCard({super.key, required this.category});
+  const BudgetCategoryCard({
+    super.key,
+    required this.category,
+    this.animationDelay = Duration.zero,
+  });
 
   final BudgetCategoryModel category;
+  final Duration animationDelay;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.kitColors;
-    final borderRadius = context.borderRadius;
-    final shadows = context.shadows;
-    final spacing = context.spacing;
-    final accentColor = _accentColor(colors);
-    final usageTone = _usageTone;
+    final textStyles = context.textStyles;
+
+    final fraction = category.spentFraction;
+    final int percent = (fraction * 100).round();
+
+    // Status Logic
+    String badgeLabel;
+    Color baseColor;
+
+    if (fraction >= 0.9) {
+      badgeLabel = 'WATCH';
+      baseColor = colors.semanticNegative; // red-500
+    } else if (fraction >= 0.7) {
+      badgeLabel = 'ON PACE';
+      baseColor = const Color(
+        0xFFF97316,
+      ); // Fallback orange-500 if orange is not a semantic token
+    } else {
+      badgeLabel = 'HEALTHY';
+      baseColor = colors.semanticPositive; // emerald-600
+    }
 
     return Container(
-      padding: EdgeInsets.all(spacing.cardPaddingLG),
+      padding: const EdgeInsets.all(16), // p-4
       decoration: BoxDecoration(
-        color: colors.bgSurface,
-        borderRadius: borderRadius.xl,
-        border: Border.all(color: accentColor.withValues(alpha: 0.18)),
-        boxShadow: shadows.elevation2,
+        color: colors.bgSurface, // bg-white
+        borderRadius: BorderRadius.circular(24), // rounded-3xl roughly 24
+        border: Border.all(
+          color: colors.borderDefault,
+        ), // border-border-defined
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 2,
+            offset: const Offset(0, 1),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _CategoryCardHeader(
-            category: category,
-            accentColor: accentColor,
-            usageTone: usageTone,
-          ),
-          SizedBox(height: spacing.s4),
-          Wrap(
-            spacing: spacing.s3,
-            runSpacing: spacing.s3,
-            children: [
-              _BudgetMetricChip(
-                label: 'Spent',
-                value: '\$${category.spentAmount.toStringAsFixed(2)}',
-                backgroundColor: accentColor.withValues(alpha: 0.10),
-                textColor: colors.textPrimary,
-              ),
-              _BudgetMetricChip(
-                label: 'Remaining',
-                value: '\$${category.remainingAmount.toStringAsFixed(2)}',
-                backgroundColor: usageTone.withValues(alpha: 0.12),
-                textColor: colors.textPrimary,
-              ),
-            ],
-          ),
-          SizedBox(height: spacing.s4),
-          BudgetCategoryProgressBar(
-            spentFraction: category.spentFraction,
-            remainingLabel: '${_spentPercent.round()}% used',
-            spentLabel: 'Cap \$${category.totalBudget.toStringAsFixed(0)}',
-            barColor: accentColor,
-            trackColor: accentColor.withValues(alpha: 0.12),
-            labelColor: colors.textTertiary,
-          ),
-        ],
-      ),
-    );
-  }
-
-  double get _spentPercent => category.spentFraction * 100;
-
-  Color _accentColor(KitColorsExtension colors) {
-    if (category.spentFraction >= 0.9) {
-      return colors.semanticNegative;
-    }
-    if (category.spentFraction >= 0.7) {
-      return const Color(0xFFD97706);
-    }
-    return colors.brandPrimary;
-  }
-
-  Color get _usageTone {
-    if (category.spentFraction >= 0.9) {
-      return const Color(0xFFF97316);
-    }
-    if (category.spentFraction >= 0.7) {
-      return const Color(0xFFF59E0B);
-    }
-    return const Color(0xFF10B981);
-  }
-}
-
-class _CategoryCardHeader extends StatelessWidget {
-  const _CategoryCardHeader({
-    required this.category,
-    required this.accentColor,
-    required this.usageTone,
-  });
-
-  final BudgetCategoryModel category;
-  final Color accentColor;
-  final Color usageTone;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.kitColors;
-    final textStyles = context.textStyles;
-    final spacing = context.spacing;
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        BudgetCategoryIconBadge(iconData: category.iconData),
-        SizedBox(width: spacing.s4), // 16px gap
-        Expanded(
-          child: Column(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          category.name,
-                          style: textStyles.headingMD.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: colors.textPrimary,
-                          ),
-                        ),
-                        SizedBox(height: spacing.s1),
-                        Text(
-                          'Keep this category balanced through the period.',
-                          style: textStyles.caption.copyWith(
-                            color: colors.textTertiary,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
+                  ColoredFeatureIcon(
+                    icon: category.iconData,
+                    baseColor: colors.brandPrimaryDark, // green-700
                   ),
-                  SizedBox(width: spacing.s3),
-                  _UsageBadge(
-                    label: _statusLabel(category.spentFraction),
-                    color: usageTone,
+                  const SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        category.name,
+                        style: textStyles.bodyMD.copyWith(
+                          fontSize: 16, // text-base
+                          fontWeight: FontWeight.w900, // font-black
+                          color: colors.textPrimary, // slate-900
+                          height: 1.25, // leading-tight
+                        ),
+                      ),
+                      Text(
+                        '\$${category.totalBudget.toStringAsFixed(0)} LIMIT',
+                        style: textStyles.labelSM.copyWith(
+                          fontSize: 10, // text-[10px]
+                          fontWeight: FontWeight.w700, // font-bold
+                          color: colors.semanticNeutral, // slate-500
+                          letterSpacing: 0.5, // tracking-wide
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              SizedBox(height: spacing.s4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    'Allocated',
-                    style: textStyles.labelSM.copyWith(
-                      color: colors.textTertiary,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    '\$${category.totalBudget.toStringAsFixed(2)}',
-                    style: textStyles.bodyMD.copyWith(
-                      fontWeight: FontWeight.w800,
-                      color: accentColor,
-                    ),
+                  SemanticStatusBadge(label: badgeLabel, baseColor: baseColor),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      OdometerText(
+                        value: category.spentAmount,
+                        prefix: '\$',
+                        decimalPlaces: 0,
+                        startDelay: animationDelay,
+                        digitStagger: const Duration(milliseconds: 30),
+                        style: textStyles.bodyMD.copyWith(
+                          fontSize: 16, // text-base
+                          fontWeight: FontWeight.w900, // font-black
+                          color: colors.textPrimary, // slate-900
+                        ),
+                      ),
+                      Text(
+                        ' spent',
+                        style: textStyles.bodyMD.copyWith(
+                          fontSize: 16, // text-base
+                          fontWeight: FontWeight.w900, // font-black
+                          color: colors.textPrimary, // slate-900
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ],
           ),
-        ),
-      ],
-    );
-  }
-
-  String _statusLabel(double fraction) {
-    if (fraction >= 0.9) {
-      return 'Watch';
-    }
-    if (fraction >= 0.7) {
-      return 'On pace';
-    }
-    return 'Healthy';
-  }
-}
-
-class _BudgetMetricChip extends StatelessWidget {
-  const _BudgetMetricChip({
-    required this.label,
-    required this.value,
-    required this.backgroundColor,
-    required this.textColor,
-  });
-
-  final String label;
-  final String value;
-  final Color backgroundColor;
-  final Color textColor;
-
-  @override
-  Widget build(BuildContext context) {
-    final textStyles = context.textStyles;
-    final borderRadius = context.borderRadius;
-    final spacing = context.spacing;
-
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: spacing.s3,
-        vertical: spacing.s2,
-      ),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: borderRadius.pill,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            '$label ',
-            style: textStyles.caption.copyWith(
-              color: textColor.withValues(alpha: 0.72),
-              fontWeight: FontWeight.w600,
-            ),
+          const SizedBox(height: 8),
+          AnimatedLimitProgressBar(
+            fraction: fraction,
+            barColor: baseColor,
+            animationDuration: const Duration(milliseconds: 700),
           ),
-          Text(
-            value,
-            style: textStyles.caption.copyWith(
-              color: textColor,
-              fontWeight: FontWeight.w800,
-            ),
+          const SizedBox(height: 4), // mb-1 from progress bar to text
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$percent% USED',
+                style: textStyles.labelSM.copyWith(
+                  fontSize: 10, // text-[10px]
+                  fontWeight: FontWeight.w700, // font-bold
+                  color: colors.textTertiary, // slate-600
+                  letterSpacing: 0.5, // tracking-wide
+                ),
+              ),
+              Text(
+                '\$${category.remainingAmount.toStringAsFixed(0)} LEFT',
+                style: textStyles.labelSM.copyWith(
+                  fontSize: 10, // text-[10px]
+                  fontWeight: FontWeight.w700, // font-bold
+                  color: colors.textPrimary, // slate-900
+                  letterSpacing: 0.5, // tracking-wide
+                ),
+              ),
+            ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _UsageBadge extends StatelessWidget {
-  const _UsageBadge({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    final textStyles = context.textStyles;
-    final borderRadius = context.borderRadius;
-    final spacing = context.spacing;
-
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: spacing.s3,
-        vertical: spacing.s2,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: borderRadius.pill,
-      ),
-      child: Text(
-        label,
-        style: textStyles.caption.copyWith(
-          color: color,
-          fontWeight: FontWeight.w800,
-        ),
       ),
     );
   }

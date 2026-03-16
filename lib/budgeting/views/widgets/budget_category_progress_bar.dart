@@ -1,3 +1,4 @@
+import 'package:expancetracker/animation/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:expancetracker/core/ui/app_theme.dart';
 
@@ -12,6 +13,7 @@ class BudgetCategoryProgressBar extends StatelessWidget {
     this.barColor,
     this.trackColor,
     this.labelColor,
+    this.height = 10,
   });
 
   final double spentFraction;
@@ -20,11 +22,11 @@ class BudgetCategoryProgressBar extends StatelessWidget {
   final Color? barColor;
   final Color? trackColor;
   final Color? labelColor;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.kitColors;
-    final borderRadius = context.borderRadius;
 
     return Column(
       children: [
@@ -32,7 +34,7 @@ class BudgetCategoryProgressBar extends StatelessWidget {
           spentFraction: spentFraction,
           barColor: barColor ?? colors.brandPrimary,
           trackColor: trackColor ?? colors.brandPrimary.withValues(alpha: 0.10),
-          progressBarRadius: borderRadius.progressBar,
+          height: height,
         ),
         const SizedBox(height: 8),
         _SpendingLabels(
@@ -50,32 +52,59 @@ class _ProgressTrack extends StatelessWidget {
     required this.spentFraction,
     required this.barColor,
     required this.trackColor,
-    required this.progressBarRadius,
+    required this.height,
   });
 
   final double spentFraction;
   final Color barColor;
   final Color trackColor;
-  final BorderRadius progressBarRadius;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: progressBarRadius,
-      child: Container(
-        height: 8,
-        color: trackColor,
-        child: FractionallySizedBox(
-          widthFactor: spentFraction.clamp(0.0, 1.0),
-          alignment: Alignment.centerLeft,
-          child: Container(
-            decoration: BoxDecoration(
-              color: barColor,
-              borderRadius: progressBarRadius,
-            ),
-          ),
+    final progress = spentFraction.clamp(0.0, 1.0);
+
+    return Stack(
+      alignment: Alignment.centerLeft,
+      children: [
+        AnimatedProgressBar(
+          progress: progress,
+          progressColor: barColor,
+          backgroundColor: trackColor,
+          height: height,
+          duration: const Duration(milliseconds: 700),
+          curve: Curves.easeOutCubic,
         ),
-      ),
+        if (progress > 0)
+          TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0, end: progress),
+            duration: const Duration(milliseconds: 700),
+            curve: Curves.easeOutCubic,
+            builder: (context, value, _) {
+              final dotProgress = value.clamp(0.03, 0.97);
+
+              return Align(
+                alignment: Alignment(dotProgress * 2 - 1, 0),
+                child: Container(
+                  width: height + 4,
+                  height: height + 4,
+                  decoration: BoxDecoration(
+                    color: barColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 2.5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: barColor.withValues(alpha: 0.18),
+                        blurRadius: 6,
+                        offset: const Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+      ],
     );
   }
 }
@@ -102,8 +131,11 @@ class _SpendingLabels extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(remainingLabel, style: style),
-        Text(spentLabel, style: style),
+        Flexible(child: Text(remainingLabel, style: style)),
+        const SizedBox(width: 12),
+        Flexible(
+          child: Text(spentLabel, style: style, textAlign: TextAlign.end),
+        ),
       ],
     );
   }

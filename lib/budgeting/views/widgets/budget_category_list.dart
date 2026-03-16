@@ -3,8 +3,6 @@ import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/budgeting/models/budget_category_model.dart';
 import 'package:expancetracker/budgeting/views/widgets/budget_category_card.dart';
 
-/// Organism: The "ACTIVE BUDGETS" section — a header label and a list of
-/// [BudgetCategoryCard]s spaced 16px apart.
 class BudgetCategoryList extends StatelessWidget {
   const BudgetCategoryList({super.key, required this.categories});
 
@@ -13,80 +11,72 @@ class BudgetCategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.kitColors;
-    final textStyles = context.textStyles;
-    final spacing = context.spacing;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Active budgets',
-                    style: textStyles.headingLG.copyWith(
-                      color: colors.textPrimary,
-                      fontWeight: FontWeight.w800,
-                    ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 32), // pb-8
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 4,
+              vertical: 4,
+            ), // px-1 mb-1 approx
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  'Budget categories',
+                  style: context.textStyles.headingLG.copyWith(
+                    fontSize: 18, // text-lg
+                    fontWeight: FontWeight.w800, // font-extrabold
+                    color: colors.textPrimary, // slate-900
                   ),
-                  SizedBox(height: spacing.s1),
-                  Text(
-                    'Track each category before it starts eating into your goals.',
-                    style: textStyles.bodySM.copyWith(
-                      color: colors.textTertiary,
-                      fontWeight: FontWeight.w500,
-                    ),
+                ),
+                Text(
+                  '${categories.length} TOTAL',
+                  style: context.textStyles.labelSM.copyWith(
+                    fontSize: 10, // text-[10px]
+                    fontWeight: FontWeight.w700, // font-bold
+                    color: colors.semanticNeutral, // slate-500
+                    letterSpacing: 1.0, // tracking-wider
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
+          const SizedBox(height: 4),
+          if (categories.isEmpty)
             Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: spacing.s3,
-                vertical: spacing.s2,
-              ),
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: colors.brandPrimary.withValues(alpha: 0.10),
-                borderRadius: context.borderRadius.pill,
+                color: colors.bgSurface,
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: colors.borderDefault),
               ),
               child: Text(
-                '${categories.length} live',
-                style: textStyles.caption.copyWith(
-                  color: colors.brandPrimary,
-                  fontWeight: FontWeight.w800,
+                'No budgets yet. Create one to start tracking your spending rhythm.',
+                style: context.textStyles.bodyMD.copyWith(
+                  color: colors.textSecondary,
                 ),
               ),
             ),
-          ],
-        ),
-        SizedBox(height: spacing.s5),
-        if (categories.isEmpty)
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(spacing.cardPaddingLG),
-            decoration: BoxDecoration(
-              color: colors.bgSurface,
-              borderRadius: context.borderRadius.xl,
-              border: Border.all(color: colors.borderLight),
+          if (categories.isNotEmpty)
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: categories.length,
+              separatorBuilder: (_, _) =>
+                  const SizedBox(height: 8), // space-y-2 -> 8px
+              itemBuilder: (context, index) => BudgetCategoryCard(
+                category: categories[index],
+                animationDelay: Duration(milliseconds: 120 + (index * 70)),
+              ),
             ),
-            child: Text(
-              'No budgets yet. Create one to start tracking your spending rhythm.',
-              style: textStyles.bodyMD.copyWith(color: colors.textSecondary),
-            ),
-          ),
-        if (categories.isNotEmpty)
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: categories.length,
-            separatorBuilder: (_, _) => SizedBox(height: spacing.listItemGap),
-            itemBuilder: (context, index) =>
-                BudgetCategoryCard(category: categories[index]),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

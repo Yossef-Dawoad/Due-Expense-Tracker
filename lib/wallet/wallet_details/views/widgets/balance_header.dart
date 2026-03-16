@@ -1,5 +1,7 @@
+import 'package:expancetracker/animation/widgets/odometer_text.dart';
+import 'package:expancetracker/core/common/widgets/app_pill_badge.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class BalanceHeader extends StatelessWidget {
   final double totalBalance;
@@ -13,67 +15,44 @@ class BalanceHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colors = context.kitColors;
+    final textStyles = context.textStyles;
+    final spacing = context.spacing;
     final isPositive = balanceChangePercent >= 0;
+    final trendColor = isPositive
+        ? colors.semanticPositive
+        : colors.semanticNegative;
 
     return Column(
       children: [
         Text(
           'TOTAL BALANCE',
-          style: theme.textTheme.labelMedium?.copyWith(
-            color: Colors
-                .grey, // Or use a specific refined color from palette if exposed
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.2,
+          style: textStyles.labelSM.copyWith(
+            color: colors.textTertiary,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.6,
           ),
         ),
-        const SizedBox(height: 8),
-        Text(
-          '\$${totalBalance.toStringAsFixed(2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
-          style: theme.textTheme.displayMedium?.copyWith(
+        SizedBox(height: spacing.s2),
+        OdometerText(
+          value: totalBalance,
+          prefix: '\$',
+          decimalPlaces: 2,
+          style: textStyles.displayXL.copyWith(
             fontWeight: FontWeight.w900,
-            color: colorScheme.onSurface,
+            color: colors.textPrimary,
             letterSpacing: -1.0,
           ),
         ),
-        const SizedBox(height: 16),
-        Container(
+        SizedBox(height: spacing.s4),
+        AppPillBadge(
+          icon: isPositive ? Icons.trending_up : Icons.trending_down,
+          label:
+              '${isPositive ? '+' : ''}${balanceChangePercent.toStringAsFixed(1)}% vs last month',
+          textColor: trendColor,
+          backgroundColor: trendColor.withValues(alpha: 0.10),
+          borderColor: trendColor.withValues(alpha: 0.18),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: isPositive
-                ? const Color(0xffECFDF5)
-                : const Color(0xffFFF1F2), // Light green/red
-            border: Border.all(
-              color: isPositive
-                  ? const Color(0xffD1FAE5)
-                  : const Color(0xffFECDD3),
-            ),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                isPositive ? Icons.trending_up : Icons.trending_down,
-                color: isPositive
-                    ? const Color(0xff059669)
-                    : const Color(0xffE11D48),
-                size: 16,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                '${isPositive ? '+' : ''}${balanceChangePercent.toString()}% vs last month',
-                style: GoogleFonts.manrope(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w800,
-                  color: isPositive
-                      ? const Color(0xff059669)
-                      : const Color(0xffE11D48),
-                ),
-              ),
-            ],
-          ),
         ),
       ],
     );

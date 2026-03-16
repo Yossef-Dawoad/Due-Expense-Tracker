@@ -43,7 +43,7 @@ class CategoryIconPicker extends StatelessWidget {
               return ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: kCustomCategoryIcons.length,
-                separatorBuilder: (_, __) => SizedBox(width: spacing.s4),
+                separatorBuilder: (_, _) => SizedBox(width: spacing.s4),
                 itemBuilder: (context, index) {
                   return _IconPickerItem(
                     icon: kCustomCategoryIcons[index],

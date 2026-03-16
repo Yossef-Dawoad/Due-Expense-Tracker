@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:expancetracker/core/ui/app_theme.dart';
+import 'package:expancetracker/animation/animation.dart';
 import 'package:expancetracker/budgeting/models/budget_summary_model.dart';
 import 'package:expancetracker/budgeting/views/widgets/budget_circular_progress_ring.dart';
+import 'package:expancetracker/core/common/widgets/app_pill_badge.dart';
+import 'package:expancetracker/core/common/widgets/app_surface_card.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
+import 'package:flutter/material.dart';
 
-/// Molecule: The upper summary section showing "MONTHLY BUDGET", the total amount,
-/// and the circular progress ring — matching the HTML's `.text-center.mt-6` block.
 class BudgetSummaryHeader extends StatelessWidget {
   const BudgetSummaryHeader({super.key, required this.summary});
 
@@ -16,127 +16,88 @@ class BudgetSummaryHeader extends StatelessWidget {
     final colors = context.kitColors;
     final textStyles = context.textStyles;
     final spacing = context.spacing;
-    final borderRadius = context.borderRadius;
-    final shadows = context.shadows;
-    final currency = NumberFormat.currency(symbol: '\$', decimalDigits: 0);
 
-    return Container(
-      padding: EdgeInsets.all(spacing.cardPaddingLG),
-      decoration: BoxDecoration(
-        borderRadius: borderRadius.xxl,
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            colors.bgSurface,
-            colors.brandPrimary.withValues(alpha: 0.12),
-          ],
-        ),
-        border: Border.all(color: colors.brandPrimary.withValues(alpha: 0.12)),
-        boxShadow: shadows.elevation2,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return AppSurfaceCard(
+      padding: EdgeInsets.all(spacing.cardPadding),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final isCompact = constraints.maxWidth < 360;
+
+          return Column(
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _BudgetPeriodLabel(label: 'Budget pulse'),
-                    SizedBox(height: spacing.s2),
-                    Text(
-                      'Your spending plan is ${summary.overallSpentPercentage}% committed.',
-                      style: textStyles.headingLG.copyWith(
-                        color: colors.textPrimary,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    SizedBox(height: spacing.s2),
-                    Text(
-                      'Stay ahead of the month by watching what is left before the final stretch.',
-                      style: textStyles.bodySM.copyWith(
-                        color: colors.textSecondary,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: spacing.s4),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: spacing.s3,
-                  vertical: spacing.s2,
-                ),
-                decoration: BoxDecoration(
-                  color: colors.bgBase.withValues(alpha: 0.82),
-                  borderRadius: borderRadius.pill,
-                ),
-                child: Text(
-                  DateFormat('MMM').format(DateTime.now()),
-                  style: textStyles.caption.copyWith(
-                    color: colors.textPrimary,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: spacing.s6),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      currency.format(summary.totalBudget),
-                      style: textStyles.displayLG.copyWith(
-                        color: colors.textPrimary,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: -1.2,
-                      ),
-                    ),
-                    SizedBox(height: spacing.s2),
-                    Text(
-                      'Allocated across all active budget categories.',
-                      style: textStyles.bodySM.copyWith(
-                        color: colors.textTertiary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(height: spacing.s5),
-                    Wrap(
-                      spacing: spacing.s3,
-                      runSpacing: spacing.s3,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _SummaryMetricTile(
-                          label: 'Spent so far',
-                          value: currency.format(summary.spentAmount),
-                          tint: colors.semanticNegative.withValues(alpha: 0.12),
+                        const _BudgetPeriodLabel(label: 'MONTHLY BUDGET'),
+                        SizedBox(height: spacing.s2),
+                        OdometerText(
+                          value: summary.totalBudget,
+                          prefix: '\$',
+                          decimalPlaces: 0,
+                          startDelay: const Duration(milliseconds: 80),
+                          digitStagger: const Duration(milliseconds: 45),
+                          style: textStyles.displayMD.copyWith(
+                            color: colors.textPrimary,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 30,
+                            letterSpacing: -0.8,
+                          ),
                         ),
-                        _SummaryMetricTile(
-                          label: 'Left to use',
-                          value: currency.format(summary.remainingAmount),
-                          tint: colors.brandPrimary.withValues(alpha: 0.12),
+                        SizedBox(height: spacing.s2),
+                        Text(
+                          'Allocated across all active categories this month.',
+                          style: textStyles.bodySM.copyWith(
+                            color: colors.textTertiary,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(height: spacing.s3),
+                        AppPillBadge(
+                          label:
+                              '${summary.overallSpentPercentage}% used so far this month',
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(width: spacing.s4),
+                  BudgetCircularProgressRing(
+                    spentFraction: summary.overallSpentFraction,
+                    percentageLabel: '${summary.overallSpentPercentage}%',
+                    size: isCompact ? 112 : 128,
+                  ),
+                ],
               ),
-              SizedBox(width: spacing.s4),
-              BudgetCircularProgressRing(
-                spentFraction: summary.overallSpentFraction,
-                percentageLabel: '${summary.overallSpentPercentage}%',
-                size: 156,
+              SizedBox(height: spacing.s4),
+              Row(
+                children: [
+                  Expanded(
+                    child: _SummaryMetricTile(
+                      label: 'REMAINING',
+                      value: summary.remainingAmount,
+                      icon: Icons.wallet_outlined,
+                      accentColor: colors.brandPrimary,
+                      startDelay: const Duration(milliseconds: 180),
+                    ),
+                  ),
+                  SizedBox(width: spacing.s3),
+                  Expanded(
+                    child: _SummaryMetricTile(
+                      label: 'SPENT',
+                      value: summary.spentAmount,
+                      icon: Icons.trending_up_rounded,
+                      accentColor: colors.semanticNegative,
+                      startDelay: const Duration(milliseconds: 280),
+                    ),
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -155,9 +116,9 @@ class _BudgetPeriodLabel extends StatelessWidget {
     return Text(
       label,
       style: textStyles.labelSM.copyWith(
-        color: colors.brandPrimary,
-        fontWeight: FontWeight.w800,
-        letterSpacing: 1.2,
+        color: colors.textTertiary,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 1.6,
       ),
     );
   }
@@ -167,41 +128,66 @@ class _SummaryMetricTile extends StatelessWidget {
   const _SummaryMetricTile({
     required this.label,
     required this.value,
-    required this.tint,
+    required this.icon,
+    required this.accentColor,
+    required this.startDelay,
   });
 
   final String label;
-  final String value;
-  final Color tint;
+  final double value;
+  final IconData icon;
+  final Color accentColor;
+  final Duration startDelay;
 
   @override
   Widget build(BuildContext context) {
     final textStyles = context.textStyles;
-    final borderRadius = context.borderRadius;
-    final spacing = context.spacing;
     final colors = context.kitColors;
+    final spacing = context.spacing;
 
-    return Container(
+    return AppSurfaceCard(
       padding: EdgeInsets.symmetric(
-        horizontal: spacing.s4,
+        horizontal: spacing.s3,
         vertical: spacing.s3,
       ),
-      decoration: BoxDecoration(color: tint, borderRadius: borderRadius.lg),
+      backgroundColor: colors.bgBase,
+      borderColor: colors.borderLight,
+      borderRadius: context.borderRadius.xl,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            label,
-            style: textStyles.caption.copyWith(
-              color: colors.textTertiary,
-              fontWeight: FontWeight.w700,
-            ),
+          Row(
+            children: [
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: accentColor.withValues(alpha: 0.12),
+                  borderRadius: context.borderRadius.iconContainer,
+                ),
+                child: Icon(icon, color: accentColor, size: 18),
+              ),
+              SizedBox(width: spacing.s3),
+              Expanded(
+                child: Text(
+                  label,
+                  style: textStyles.labelSM.copyWith(
+                    color: colors.textTertiary,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: spacing.s1),
-          Text(
-            value,
-            style: textStyles.bodyMD.copyWith(
+          SizedBox(height: spacing.s3),
+          OdometerText(
+            value: value,
+            prefix: '\$',
+            decimalPlaces: 0,
+            startDelay: startDelay,
+            digitStagger: const Duration(milliseconds: 40),
+            style: textStyles.headingMD.copyWith(
               color: colors.textPrimary,
               fontWeight: FontWeight.w800,
             ),

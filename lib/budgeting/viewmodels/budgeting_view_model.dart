@@ -1,9 +1,9 @@
+import 'package:expancetracker/budgeting/models/budget_period.dart';
+import 'package:expancetracker/budgeting/models/create_budget_submission.dart';
 import 'package:flutter/foundation.dart';
 import 'package:expancetracker/budgeting/models/budget_category_model.dart';
 import 'package:expancetracker/budgeting/models/budget_summary_model.dart';
 import 'package:expancetracker/budgeting/mock_data/budgeting_mock_data.dart';
-
-enum BudgetPeriod { monthly, weekly }
 
 class BudgetingViewModel {
   BudgetingViewModel();
@@ -27,6 +27,12 @@ class BudgetingViewModel {
     if (_selectedPeriod.value == period) return;
     _selectedPeriod.value = period;
     // In a real implementation, reload data from repository based on period.
+  }
+
+  void applyCreatedBudget(CreateBudgetSubmission submission) {
+    _selectedPeriod.value = submission.period;
+    _summary.value = submission.summary;
+    _categories.value = List.unmodifiable(submission.categories);
   }
 
   void dispose() {

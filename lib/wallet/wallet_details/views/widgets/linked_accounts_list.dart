@@ -1,3 +1,8 @@
+import 'package:expancetracker/animation/widgets/odometer_text.dart';
+import 'package:expancetracker/core/common/widgets/app_pill_badge.dart';
+import 'package:expancetracker/core/common/widgets/app_section_header.dart';
+import 'package:expancetracker/core/common/widgets/app_surface_card.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/wallet/data/models/account.dart';
 import 'package:flutter/material.dart';
 
@@ -8,62 +13,52 @@ class LinkedAccountsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.kitColors;
+    final spacing = context.spacing;
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Linked Accounts',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+        AppSectionHeader(
+          title: 'Linked Accounts',
+          subtitle:
+              'Connected sources that contribute to your total wallet picture.',
+          trailing: Container(
+            decoration: BoxDecoration(
+              color: colors.bgSurface,
+              shape: BoxShape.circle,
+              border: Border.all(color: colors.borderLight),
             ),
-            Container(
-              decoration: const BoxDecoration(
-                color: Color(0xffF1F5F9),
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.add, color: Colors.black54),
-                constraints: const BoxConstraints.tightFor(
-                  width: 36,
-                  height: 36,
-                ),
-                padding: EdgeInsets.zero,
-                iconSize: 20,
-              ),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.add, color: colors.textSecondary),
+              constraints: const BoxConstraints.tightFor(width: 36, height: 36),
+              padding: EdgeInsets.zero,
+              iconSize: 20,
             ),
-          ],
+          ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: spacing.s4),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: accounts.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 12),
+          separatorBuilder: (context, index) => SizedBox(height: spacing.s3),
           itemBuilder: (context, index) {
             final account = accounts[index];
-            // Use a default icon and color based on account type
             final accountColor = _getAccountColor(account.type);
             final accountIcon = _getAccountIcon(account.type);
 
-            return Container(
+            return AppSurfaceCard(
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.02),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
+              borderRadius: context.borderRadius.xl,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.02),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
               child: Row(
                 children: [
                   Container(
@@ -89,16 +84,17 @@ class LinkedAccountsList extends StatelessWidget {
                       children: [
                         Text(
                           account.name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                          style: context.textStyles.bodyMD.copyWith(
+                            color: colors.textPrimary,
+                            fontWeight: FontWeight.w700,
                             fontSize: 14,
                           ),
                         ),
                         const SizedBox(height: 2),
                         Text(
                           account.type,
-                          style: TextStyle(
-                            color: Colors.grey[400],
+                          style: context.textStyles.caption.copyWith(
+                            color: colors.textTertiary,
                             fontSize: 12,
                           ),
                         ),
@@ -108,30 +104,38 @@ class LinkedAccountsList extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        '\$${account.balance.toStringAsFixed(2)}',
-                        style: const TextStyle(
+                      OdometerText(
+                        value: account.balance,
+                        prefix: '\$',
+                        decimalPlaces: 2,
+                        style: context.textStyles.headingMD.copyWith(
+                          color: colors.textPrimary,
                           fontWeight: FontWeight.w800,
                           fontSize: 16,
                         ),
                       ),
                       const SizedBox(height: 2),
                       if (!account.isArchived)
-                        const Text(
-                          'Active',
-                          style: TextStyle(
-                            color: Color(0xff10B981),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11,
+                        AppPillBadge(
+                          label: 'Active',
+                          textColor: colors.semanticPositive,
+                          backgroundColor: colors.semanticPositive.withValues(
+                            alpha: 0.10,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
                           ),
                         )
                       else
-                        Text(
-                          'Archived',
-                          style: TextStyle(
-                            color: Colors.grey[500],
-                            fontWeight: FontWeight.w600,
-                            fontSize: 11,
+                        AppPillBadge(
+                          label: 'Archived',
+                          textColor: colors.textSecondary,
+                          backgroundColor: colors.bgBase,
+                          borderColor: colors.borderLight,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
                           ),
                         ),
                     ],
@@ -145,7 +149,6 @@ class LinkedAccountsList extends StatelessWidget {
     );
   }
 
-  /// Maps account type to a display color.
   Color _getAccountColor(String type) {
     return switch (type.toLowerCase()) {
       'savings' => const Color(0xFF10B981),
@@ -156,7 +159,6 @@ class LinkedAccountsList extends StatelessWidget {
     };
   }
 
-  /// Maps account type to a display icon.
   IconData _getAccountIcon(String type) {
     return switch (type.toLowerCase()) {
       'savings' => Icons.savings,

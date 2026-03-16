@@ -1,21 +1,11 @@
-import 'package:expancetracker/core/services/sync_orchestration_service.dart';
 import 'package:expancetracker/core/ui/app_theme.dart';
-import 'package:expancetracker/core/ui/constants/kit_colors.dart';
+import 'package:expancetracker/home/mock_data/home_mock_data.dart';
 import 'package:flutter/material.dart';
 
 /// Top header row with user avatar, greeting text, and notification bell icon.
-/// HTML ref: flex items-center px-6 pt-6 pb-2 justify-between
+/// HTML ref: flex items-center px-6 pt-5 pb-2 justify-between
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({
-    super.key,
-    required this.isConnected,
-    required this.syncState,
-    required this.onSyncPressed,
-  });
-
-  final bool isConnected;
-  final SyncState syncState;
-  final VoidCallback onSyncPressed;
+  const HomeAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,169 +13,112 @@ class HomeAppBar extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(
-        top: 8,
-        bottom: 8,
-      ), // HTML: pt-6 pb-2 (relative to screen top padding)
+        top: 4, // equivalent to pt-5 minus safe area
+        bottom: 8, // pb-2
+      ),
       child: Row(
         children: [
-          // Profile avatar with thin ring — HTML: size-10 ring-1 ring-black/5
+          // Profile avatar with thin ring — HTML: size-10 ring-1 ring-black/10
           Container(
             width: 40,
             height: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(
-                color: colors.textPrimary.withValues(alpha: 0.05),
+              border: Border.all(color: Colors.black.withValues(alpha: 0.10)),
+              image: const DecorationImage(
+                image: NetworkImage(HomeMockData.userAvatarUrl),
+                fit: BoxFit.cover,
               ),
-            ),
-            child: const CircleAvatar(
-              radius: 20,
-              backgroundImage: AssetImage('assets/images/profile.png'),
             ),
           ),
           const SizedBox(width: 12), // HTML: gap-3
           // Greeting text
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // HTML: text-[11px] font-bold tracking-[0.05em] uppercase
-              Text(
-                'GOOD MORNING,',
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                  color: colors.textTertiary,
-                  letterSpacing: 0.55, // 0.05em × 11px
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // HTML: text-[10px] font-extrabold tracking-[0.05em] uppercase
+                Text(
+                  HomeMockData.greetingPrefix,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800, // extrabold
+                    color: colors.textTertiary,
+                    letterSpacing: 0.5, // 0.05em × 10px
+                  ),
                 ),
-              ),
-              // HTML: text-[15px] font-bold
-              Text(
-                'Youssef Dawoud',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  color: colors.textPrimary,
+                const SizedBox(height: 1),
+                // HTML: text-text-main text-[15px] font-extrabold
+                Text(
+                  HomeMockData.userName,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w800, // extrabold
+                    color: colors.textPrimary,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-
-          const Spacer(),
-
-          _SyncStatusButton(
-            colors: colors,
-            isConnected: isConnected,
-            syncState: syncState,
-            onPressed: onSyncPressed,
-          ),
+          // Notification Button
+          const _NotificationButton(),
         ],
       ),
     );
   }
 }
 
-class _SyncStatusButton extends StatelessWidget {
-  const _SyncStatusButton({
-    required this.colors,
-    required this.isConnected,
-    required this.syncState,
-    required this.onPressed,
-  });
-
-  final KitColorsExtension colors;
-  final bool isConnected;
-  final SyncState syncState;
-  final VoidCallback onPressed;
+class _NotificationButton extends StatelessWidget {
+  const _NotificationButton();
 
   @override
   Widget build(BuildContext context) {
-    final visual = _statusVisual();
+    final colors = context.kitColors;
 
+    // HTML: relative flex items-center justify-center rounded-full size-10 bg-surface border border-border-light text-text-main
     return Stack(
       clipBehavior: Clip.none,
       children: [
         Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: onPressed,
+            onTap: () {},
             borderRadius: BorderRadius.circular(20),
             child: Ink(
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: colors.bgSurfaceSecondary,
+                color: colors.bgSurface,
                 shape: BoxShape.circle,
-                border: Border.all(color: visual.ringColor, width: 1.2),
+                border: Border.all(color: colors.borderLight),
               ),
-              child: Icon(visual.icon, color: colors.textPrimary, size: 22),
+              child: Icon(
+                Icons.notifications_none_rounded,
+                color: colors.textPrimary,
+                size: 24,
+              ),
             ),
           ),
         ),
+        // Red dot indicator
+        // HTML: absolute top-2.5 right-2.5 size-2 bg-red-600 rounded-full border-2 border-white
         Positioned(
-          right: -1,
-          top: -1,
-          child: AnimatedContainer(
-            duration: context.durations.duration200,
-            width: 13,
-            height: 13,
+          top: 10,
+          right: 10,
+          child: Container(
+            width: 8,
+            height: 8,
             decoration: BoxDecoration(
-              color: visual.badgeColor,
+              color: const Color(0xFFDC2626), // red-600
               shape: BoxShape.circle,
-              border: Border.all(color: colors.bgBase, width: 2),
-              boxShadow: [
-                BoxShadow(
-                  color: visual.badgeColor.withValues(alpha: 0.35),
-                  blurRadius: 10,
-                ),
-              ],
+              border: Border.all(
+                color: Colors.white,
+                width: 2,
+              ), // Note: HTML says size-2 but border-2 makes it take up all space unless padded. size-2=8px.
             ),
           ),
         ),
       ],
     );
   }
-
-  _SyncBadgeVisual _statusVisual() {
-    if (!isConnected) {
-      return _SyncBadgeVisual(
-        icon: Icons.cloud_off_rounded,
-        badgeColor: colors.semanticNeutral,
-        ringColor: colors.borderDefault,
-      );
-    }
-
-    if (syncState.status == SyncStatus.syncing) {
-      return _SyncBadgeVisual(
-        icon: Icons.sync_rounded,
-        badgeColor: colors.brandPrimary,
-        ringColor: colors.brandPrimary.withValues(alpha: 0.35),
-      );
-    }
-
-    if (syncState.status == SyncStatus.failed || syncState.pendingCount > 0) {
-      return _SyncBadgeVisual(
-        icon: Icons.cloud_upload_rounded,
-        badgeColor: const Color(0xFFF59E0B),
-        ringColor: const Color(0xFFF59E0B).withValues(alpha: 0.3),
-      );
-    }
-
-    return _SyncBadgeVisual(
-      icon: Icons.cloud_done_rounded,
-      badgeColor: colors.semanticPositive,
-      ringColor: colors.semanticPositive.withValues(alpha: 0.3),
-    );
-  }
-}
-
-class _SyncBadgeVisual {
-  const _SyncBadgeVisual({
-    required this.icon,
-    required this.badgeColor,
-    required this.ringColor,
-  });
-
-  final IconData icon;
-  final Color badgeColor;
-  final Color ringColor;
 }

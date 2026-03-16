@@ -44,6 +44,9 @@ class OdometerText extends StatefulWidget {
   /// Delay between successive digit columns (cascading stagger).
   final Duration digitStagger;
 
+  /// Delay before the full odometer starts animating.
+  final Duration startDelay;
+
   /// Easing curve for the digit roll.
   final Curve curve;
 
@@ -55,6 +58,7 @@ class OdometerText extends StatefulWidget {
     this.decimalPlaces = 2,
     this.duration = AnimationDurations.longer,
     this.digitStagger = const Duration(milliseconds: 60),
+    this.startDelay = Duration.zero,
     this.curve = AnimationCurves.decelerate,
   });
 
@@ -167,7 +171,8 @@ class _OdometerTextState extends State<OdometerText>
       if (disableAnimations) {
         _controllers[i].value = 1.0;
       } else {
-        Future.delayed(_delays[i], () {
+        final totalDelay = widget.startDelay + _delays[i];
+        Future.delayed(totalDelay, () {
           if (mounted) {
             _controllers[i].forward();
           }

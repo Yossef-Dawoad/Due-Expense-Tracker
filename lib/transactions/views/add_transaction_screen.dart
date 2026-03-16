@@ -2,6 +2,7 @@ import 'package:expancetracker/animation/animation.dart';
 import 'package:expancetracker/core/utils/locator.dart';
 import 'package:expancetracker/core/services/transaction_service.dart';
 import 'package:expancetracker/core/services/wallet_service.dart';
+import 'package:expancetracker/core/common/widgets/app_section_header.dart';
 import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/core/utils/navigation/router_service.dart';
 import 'package:expancetracker/core/utils/navigation/routes.dart';
@@ -99,13 +100,15 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Category',
-                            style: GoogleFonts.manrope(
+                          Text(''),
+                          AppSectionHeader(
+                            title: 'Category',
+                            titleStyle: GoogleFonts.manrope(
                               color: colors.textPrimary,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
+                            spacing: 0,
                           ),
                           const SizedBox(height: 16),
                           TransactionCategoryGrid(

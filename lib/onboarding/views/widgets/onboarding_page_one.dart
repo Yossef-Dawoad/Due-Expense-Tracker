@@ -63,13 +63,10 @@ class OnboardingPageOne extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  const FadeInAnimation(
+                  const SlideInAnimation(
+                    beginOffset: Offset(0, 0.1),
                     delay: Duration(milliseconds: 100),
-                    child: SlideInAnimation(
-                      beginOffset: Offset(0, 0.1),
-                      delay: Duration(milliseconds: 100),
-                      child: _FloatingCardScene(),
-                    ),
+                    child: _FloatingCardScene(),
                   ),
                   const SizedBox(height: 48),
                   FadeInAnimation(
@@ -154,7 +151,11 @@ class _FloatingCardScene extends StatelessWidget {
               scale: 0.95,
               child: Opacity(
                 opacity: 0.5,
-                child: _buildGlassContainer(context, size: size),
+                child: _buildGlassContainer(
+                  context,
+                  size: size,
+                  showBlur: false,
+                ),
               ),
             ),
           ),
@@ -218,7 +219,11 @@ class _FloatingCardScene extends StatelessWidget {
     );
   }
 
-  Widget _buildGlassContainer(BuildContext context, {required double size}) {
+  Widget _buildGlassContainer(
+    BuildContext context, {
+    required double size,
+    bool showBlur = true,
+  }) {
     return Container(
       width: size,
       height: size,
@@ -240,11 +245,15 @@ class _FloatingCardScene extends StatelessWidget {
           ),
         ],
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(48),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-          child: const SizedBox.shrink(),
+      child: RepaintBoundary(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(48),
+          child: showBlur
+              ? BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                  child: const SizedBox.shrink(),
+                )
+              : const SizedBox.shrink(),
         ),
       ),
     );
@@ -340,10 +349,12 @@ class _FloatingCreditCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: Colors.white.withValues(alpha: 0.1),
                 ),
-                child: ClipOval(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4), // blur-sm
-                    child: const SizedBox.shrink(),
+                child: RepaintBoundary(
+                  child: ClipOval(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4), // blur-sm
+                      child: const SizedBox.shrink(),
+                    ),
                   ),
                 ),
               ),

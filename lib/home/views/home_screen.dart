@@ -1,5 +1,7 @@
 import 'package:expancetracker/animation/animation.dart';
+import 'package:expancetracker/core/common/widgets/app_section_header.dart';
 import 'package:expancetracker/core/ui/app_theme.dart';
+import 'package:expancetracker/home/mock_data/home_mock_data.dart';
 import 'package:expancetracker/home/viewmodel/home_viewmodel.dart';
 import 'package:expancetracker/home/views/widgets/budget_overview_card.dart';
 import 'package:expancetracker/home/views/widgets/daily_insight_card.dart';
@@ -54,23 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // ── App Bar ── HTML: pt-6 pb-2
                   FadeInAnimation(
                     duration: AnimationDurations.short,
-                    child: ListenableBuilder(
-                      listenable: Listenable.merge([
-                        _viewModel.isConnected,
-                        _viewModel.syncState,
-                      ]),
-                      builder: (context, _) {
-                        return HomeAppBar(
-                          isConnected: _viewModel.isConnected.value,
-                          syncState: _viewModel.syncState.value,
-                          onSyncPressed: () {
-                            setState(() {
-                              _showSyncDetails = !_showSyncDetails;
-                            });
-                          },
-                        );
-                      },
-                    ),
+                    child: const HomeAppBar(),
                   ),
 
                   AnimatedSwitcher(
@@ -147,35 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           "You've spent 15% less than yesterday. You're on track to save \$340 this month!",
                     ),
                   ),
-                  SizedBox(height: spacing.s4),
-                  // ── Budget Overview Heading ──
-                  ClassicSlideWithFadeInAnimation(
-                    delay: const Duration(milliseconds: 380),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // HTML: text-[17px] font-bold tracking-tight
-                        Text(
-                          'Budget Overview',
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
-                            color: colors.textPrimary,
-                            letterSpacing: -0.3,
-                          ),
-                        ),
-                        // HTML: text-[12px] font-medium
-                        Text(
-                          'September',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: colors.textTertiary,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   const SizedBox(height: 16), // HTML: mb-4
                   // ── Budget Overview Card ──
                   ClassicSlideWithFadeInAnimation(
@@ -186,17 +143,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         _viewModel.monthlyExpenses,
                       ]),
                       builder: (context, _) {
-                        final limit = 3500.0;
-                        final remaining =
-                            limit - _viewModel.monthlyExpenses.value;
-                        final percentUsed =
-                            (_viewModel.monthlyExpenses.value / limit * 100)
-                                .clamp(0.0, 100.0);
                         return BudgetOverviewCard(
-                          remaining: remaining,
-                          limit: limit,
-                          percentUsed: percentUsed,
-                          daysLeft: 12,
+                          limit: HomeMockData.budgetLimit,
+                          remaining: HomeMockData.budgetRemaining,
+                          month: HomeMockData.budgetMonthStr,
                         );
                       },
                     ),
@@ -205,32 +155,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   // ── Recent Activity Heading ──
                   ClassicSlideWithFadeInAnimation(
                     delay: const Duration(milliseconds: 460),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // HTML: text-[17px] font-bold tracking-tight
-                        Text(
-                          'Recent Activity',
+                    child: AppSectionHeader(
+                      title: 'Recent Activity',
+                      titleStyle: TextStyle(
+                        fontSize: 17, // text-[17px]
+                        fontWeight: FontWeight.w900, // font-black
+                        color: colors.textPrimary,
+                        letterSpacing: -0.3, // tracking-tight roughly
+                      ),
+                      trailing: GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          'See all', // HTML says 'See all'
                           style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
-                            color: colors.textPrimary,
-                            letterSpacing: -0.3,
+                            fontSize: 12, // text-[12px]
+                            color: colors.textTertiary,
+                            fontWeight: FontWeight.w800, // font-extrabold
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {},
-                          // HTML: text-sm font-medium = 14px
-                          child: Text(
-                            'History',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: colors.textTertiary,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16), // HTML: mb-4

@@ -214,10 +214,10 @@ class _CategoryGridSection extends StatelessWidget {
 
     return ValueListenableBuilder<List<CategoryModel>>(
       valueListenable: viewModel.allDbCategories,
-      builder: (context, _, __) {
+      builder: (context, _, _) {
         return ValueListenableBuilder<String>(
           valueListenable: viewModel.searchQuery,
-          builder: (context, _, __) {
+          builder: (context, _, _) {
             final categories = viewModel.filteredCategories;
 
             return ValueListenableBuilder<CategoryModel?>(

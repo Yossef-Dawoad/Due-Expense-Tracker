@@ -1,3 +1,6 @@
+import 'package:expancetracker/animation/widgets/odometer_text.dart';
+import 'package:expancetracker/core/common/widgets/app_surface_card.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class FinancialSummaryCards extends StatelessWidget {
@@ -12,6 +15,8 @@ class FinancialSummaryCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final spacing = context.spacing;
+
     return Row(
       children: [
         Expanded(
@@ -23,7 +28,7 @@ class FinancialSummaryCards extends StatelessWidget {
             iconBg: const Color(0xffD1FAE5),
           ),
         ),
-        const SizedBox(width: 16),
+        SizedBox(width: spacing.s4),
         Expanded(
           child: SummaryCard(
             title: 'TOTAL LIABILITIES',
@@ -56,21 +61,22 @@ class SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final colors = context.kitColors;
+    final textStyles = context.textStyles;
+
+    return AppSurfaceCard(
       height: 160,
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.8),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
+      borderRadius: context.borderRadius.xxl,
+      backgroundColor: colors.bgSurface,
+      borderColor: colors.borderDefault,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.02),
+          blurRadius: 20,
+          offset: const Offset(0, 10),
+        ),
+      ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,18 +91,21 @@ class SummaryCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
+                style: textStyles.labelSM.copyWith(
+                  color: colors.textTertiary,
+                  fontWeight: FontWeight.w700,
                   letterSpacing: 0.5,
                 ),
               ),
               const SizedBox(height: 4),
-              Text(
-                '\$${amount.toStringAsFixed(2)}',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              OdometerText(
+                value: amount,
+                prefix: '\$',
+                decimalPlaces: 2,
+                style: textStyles.headingLG.copyWith(
                   fontWeight: FontWeight.w800,
                   fontSize: 20,
+                  color: colors.textPrimary,
                 ),
               ),
             ],

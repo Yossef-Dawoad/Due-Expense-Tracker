@@ -1,4 +1,5 @@
 import 'package:expancetracker/animation/animation.dart';
+import 'package:expancetracker/core/common/widgets/app_surface_card.dart';
 import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -16,25 +17,27 @@ class IncomeExpenseSummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.kitColors;
+
     return Row(
       children: [
         Expanded(
-          child: _SummaryMiniCard(
+          child: _SummaryMetricTile(
             label: 'INCOME',
-            amount: income,
+            value: income,
             icon: Icons.arrow_downward,
-            valueColor: const Color(0xFF10B981), // Emerald-500
-            isIncome: true,
+            accentColor: const Color(0xFF059669), // text-emerald-600
+            startDelay: const Duration(milliseconds: 180),
           ),
         ),
-        const SizedBox(width: 16), // HTML: gap-4
+        const SizedBox(width: 12), // tighter gap
         Expanded(
-          child: _SummaryMiniCard(
+          child: _SummaryMetricTile(
             label: 'EXPENSES',
-            amount: expenses,
+            value: expenses,
             icon: Icons.arrow_upward,
-            valueColor: const Color(0xFFFB7185), // Rose-400
-            isIncome: false,
+            accentColor: colors.semanticNegative,
+            startDelay: const Duration(milliseconds: 280),
           ),
         ),
       ],
@@ -42,73 +45,78 @@ class IncomeExpenseSummaryRow extends StatelessWidget {
   }
 }
 
-class _SummaryMiniCard extends StatelessWidget {
-  const _SummaryMiniCard({
+class _SummaryMetricTile extends StatelessWidget {
+  const _SummaryMetricTile({
     required this.label,
-    required this.amount,
+    required this.value,
     required this.icon,
-    required this.valueColor,
-    required this.isIncome,
+    required this.accentColor,
+    required this.startDelay,
   });
 
   final String label;
-  final double amount;
+  final double value;
   final IconData icon;
-  final Color valueColor;
-  final bool isIncome;
+  final Color accentColor;
+  final Duration startDelay;
 
   @override
   Widget build(BuildContext context) {
+    final textStyles = context.textStyles;
     final colors = context.kitColors;
+    final spacing = context.spacing;
 
-    return ScaleFeedback(
-      onTap: () {},
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ), // HTML: p-4
-        decoration: BoxDecoration(
-          color: colors.bgSurface,
-          borderRadius: context.borderRadius.xxl,
-          border: Border.all(color: colors.borderDefault),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // HTML: text-[10px] font-bold uppercase tracking-widest mb-1
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-                color: colors.textTertiary,
-                letterSpacing: 1.6, // tracking-widest ≈ 0.16em × 10px
-              ),
-            ),
-            const SizedBox(height: 4), // HTML: mb-1
-            // HTML: flex items-center gap-1
-            Row(
-              children: [
-                Icon(icon, color: valueColor, size: 18),
-                const SizedBox(width: 4), // HTML: gap-1
-                Flexible(
-                  child: OdometerText(
-                    value: amount,
-                    prefix: '\$',
-                    decimalPlaces: 2,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                      color: isIncome ? valueColor : colors.textPrimary,
-                    ),
-                    duration: const Duration(milliseconds: 800),
-                  ),
+    return AppSurfaceCard(
+      padding: EdgeInsets.symmetric(
+        horizontal: spacing.s3,
+        vertical: spacing.s3,
+      ),
+      backgroundColor: colors.bgBase,
+      borderColor: colors.borderLight,
+      borderRadius: context.borderRadius.xl,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 28,
+                height: 28,
+                decoration: BoxDecoration(
+                  color: accentColor.withValues(alpha: 0.12),
+                  borderRadius: context.borderRadius.iconContainer,
                 ),
-              ],
+                child: Icon(icon, color: accentColor, size: 16),
+              ),
+              SizedBox(width: spacing.s2),
+              Expanded(
+                child: Text(
+                  label,
+                  style: textStyles.labelSM.copyWith(
+                    color: colors.textTertiary,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.5,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: spacing.s2),
+          OdometerText(
+            value: value,
+            prefix: '\$',
+            decimalPlaces: 0,
+            startDelay: startDelay,
+            digitStagger: const Duration(milliseconds: 40),
+            style: textStyles.headingMD.copyWith(
+              color: colors.textPrimary,
+              fontWeight: FontWeight.w900,
+              fontSize: 20, // 20px for compactness
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
