@@ -399,7 +399,7 @@ class _RecentActivityItem extends StatelessWidget {
           color: isSelected
               ? colors.semanticNegative.withValues(alpha: 0.04)
               : Colors.transparent, // Solid background
-          borderRadius: context.borderRadius.xxl, // Card-like rounding
+          borderRadius: context.borderRadius.xtreme, // Card-like rounding
           border: Border.all(
             color: isSelected
                 ? colors.semanticNegative

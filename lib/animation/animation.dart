@@ -22,6 +22,7 @@ export 'widgets/gradient_background.dart';
 export 'widgets/hover_dance.dart';
 export 'widgets/progress.dart';
 export 'widgets/pulse.dart';
+export 'widgets/ripple.dart';
 export 'widgets/shimmer.dart';
 export 'widgets/slide_in.dart';
 export 'widgets/staggered_list.dart';

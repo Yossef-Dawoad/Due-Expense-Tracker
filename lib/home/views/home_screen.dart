@@ -7,10 +7,11 @@ import 'package:expancetracker/home/views/widgets/budget_overview_card.dart';
 import 'package:expancetracker/home/views/widgets/daily_insight_card.dart';
 import 'package:expancetracker/home/views/widgets/home_app_bar.dart';
 import 'package:expancetracker/home/views/widgets/home_sync_status_card.dart';
-import 'package:expancetracker/home/views/widgets/income_expense_summary_row.dart';
 import 'package:expancetracker/home/views/widgets/recent_activity_section.dart';
 import 'package:expancetracker/home/views/widgets/today_spending_hero_section.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/common/widgets/icon_metric_stat_pill.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late final HomeViewModel _viewModel;
-  bool _showSyncDetails = false;
+  final bool _showSyncDetails = false;
 
   @override
   void initState() {
@@ -96,9 +97,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ClassicSlideWithFadeInAnimation(
                     delay: const Duration(milliseconds: 80),
                     child: ListenableBuilder(
-                      listenable: _viewModel.monthlyExpenses,
+                      listenable: Listenable.merge([
+                        _viewModel.monthlyExpenses,
+                        _viewModel.totalBalance,
+                      ]),
                       builder: (context, _) {
                         return TodaySpendingHeroSection(
+                          remaining: _viewModel.totalBalance.value,
                           todaySpending: _viewModel.monthlyExpenses.value,
                           percentageChange: 15,
                           isSpendingDown: true,
@@ -116,9 +121,30 @@ class _HomeScreenState extends State<HomeScreen> {
                         _viewModel.monthlyExpenses,
                       ]),
                       builder: (context, _) {
-                        return IncomeExpenseSummaryRow(
-                          income: _viewModel.monthlyIncome.value,
-                          expenses: _viewModel.monthlyExpenses.value,
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: IconMetricStatPill(
+                                label: 'INCOME',
+                                value: _viewModel.monthlyIncome.value,
+                                icon: Icons.account_balance_wallet_outlined,
+                                iconColor: colors
+                                    .brandPrimaryDark, // string brand-green
+                                startDelay: const Duration(milliseconds: 180),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: IconMetricStatPill(
+                                label: 'EXPENSES',
+                                value: _viewModel.monthlyExpenses.value,
+                                icon: Icons.trending_up,
+                                iconColor:
+                                    colors.semanticNegative, // string brand-red
+                                startDelay: const Duration(milliseconds: 280),
+                              ),
+                            ),
+                          ],
                         );
                       },
                     ),

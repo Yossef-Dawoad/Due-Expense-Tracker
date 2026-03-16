@@ -1,16 +1,11 @@
 import 'package:expancetracker/animation/animation.dart';
-import 'package:expancetracker/budgeting/models/create_budget_submission.dart';
 import 'package:expancetracker/budgeting/viewmodels/budgeting_view_model.dart';
 import 'package:expancetracker/budgeting/views/widgets/budget_category_list.dart';
 import 'package:expancetracker/budgeting/views/widgets/budget_overview_card.dart';
 import 'package:expancetracker/budgeting/views/widgets/budget_overview_header.dart';
 import 'package:expancetracker/budgeting/views/widgets/budget_status_alert.dart';
-import 'package:expancetracker/core/common/widgets/app_bottom_action_button.dart';
 
 import 'package:expancetracker/core/ui/app_theme.dart';
-import 'package:expancetracker/core/utils/locator.dart';
-import 'package:expancetracker/core/utils/navigation/router_service.dart';
-import 'package:expancetracker/core/utils/navigation/routes.dart';
 import 'package:flutter/material.dart';
 
 class BudgetingScreen extends StatefulWidget {
@@ -39,28 +34,9 @@ class _BudgetingScreenState extends State<BudgetingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.kitColors.bgBase,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            _BudgetingScrollableBody(viewModel: _viewModel),
-            //  _BudgetingAddFab(onTap: _onAddBudgetTapped),
-          ],
-        ),
-      ),
+      body: SafeArea(child: _BudgetingScrollableBody(viewModel: _viewModel)),
     );
   }
-
-  // Future<void> _onAddBudgetTapped() async {
-  //   final draft = await locator<RouterService>().push<CreateBudgetSubmission>(
-  //     Routes.createBudget,
-  //   );
-
-  //   if (draft == null) {
-  //     return;
-  //   }
-
-  //   _viewModel.applyCreatedBudget(draft);
-  // }
 }
 
 class _BudgetingScrollableBody extends StatelessWidget {
@@ -127,26 +103,6 @@ class _BudgetingScrollableBody extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _BudgetingAddFab extends StatelessWidget {
-  const _BudgetingAddFab({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      left: 20,
-      right: 20,
-      bottom: 24,
-      child: AppBottomActionButton(
-        label: 'Create Budget',
-        icon: Icons.add_rounded,
-        onPressed: onTap,
-      ),
     );
   }
 }
