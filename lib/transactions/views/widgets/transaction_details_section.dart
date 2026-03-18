@@ -1,3 +1,4 @@
+import 'package:expancetracker/core/common/widgets/app_surface_card.dart';
 import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/transactions/models/tag.dart';
 import 'package:expancetracker/transactions/views/widgets/transaction_tag_selector.dart';
@@ -106,13 +107,9 @@ class _TransactionDatePicker extends StatelessWidget {
           onDateChanged(picked);
         }
       },
-      child: Container(
+      child: AppSurfaceCard(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        decoration: BoxDecoration(
-          color: colors.bgSurface,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colors.borderDefault),
-        ),
+        borderRadius: context.borderRadius.input,
         child: Row(
           children: [
             Icon(Icons.calendar_today, color: colors.textSecondary, size: 20),
@@ -147,12 +144,9 @@ class _TransactionNotesField extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.kitColors;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: colors.bgSurface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: colors.borderDefault),
-      ),
+    return AppSurfaceCard(
+      padding: EdgeInsets.zero,
+      borderRadius: context.borderRadius.input,
       child: TextField(
         controller: controller,
         maxLines: 3,

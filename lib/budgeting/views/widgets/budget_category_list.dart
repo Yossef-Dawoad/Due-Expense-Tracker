@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:expancetracker/core/ui/app_theme.dart';
 import 'package:expancetracker/budgeting/models/budget_category_model.dart';
 import 'package:expancetracker/budgeting/views/widgets/budget_category_card.dart';
+import 'package:expancetracker/core/common/widgets/app_content_section.dart';
+import 'package:expancetracker/core/common/widgets/app_surface_card.dart';
+import 'package:expancetracker/core/ui/app_theme.dart';
+import 'package:flutter/material.dart';
 
 class BudgetCategoryList extends StatelessWidget {
   const BudgetCategoryList({super.key, required this.categories});
@@ -11,71 +13,49 @@ class BudgetCategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.kitColors;
+    final spacing = context.spacing;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 32), // pb-8
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 4,
-              vertical: 4,
-            ), // px-1 mb-1 approx
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'Budget categories',
-                  style: context.textStyles.headingLG.copyWith(
-                    fontSize: 18, // text-lg
-                    fontWeight: FontWeight.w800, // font-extrabold
-                    color: colors.textPrimary, // slate-900
-                  ),
-                ),
-                Text(
-                  '${categories.length} TOTAL',
-                  style: context.textStyles.labelSM.copyWith(
-                    fontSize: 10, // text-[10px]
-                    fontWeight: FontWeight.w700, // font-bold
-                    color: colors.semanticNeutral, // slate-500
-                    letterSpacing: 1.0, // tracking-wider
-                  ),
-                ),
-              ],
-            ),
+      child: AppContentSection(
+        title: 'Budget categories',
+        headerSpacing: spacing.s1,
+        trailing: Text(
+          '${categories.length} TOTAL',
+          style: context.textStyles.labelSM.copyWith(
+            fontSize: 10,
+            fontWeight: FontWeight.w700,
+            color: colors.semanticNeutral,
+            letterSpacing: 1.0,
           ),
-          const SizedBox(height: 4),
-          if (categories.isEmpty)
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: colors.bgSurface,
+        ),
+        titleStyle: context.textStyles.headingLG.copyWith(
+          fontSize: 18,
+          fontWeight: FontWeight.w800,
+          color: colors.textPrimary,
+        ),
+        child: categories.isEmpty
+            ? AppSurfaceCard(
+                width: double.infinity,
+                padding: EdgeInsets.all(spacing.cardPaddingLG),
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: colors.borderDefault),
-              ),
-              child: Text(
-                'No budgets yet. Create one to start tracking your spending rhythm.',
-                style: context.textStyles.bodyMD.copyWith(
-                  color: colors.textSecondary,
+                child: Text(
+                  'No category budgets yet. Keep this plan flexible or add focused category guardrails when you need them.',
+                  style: context.textStyles.bodyMD.copyWith(
+                    color: colors.textSecondary,
+                  ),
+                ),
+              )
+            : ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: categories.length,
+                separatorBuilder: (_, _) => const SizedBox(height: 8),
+                itemBuilder: (context, index) => BudgetCategoryCard(
+                  category: categories[index],
+                  animationDelay: Duration(milliseconds: 120 + (index * 70)),
                 ),
               ),
-            ),
-          if (categories.isNotEmpty)
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: categories.length,
-              separatorBuilder: (_, _) =>
-                  const SizedBox(height: 8), // space-y-2 -> 8px
-              itemBuilder: (context, index) => BudgetCategoryCard(
-                category: categories[index],
-                animationDelay: Duration(milliseconds: 120 + (index * 70)),
-              ),
-            ),
-        ],
       ),
     );
   }

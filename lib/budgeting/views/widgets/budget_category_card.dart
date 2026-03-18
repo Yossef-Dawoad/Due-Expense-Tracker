@@ -1,6 +1,7 @@
 import 'package:expancetracker/animation/animation.dart';
 import 'package:expancetracker/budgeting/models/budget_category_model.dart';
 import 'package:expancetracker/core/common/widgets/animated_limit_progress_bar.dart';
+import 'package:expancetracker/core/common/widgets/app_surface_card.dart';
 import 'package:expancetracker/core/common/widgets/colored_feature_icon.dart';
 import 'package:expancetracker/core/common/widgets/semantic_status_badge.dart';
 import 'package:expancetracker/core/ui/app_theme.dart';
@@ -41,22 +42,10 @@ class BudgetCategoryCard extends StatelessWidget {
       baseColor = colors.semanticPositive; // emerald-600
     }
 
-    return Container(
-      padding: const EdgeInsets.all(16), // p-4
-      decoration: BoxDecoration(
-        color: colors.bgSurface, // bg-white
-        borderRadius: BorderRadius.circular(24), // rounded-3xl roughly 24
-        border: Border.all(
-          color: colors.borderDefault,
-        ), // border-border-defined
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 2,
-            offset: const Offset(0, 1),
-          ),
-        ],
-      ),
+    return AppSurfaceCard(
+      padding: const EdgeInsets.all(16),
+      borderRadius: BorderRadius.circular(24),
+      boxShadow: context.shadows.elevation1,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

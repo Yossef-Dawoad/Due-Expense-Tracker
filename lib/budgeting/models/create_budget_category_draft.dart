@@ -6,6 +6,7 @@ class CreateBudgetCategoryDraft {
     required this.id,
     required this.name,
     required this.iconData,
+    required this.accentColor,
     required this.spentAmount,
     required this.allocationText,
     required this.isSelected,
@@ -14,6 +15,7 @@ class CreateBudgetCategoryDraft {
   final String id;
   final String name;
   final IconData iconData;
+  final Color accentColor;
   final double spentAmount;
   final String allocationText;
   final bool isSelected;
@@ -36,6 +38,7 @@ class CreateBudgetCategoryDraft {
     String? id,
     String? name,
     IconData? iconData,
+    Color? accentColor,
     double? spentAmount,
     String? allocationText,
     bool? isSelected,
@@ -44,6 +47,7 @@ class CreateBudgetCategoryDraft {
       id: id ?? this.id,
       name: name ?? this.name,
       iconData: iconData ?? this.iconData,
+      accentColor: accentColor ?? this.accentColor,
       spentAmount: spentAmount ?? this.spentAmount,
       allocationText: allocationText ?? this.allocationText,
       isSelected: isSelected ?? this.isSelected,

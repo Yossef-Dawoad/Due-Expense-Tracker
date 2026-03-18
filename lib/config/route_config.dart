@@ -1,8 +1,8 @@
-import 'package:expancetracker/budgeting/views/create_budget_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:expancetracker/budgeting/views/create_budget_screen.dart';
 import 'package:expancetracker/core/utils/navigation/routes.dart';
 import 'package:expancetracker/onboarding/views/onboarding_screen.dart';
 import 'package:expancetracker/navigation/navigation_menu.dart';
@@ -66,36 +66,6 @@ final routes = [
     ),
   ),
   GoRoute(
-    path: Routes.createBudget,
-    pageBuilder: (context, state) => CustomTransitionPage(
-      key: state.pageKey,
-      child: const CreateBudgetScreen(),
-      transitionDuration: const Duration(milliseconds: 350),
-      reverseTransitionDuration: const Duration(milliseconds: 300),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final slideAnimation =
-            Tween<Offset>(
-              begin: const Offset(0, 0.08),
-              end: Offset.zero,
-            ).animate(
-              CurvedAnimation(
-                parent: animation,
-                curve: Curves.easeOutCubic,
-                reverseCurve: Curves.easeInCubic,
-              ),
-            );
-        final fadeAnimation = CurvedAnimation(
-          parent: animation,
-          curve: Curves.easeOut,
-        );
-        return SlideTransition(
-          position: slideAnimation,
-          child: FadeTransition(opacity: fadeAnimation, child: child),
-        );
-      },
-    ),
-  ),
-  GoRoute(
     path: Routes.addCategory,
     pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
@@ -128,6 +98,37 @@ final routes = [
             opacity: fadeAnimation,
             child: ScaleTransition(scale: scaleAnimation, child: child),
           ),
+        );
+      },
+    ),
+  ),
+  GoRoute(
+    path: Routes.createBudget,
+    pageBuilder: (context, state) => CustomTransitionPage(
+      key: state.pageKey,
+      child: const CreateBudgetScreen(),
+      transitionDuration: const Duration(milliseconds: 380),
+      reverseTransitionDuration: const Duration(milliseconds: 320),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        final slideAnimation =
+            Tween<Offset>(
+              begin: const Offset(0, 0.18),
+              end: Offset.zero,
+            ).animate(
+              CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeOutCubic,
+                reverseCurve: Curves.easeInCubic,
+              ),
+            );
+        final fadeAnimation = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOut,
+        );
+
+        return SlideTransition(
+          position: slideAnimation,
+          child: FadeTransition(opacity: fadeAnimation, child: child),
         );
       },
     ),

@@ -10,6 +10,7 @@ class CreateBudgetMoneyField extends StatefulWidget {
     this.controller,
     this.hintText = '0',
     this.enabled = true,
+    this.onFocusChanged,
   });
 
   final String initialValue;
@@ -17,6 +18,7 @@ class CreateBudgetMoneyField extends StatefulWidget {
   final TextEditingController? controller;
   final String hintText;
   final bool enabled;
+  final ValueChanged<bool>? onFocusChanged;
 
   @override
   State<CreateBudgetMoneyField> createState() => _CreateBudgetMoneyFieldState();
@@ -24,6 +26,7 @@ class CreateBudgetMoneyField extends StatefulWidget {
 
 class _CreateBudgetMoneyFieldState extends State<CreateBudgetMoneyField> {
   late final TextEditingController _localController;
+  late final FocusNode _focusNode;
 
   TextEditingController get _effectiveController =>
       widget.controller ?? _localController;
@@ -32,6 +35,8 @@ class _CreateBudgetMoneyFieldState extends State<CreateBudgetMoneyField> {
   void initState() {
     super.initState();
     _localController = TextEditingController(text: widget.initialValue);
+    _focusNode = FocusNode();
+    _focusNode.addListener(_handleFocusChanged);
   }
 
   @override
@@ -51,8 +56,14 @@ class _CreateBudgetMoneyFieldState extends State<CreateBudgetMoneyField> {
 
   @override
   void dispose() {
+    _focusNode.removeListener(_handleFocusChanged);
+    _focusNode.dispose();
     _localController.dispose();
     super.dispose();
+  }
+
+  void _handleFocusChanged() {
+    widget.onFocusChanged?.call(_focusNode.hasFocus);
   }
 
   @override
@@ -62,6 +73,8 @@ class _CreateBudgetMoneyFieldState extends State<CreateBudgetMoneyField> {
 
     return TextField(
       controller: _effectiveController,
+      focusNode: _focusNode,
+      showCursor: true,
       enabled: widget.enabled,
       onChanged: widget.onChanged,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
